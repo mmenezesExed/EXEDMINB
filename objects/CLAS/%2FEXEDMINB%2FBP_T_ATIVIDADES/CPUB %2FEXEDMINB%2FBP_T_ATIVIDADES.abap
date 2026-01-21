@@ -1,0 +1,1 @@
+CLASS /exedminb/bp_t_atividades DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF /exedminb/t_atividades.

@@ -1,0 +1,2 @@
+  method IF_HTTP_SERVICE_EXTENSION~HANDLE_REQUEST.
+  endmethod.

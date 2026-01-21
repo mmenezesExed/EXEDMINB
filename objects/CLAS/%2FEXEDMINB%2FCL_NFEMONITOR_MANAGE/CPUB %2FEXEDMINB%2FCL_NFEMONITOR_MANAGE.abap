@@ -1,0 +1,1 @@
+CLASS /exedminb/cl_nfemonitor_manage DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF /exedminb/i_nfemonitorh.

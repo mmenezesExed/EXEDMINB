@@ -1,0 +1,50 @@
+[
+ {
+  "table":"/IWBEP/I_CP_MOD",
+  "data":
+  [
+   {
+    "PROXY_MODEL_ID":"/EXEDMINB/SC_API_SUPPLINV_PROC",
+    "VERSION":1,
+    "MPC_NAME":"/EXEDMINB/SC_API_SUPPLINV_PROC",
+    "DESCRIPTION":"Service Consumption Model for API_SUPPLIERINVOICE_PROCESS",
+    "CREATED_BY":"SAP_CUSTOMER",
+    "CREATED_AT":"+020251111202934",
+    "CHANGED_BY":"SAP_CUSTOMER",
+    "CHANGED_AT":"+020251111202934",
+    "ABAP_LANGUAGE_VERSION":"5",
+    "KIND":"OData_V2"
+   }
+  ]
+ },
+ {
+  "table":"TADIR",
+  "data":
+  [
+   {
+    "PGMID":"R3TR",
+    "OBJECT":"GCPM",
+    "OBJ_NAME":"/EXEDMINB/SC_API_SUPPLINV_PROC      0001",
+    "KORRNUM":"",
+    "SRCSYSTEM":"...",
+    "AUTHOR":"SAP_CUSTOMER",
+    "SRCDEP":"",
+    "DEVCLASS":"/EXEDMINB/SERVICES",
+    "GENFLAG":"",
+    "EDTFLAG":"",
+    "CPROJECT":" L",
+    "MASTERLANG":"P",
+    "VERSID":"",
+    "PAKNOCHECK":"",
+    "OBJSTABLTY":"",
+    "COMPONENT":"",
+    "CRELEASE":"",
+    "DELFLAG":"",
+    "TRANSLTTXT":"",
+    "CREATED_ON":"2025-11-11",
+    "CHECK_DATE":"2025-11-11",
+    "CHECK_CFG":""
+   }
+  ]
+ }
+]

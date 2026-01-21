@@ -1,0 +1,1 @@
+class /exedminb/bp_t_mat_fornc_sap definition public abstract final for behavior of /exedminb/t_mat_fornc_sap.
