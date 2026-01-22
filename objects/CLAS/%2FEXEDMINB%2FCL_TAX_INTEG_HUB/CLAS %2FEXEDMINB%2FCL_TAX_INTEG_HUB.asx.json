@@ -1567,6 +1567,14 @@
    {
     "CLSNAME":"/EXEDMINB/CL_TAX_INTEG_HUB",
     "CMPNAME":"GET_NFE_XML_LIST",
+    "SCONAME":"E_STATUS",
+    "CMPTYPE":1,
+    "MTDTYPE":0,
+    "SCOTYPE":0
+   },
+   {
+    "CLSNAME":"/EXEDMINB/CL_TAX_INTEG_HUB",
+    "CMPNAME":"GET_NFE_XML_LIST",
     "SCONAME":"E_XML_STRING",
     "CMPTYPE":1,
     "MTDTYPE":0,
@@ -1991,6 +1999,33 @@
    {
     "CLSNAME":"/EXEDMINB/CL_TAX_INTEG_HUB",
     "CMPNAME":"GET_NFE_XML_LIST",
+    "SCONAME":"E_STATUS",
+    "VERSION":1,
+    "EDITORDER":6,
+    "LOCKED":"",
+    "DISPID":0,
+    "AUTHOR":"SAP_CUSTOMER",
+    "CREATEDON":"2026-01-22",
+    "CHANGEDBY":"",
+    "CHANGEDON":"0000-00-00",
+    "PARDECLTYP":1,
+    "PARPASSTYP":1,
+    "TYPTYPE":1,
+    "TYPE":"I",
+    "TABLEOF":"",
+    "SRCROW1":0,
+    "SRCCOLUMN1":0,
+    "SRCROW2":0,
+    "SRCCOLUMN2":0,
+    "PARVALUE":"",
+    "PAROPTIONL":"",
+    "PARPREFERD":"",
+    "EXCDECLTYP":0,
+    "IS_RESUMABLE":""
+   },
+   {
+    "CLSNAME":"/EXEDMINB/CL_TAX_INTEG_HUB",
+    "CMPNAME":"GET_NFE_XML_LIST",
     "SCONAME":"E_XML_STRING",
     "VERSION":1,
     "EDITORDER":4,
@@ -2224,6 +2259,13 @@
     "CLSNAME":"/EXEDMINB/CL_TAX_INTEG_HUB",
     "CMPNAME":"GET_NFE_XML",
     "SCONAME":"I_ACCESSKEY",
+    "LANGU":"E",
+    "DESCRIPT":""
+   },
+   {
+    "CLSNAME":"/EXEDMINB/CL_TAX_INTEG_HUB",
+    "CMPNAME":"GET_NFE_XML_LIST",
+    "SCONAME":"E_STATUS",
     "LANGU":"E",
     "DESCRIPT":""
    },

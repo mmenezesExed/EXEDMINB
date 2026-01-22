@@ -32,7 +32,8 @@ class /exedminb/cl_tax_integ_hub definition
                                              i_startEntryDate type ty_iso8601_z optional
                                              i_endEntryDate   type ty_iso8601_z optional
                                    exporting e_xml_string     type string
-                                             e_xml_xstring    type xstring.
+                                             e_xml_xstring    type xstring
+                                             e_status         type i.
 
     "Buscar Nfe
     class-methods get_nfe     importing i_accessKey   type string

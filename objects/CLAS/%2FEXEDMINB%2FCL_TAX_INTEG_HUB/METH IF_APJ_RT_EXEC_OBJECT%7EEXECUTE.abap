@@ -5,7 +5,8 @@
           lv_time           type t,
           lv_startTime      type t,
           lv_startEntryDate type ty_iso8601_z,
-          lv_endEntryDate   type ty_iso8601_z.
+          lv_endEntryDate   type ty_iso8601_z,
+          lv_status         type i.
 
     data(lv_date) = cl_abap_context_info=>get_system_date( ).
     lv_time = cl_abap_context_info=>get_system_time( ) - 10800.
@@ -20,10 +21,11 @@
                                 i_startEntryDate = lv_startEntryDate
                                 i_endEntryDate   = lv_endEntryDate
                       importing e_xml_string     = lv_xml_string
-                                e_xml_xstring    = lv_xml_xstring ).
+                                e_xml_xstring    = lv_xml_xstring
+                                e_status         = lv_status ).
 
     "Extrair a estrutura do XML e salvar nas tabelas
-    if lv_xml_xstring is not initial.
+    if lv_xml_xstring is not initial AND lv_status EQ 200.
       extract_xml_save( exporting i_xml_xstring = lv_xml_xstring ).
     endif.
 

@@ -25,6 +25,7 @@
 
         e_xml_string  = lo_response->get_text( ).
         e_xml_xstring = lo_response->get_binary( ).
+        e_status      = ls_http_status-code.
 
       catch cx_web_http_client_error into data(oref_web_http_client_error).
         " handle exception here
