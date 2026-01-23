@@ -77,7 +77,9 @@
                               ItemIdDiv = lv_maxItemIdDiv
                              Quantidade = ls_nfe_item_data-Quantidade - it_keys[ 1 ]-%param-qCom
                              ValorICMS  = ls_nfe_item_data-ValorICMS - it_keys[ 1 ]-%param-ValorICMS
-                                   Lote = '' ) ).
+                                   Lote = ls_nfe_item_data-Lote
+                                 Pedido = ls_nfe_item_data-Pedido
+                             ItemPedido = ls_nfe_item_data-ItemPedido ) ).
 
     else.
       "Já foi dividido? Edita quantidade da linha referencia

@@ -8,6 +8,14 @@ class lhc_tabs_operations definition.
              cStat     type /EXEDMINB/T_NFEProtocolo-cStat,
            end of y_fields_chngs_header.
 
+    types: begin of y_item_div_control,
+             pedido     type abp_behv_flag,
+             itempedido type abp_behv_flag,
+             quantidade type abp_behv_flag,
+             lote       type abp_behv_flag,
+             valoricms  type abp_behv_flag,
+           end of y_item_div_control.
+
     class-methods: update_header_data   importing i_header     type y_fields_chngs_header
                                         returning value(error) type abap_boolean.
     class-methods: read_header_data     importing it_keys   type /exedminb/cl_nfe_inb_processor=>y_keys_header
@@ -19,6 +27,7 @@ class lhc_tabs_operations definition.
     class-methods: create_item_div      importing is_value     type /exedminb/t_nfeitemdiv
                                         returning value(error) type abap_boolean.
     class-methods: update_item_div      importing is_value     type /exedminb/t_nfeitemdiv
+                                                  is_control   type y_item_div_control
                                         returning value(error) type abap_boolean.
 
     class-methods: delete_item_div      importing is_value     type /exedminb/t_nfeitemdiv
@@ -62,16 +71,39 @@ class lhc_tabs_operations implementation.
   endmethod.
 
   method update_item_div.
-    if line_exists( mt_data_itens_div_to_save[ Id = is_value-Id
-                                               ItemId = is_value-ItemId
-                                               ItemIdDiv = is_value-ItemIdDiv ] ).
-      modify table mt_data_itens_div_to_save from is_value.
+    data lv_div_to_modif type /exedminb/t_nfeitemdiv.
+
+    select single * from /EXEDMINB/I_NFeMonitorI
+      where ChaveNFe = @is_value-Id
+        and ItemNFe = @is_value-ItemId
+        and ItemIdDiv = @is_value-ItemIdDiv
+        into @data(ls_item_hist).
+
+    if sy-subrc ne 0.
+      error = abap_true.
+      exit.
+    endif.
+
+    lv_div_to_modif-Id = is_value-Id.
+    lv_div_to_modif-ItemId = is_value-ItemId.
+    lv_div_to_modif-ItemIdDiv = is_value-ItemIdDiv.
+    lv_div_to_modif-qCom = cond #( when is_control-quantidade is not initial then is_value-qCom else ls_item_hist-Quantidade ).
+    lv_div_to_modif-Lote = cond #( when is_control-Lote is not initial then is_value-Lote else ls_item_hist-Lote ).
+    lv_div_to_modif-ValorICMS = cond #( when is_control-ValorICMS is not initial then is_value-ValorICMS else ls_item_hist-ValorICMS ).
+    lv_div_to_modif-Pedido = cond #( when is_control-Pedido is not initial then is_value-Pedido else ls_item_hist-Pedido ).
+    lv_div_to_modif-ItemPedido = cond #( when is_control-ItemPedido is not initial then is_value-ItemPedido else ls_item_hist-ItemPedido ).
+
+
+    if line_exists( mt_data_itens_div_to_save[ Id = lv_div_to_modif-Id
+                                               ItemId = lv_div_to_modif-ItemId
+                                               ItemIdDiv = lv_div_to_modif-ItemIdDiv ] ).
+      modify table mt_data_itens_div_to_save from lv_div_to_modif.
 
       if sy-subrc ne 0.
         error = abap_true.
       endif.
     else.
-      error = lhc_tabs_operations=>create_item_div( is_value ).
+      error = lhc_tabs_operations=>create_item_div( lv_div_to_modif ).
     endif.
   endmethod.
 
@@ -344,12 +376,30 @@ class lhc__nfemonitori implementation.
 
   method update.
     loop at entities into data(entitie).
-      lhc_tabs_operations=>update_item_div( value #( Id = entitie-ChaveNFe
-                                                 ItemId = entitie-ItemNFe
-                                              ItemIdDiv = entitie-ItemIdDiv
-                                                   qCom = entitie-Quantidade
-                                                   Lote = entitie-Lote
-                                              ValorICMS = entitie-ValorICMS ) ).
+      if lhc_tabs_operations=>update_item_div( is_value   = value #( Id = entitie-ChaveNFe
+                                                                  ItemId = entitie-ItemNFe
+                                                               ItemIdDiv = entitie-ItemIdDiv
+                                                                    qCom = entitie-Quantidade
+                                                                    Lote = entitie-Lote
+                                                               ValorICMS = entitie-ValorICMS
+                                                                  Pedido = entitie-Pedido
+                                                              ItemPedido = entitie-ItemPedido )
+                                            is_control = value #( Quantidade = entitie-%control-Quantidade
+                                                                        Lote = entitie-%control-Lote
+                                                                   ValorICMS = entitie-%control-ValorICMS
+                                                                      Pedido = entitie-%control-Pedido
+                                                                  ItemPedido = entitie-%control-ItemPedido ) ) eq abap_true.
+        failed-_nfemonitori = value #( ( %key = value #( chavenfe = entitie-ChaveNFe
+                                                          itemnfe = entitie-ItemNFe
+                                                          itemiddiv = entitie-ItemIdDiv )
+                                         %update = if_abap_behv=>mk-on ) ).
+        reported-_nfemonitori = value #( ( %key = value #( chavenfe = entitie-ChaveNFe
+                                                           itemnfe = entitie-ItemNFe
+                                                           itemiddiv = entitie-ItemIdDiv )
+                                           %msg = new_message_with_text( severity = if_abap_behv_message=>severity-error
+                                                                             text = 'Erro ao atualizar Item.' ) ) ).
+        exit.
+      endif.
     endloop.
   endmethod.
 
@@ -398,7 +448,9 @@ class lhc__nfemonitori implementation.
                                               ItemIdDiv = entitie-ItemIdDiv
                                                    qCom = entitie-Quantidade
                                                    Lote = entitie-Lote
-                                              ValorICMS = entitie-ValorICMS  ) ).
+                                              ValorICMS = entitie-ValorICMS
+                                                 Pedido = entitie-Pedido
+                                             ItemPedido = entitie-ItemPedido  ) ).
     endloop.
   endmethod.
 

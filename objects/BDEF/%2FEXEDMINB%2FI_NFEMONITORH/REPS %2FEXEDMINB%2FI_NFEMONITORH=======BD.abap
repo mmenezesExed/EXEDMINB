@@ -26,7 +26,7 @@ authorization dependent by _Header
   update;
   internal delete;
   field ( readonly )
-  ChaveNFe, ItemNFe, ItemIdDiv, Pedido, ItemPEdido, Material, DescricaoMaterial, NCM,
+  ChaveNFe, ItemNFe, ItemIdDiv, Material, DescricaoMaterial, NCM,
   CFOP, ValorUnitario, UnidadeMedida, AliquotaICMS, AliquotaIPI, ValorIPI;
 
   action dividir parameter /EXEDMINB/a_dividir_in_param;
