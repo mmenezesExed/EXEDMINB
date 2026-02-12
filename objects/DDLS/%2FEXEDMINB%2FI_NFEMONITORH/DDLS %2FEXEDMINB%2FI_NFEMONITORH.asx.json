@@ -9,10 +9,10 @@
     "AS4USER":"SAP_CUSTOMER",
     "AS4DATE":"0000-00-00",
     "AS4TIME":"00:00:00",
-    "SOURCE":"@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'CDS Dados Cabeçalho Monitor InBound'\r\n@Metadata.ignorePropagatedAnnotations: true\r\n@Metadata.allowExtensions: true\r\ndefine root view entity /EXEDMINB/I_NFeMonitorH\r\n  as select from /EXEDMINB/I_NFEHEADER    as _NFeHeader\r\n    inner join   /EXEDMINB/I_NFEProtocolo as _NFEProtocolo on _NFeHeader.Id = _NFEProtocolo.Id\r\n\r\n  composition [0..*] of /EXEDMINB/I_NFeMonitorI as _Item\r\n\r\n  association to /EXEDMINB/I_NFE_STATUS_DESC    as _StatusDesc on $projection.Status = _StatusDesc.Status\r\n  association to /EXEDMINB/T_ATIVIDADES         as _Atividades on $projection.Atividade = _Atividades.atividade\r\n\r\n{\r\n      //Dados Nota Fiscal\r\n  key _NFeHeader.Id                  as ChaveNFe,\r\n      @ObjectModel.text.element: [ 'StatusDescricao' ]\r\n      _NFEProtocolo.cStat            as Status,\r\n      _NFeHeader.bukrs               as Empresa,\r\n      _NFeHeader.branch              as LocalDeNegocio,\r\n      _NFeHeader.processo            as ProcessoSAP,\r\n      @ObjectModel.text.element: [ 'AtividadeDescricao' ]\r\n      _NFeHeader.atividade           as Atividade,\r\n      _NFeHeader.nNF                 as NumeroNFe,\r\n      _NFeHeader.serie               as Serie,\r\n      _NFeHeader.dhEmi               as DataEmissao,\r\n\r\n      //Dados Emitente\r\n      _NFeHeader._Issuer.CNPJ        as Emitente,\r\n      _NFeHeader._Issuer.xNome       as NomeEmitente,\r\n\r\n      //Dados Destinatario\r\n      _NFeHeader._Recipient.CNPJ_CPF as Destinatario,\r\n      _NFeHeader._Recipient.xNome    as NomeDestinatario,\r\n\r\n      //Dados Valores\r\n      _NFeHeader._ICMSTaxTot.vNF     as ValorTotalNFe,\r\n      _NFeHeader._ICMSTaxTot.vICMS   as ValorTotalICMS,\r\n      _NFeHeader._ICMSTaxTot.vIPI    as ValorTotalIPI,\r\n      _NFeHeader._ICMSTaxTot.vST     as ValorTotalICMSST,\r\n      _NFeHeader._ICMSTaxTot.vFrete  as ValorFrete,\r\n      _NFeHeader._ICMSTaxTot.vSeg    as ValorSeguro,\r\n      _NFeHeader._ICMSTaxTot.vOutro  as ValorOutrasDesp,\r\n      \r\n      _Atividades.descricao          as AtividadeDescricao,\r\n      _StatusDesc.Descricao          as StatusDescricao,\r\n      _StatusDesc.Criticality        as StatusCriticality,\r\n\r\n      _Item\r\n\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[\n\"/EXEDMINB/I_NFEHEADER\",\n\"/EXEDMINB/I_NFEICMSTAXTOT\",\n\"/EXEDMINB/I_NFEISSUER\",\n\"/EXEDMINB/I_NFEPROTOCOLO\",\n\"/EXEDMINB/I_NFERECIPIENT\",\n\"/EXEDMINB/I_NFE_STATUS_DESC\"\n],\n\"ASSOCIATED\":\n[\n\"/EXEDMINB/I_NFEMONITORI\"\n],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
+    "SOURCE":"@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'CDS Dados Cabeçalho Monitor InBound'\r\n@Metadata.ignorePropagatedAnnotations: true\r\n@Metadata.allowExtensions: true\r\ndefine root view entity /EXEDMINB/I_NFeMonitorH\r\n  as select from    /EXEDMINB/I_NFEHEADER    as _NFeHeader\r\n    left outer join /EXEDMINB/I_NFEProtocolo as _NFEProtocolo on _NFeHeader.Id = _NFEProtocolo.Id\r\n\r\n\r\n  composition [0..*] of /EXEDMINB/I_NFeMonitorI as _Item\r\n  association [0..*] to /EXEDMINB/I_HISTORICO as _Historico on $projection.ChaveNFe = _Historico.IdNfe\r\n\r\n\r\n  association to /EXEDMINB/I_NFE_STATUS_DESC    as _StatusNFeDesc   on  $projection.StatusNFe = _StatusNFeDesc.Status\r\n  association to /EXEDMINB/T_ATIVIDADES         as _Atividades      on  $projection.Atividade = _Atividades.atividade\r\n  association to I_CompanyCodeVH                as _CompanyCodeVH   on  $projection.Empresa = _CompanyCodeVH.CompanyCode\r\n  association to I_BR_BusinessPlace             as _BusinessPlaceVH on  $projection.Empresa        = _BusinessPlaceVH.CompanyCode\r\n                                                                    and $projection.LocalDeNegocio = _BusinessPlaceVH.Branch\r\n\r\n\r\n{\r\n      //Dados Nota Fiscal\r\n  key _NFeHeader.Id                  as ChaveNFe,\r\n\r\n      case _NFeHeader.statusProc\r\n        when 1 then 'Erro'\r\n        when 2 then 'Pendente'\r\n        when 3 then 'Sucesso'\r\n        else 'Erro'\r\n      end                            as Status,\r\n      case\r\n        when _NFeHeader.statusProc is not initial then _NFeHeader.statusProc\r\n        else 1\r\n      end                            as StatusCriticality,\r\n      @ObjectModel.text.element: [ 'StatusNFeDescricao' ]\r\n      _NFEProtocolo.cStat            as StatusNFe,\r\n      @ObjectModel.text.element: [ 'CompanyCodeName' ]\r\n      _NFeHeader.bukrs               as Empresa,      \r\n      @ObjectModel.text.element: [ 'BusinessPlaceName' ]\r\n      _NFeHeader.branch              as LocalDeNegocio,\r\n      _NFeHeader.processo            as ProcessoSAP,\r\n      @ObjectModel.text.element: [ 'AtividadeDescricao' ]\r\n      _NFeHeader.atividade           as Atividade,\r\n      _NFeHeader.nNF                 as NumeroNFe,\r\n      _NFeHeader.serie               as Serie,\r\n      _NFeHeader.dhEmi               as DataEmissao,\r\n      _NFeHeader.migo                as EntradaMercadoria,\r\n      _NFeHeader.miro                as EntradaFatura,\r\n      _NFeHeader.delivery            as Delivery,\r\n\r\n      //Dados Emitente\r\n      _NFeHeader._Issuer.CNPJ        as Emitente,\r\n      _NFeHeader._Issuer.xNome       as NomeEmitente,\r\n\r\n      //Dados Destinatario\r\n      _NFeHeader._Recipient.CNPJ_CPF as Destinatario,\r\n      _NFeHeader._Recipient.xNome    as NomeDestinatario,\r\n\r\n      //Dados Valores\r\n      _NFeHeader._ICMSTaxTot.vNF     as ValorTotalNFe,\r\n      _NFeHeader._ICMSTaxTot.vICMS   as ValorTotalICMS,\r\n      _NFeHeader._ICMSTaxTot.vIPI    as ValorTotalIPI,\r\n      _NFeHeader._ICMSTaxTot.vST     as ValorTotalICMSST,\r\n      _NFeHeader._ICMSTaxTot.vFrete  as ValorFrete,\r\n      _NFeHeader._ICMSTaxTot.vSeg    as ValorSeguro,\r\n      _NFeHeader._ICMSTaxTot.vOutro  as ValorOutrasDesp,\r\n\r\n      _Atividades.descricao          as AtividadeDescricao,\r\n      _StatusNFeDesc.Descricao       as StatusNFeDescricao,\r\n      _CompanyCodeVH.CompanyCodeName,\r\n      _BusinessPlaceVH.BusinessPlaceName,\r\n\r\n\r\n      _Item,\r\n      _Historico\r\n\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[\n\"/EXEDMINB/I_NFEHEADER\",\n\"/EXEDMINB/I_NFEICMSTAXTOT\",\n\"/EXEDMINB/I_NFEISSUER\",\n\"/EXEDMINB/I_NFEPROTOCOLO\",\n\"/EXEDMINB/I_NFERECIPIENT\",\n\"/EXEDMINB/I_NFE_STATUS_DESC\",\n\"I_BR_BUSINESSPLACE\",\n\"I_COMPANYCODEVH\"\n],\n\"ASSOCIATED\":\n[\n\"/EXEDMINB/I_HISTORICO\",\n\"/EXEDMINB/I_NFEMONITORI\"\n],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"54",
+    "CHGFLAG":"",
     "SOURCE_TYPE":"W",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"
@@ -52,15 +52,43 @@
     "STRUCOBJN":"/EXEDMINB/I_NFEMONITORH",
     "LFIELDNAME":"ATIVIDADE",
     "NAME":"OBJECTMODEL",
-    "POSITION":5,
+    "POSITION":9,
     "VALUE":""
    },
    {
     "STRUCOBJN":"/EXEDMINB/I_NFEMONITORH",
     "LFIELDNAME":"ATIVIDADE",
     "NAME":"OBJECTMODEL.TEXT.ELEMENT$1$",
-    "POSITION":6,
+    "POSITION":10,
     "VALUE":"'AtividadeDescricao'"
+   },
+   {
+    "STRUCOBJN":"/EXEDMINB/I_NFEMONITORH",
+    "LFIELDNAME":"EMPRESA",
+    "NAME":"OBJECTMODEL",
+    "POSITION":5,
+    "VALUE":""
+   },
+   {
+    "STRUCOBJN":"/EXEDMINB/I_NFEMONITORH",
+    "LFIELDNAME":"EMPRESA",
+    "NAME":"OBJECTMODEL.TEXT.ELEMENT$1$",
+    "POSITION":6,
+    "VALUE":"'CompanyCodeName'"
+   },
+   {
+    "STRUCOBJN":"/EXEDMINB/I_NFEMONITORH",
+    "LFIELDNAME":"LOCALDENEGOCIO",
+    "NAME":"OBJECTMODEL",
+    "POSITION":7,
+    "VALUE":""
+   },
+   {
+    "STRUCOBJN":"/EXEDMINB/I_NFEMONITORH",
+    "LFIELDNAME":"LOCALDENEGOCIO",
+    "NAME":"OBJECTMODEL.TEXT.ELEMENT$1$",
+    "POSITION":8,
+    "VALUE":"'BusinessPlaceName'"
    },
    {
     "STRUCOBJN":"/EXEDMINB/I_NFEMONITORH",
@@ -78,17 +106,17 @@
    },
    {
     "STRUCOBJN":"/EXEDMINB/I_NFEMONITORH",
-    "LFIELDNAME":"STATUS",
+    "LFIELDNAME":"STATUSNFE",
     "NAME":"OBJECTMODEL",
     "POSITION":3,
     "VALUE":""
    },
    {
     "STRUCOBJN":"/EXEDMINB/I_NFEMONITORH",
-    "LFIELDNAME":"STATUS",
+    "LFIELDNAME":"STATUSNFE",
     "NAME":"OBJECTMODEL.TEXT.ELEMENT$1$",
     "POSITION":4,
-    "VALUE":"'StatusDescricao'"
+    "VALUE":"'StatusNFeDescricao'"
    }
   ]
  },

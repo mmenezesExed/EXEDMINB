@@ -43,7 +43,7 @@ class lcl_tools definition.
 
     class-methods new_message
       importing
-        !id        type symsgid
+        !id        type symsgid optional
         !number    type symsgno
         !severity  type if_abap_behv_message=>t_severity
         !v1        type simple optional

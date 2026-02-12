@@ -1,0 +1,1 @@
+class /exedminb/bp_i_historico definition public abstract final for behavior of /exedminb/i_historico.

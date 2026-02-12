@@ -139,6 +139,13 @@
    },
    {
     "CLSNAME":"/EXEDMINB/CL_TAX_INTEG_HUB",
+    "CMPNAME":"EXTRACT_STATUS_XML",
+    "CMPTYPE":1,
+    "MTDTYPE":0,
+    "MTDTYPE2":0
+   },
+   {
+    "CLSNAME":"/EXEDMINB/CL_TAX_INTEG_HUB",
     "CMPNAME":"EXTRACT_XML_SAVE",
     "CMPTYPE":1,
     "MTDTYPE":0,
@@ -668,6 +675,65 @@
     "TYPDUMMY":"",
     "TYPTYPE":1,
     "TYPE":"IF_COM_MANAGEMENT=>TY_CSCN_OUTB_SRV_ID",
+    "TABLEOF":"",
+    "SRCROW1":0,
+    "SRCCOLUMN1":0,
+    "SRCROW2":0,
+    "SRCCOLUMN2":0,
+    "REFCLSNAME":"",
+    "REFINTNAME":"",
+    "REFCMPNAME":"",
+    "BCMTDINST":"",
+    "BCMTDCAT":0,
+    "BCMTDDIA":"",
+    "BCMTDCOM":"",
+    "BCMTDSYN":0,
+    "BCEVTCAT":0,
+    "TYPESRC_LENG":0,
+    "TYPESRC":""
+   },
+   {
+    "CLSNAME":"/EXEDMINB/CL_TAX_INTEG_HUB",
+    "CMPNAME":"EXTRACT_STATUS_XML",
+    "VERSION":1,
+    "ALIAS":"",
+    "REDEFIN":"",
+    "EXPOSURE":2,
+    "STATE":1,
+    "EDITORDER":8,
+    "LOCKED":"",
+    "DISPID":0,
+    "R3RELEASE":"916",
+    "AUTHOR":"",
+    "CREATEDON":"2026-02-04",
+    "CHANGEDBY":"",
+    "CHANGEDON":"0000-00-00",
+    "MTDDECLTYP":1,
+    "MTDABSTRCT":"",
+    "MTDFINAL":"",
+    "DSRNOTEOM":"",
+    "EDTX":"",
+    "MTDNEWEXC":"",
+    "MTDREPLACE":"",
+    "MTDOPTNL":"",
+    "MTDSQLSERVICE":"",
+    "MTDAMDPRDONLY":"",
+    "MTDAMDPCDSCLNT":"",
+    "MTDAMDPCLNTINDEP":"",
+    "ATTDECLTYP":0,
+    "ATTDYNAMIC":"",
+    "ATTGETMTD":"",
+    "ATTSETMTD":"",
+    "ATTRDONLY":"",
+    "ATTVALUE":"",
+    "ATTPERSIST":"",
+    "ATTBUSOBJ":"",
+    "ATTKEYFLD":"",
+    "ATTEXPVIRT":0,
+    "EVTDECLTYP":0,
+    "TYPDUMMY":"",
+    "TYPTYPE":0,
+    "TYPE":"",
     "TABLEOF":"",
     "SRCROW1":0,
     "SRCCOLUMN1":0,
@@ -1331,6 +1397,12 @@
    },
    {
     "CLSNAME":"/EXEDMINB/CL_TAX_INTEG_HUB",
+    "CMPNAME":"EXTRACT_STATUS_XML",
+    "LANGU":"E",
+    "DESCRIPT":""
+   },
+   {
+    "CLSNAME":"/EXEDMINB/CL_TAX_INTEG_HUB",
     "CMPNAME":"EXTRACT_XML_SAVE",
     "LANGU":"E",
     "DESCRIPT":""
@@ -1452,6 +1524,22 @@
   "table":"SEOSUBCO",
   "data":
   [
+   {
+    "CLSNAME":"/EXEDMINB/CL_TAX_INTEG_HUB",
+    "CMPNAME":"EXTRACT_STATUS_XML",
+    "SCONAME":"CSTAT",
+    "CMPTYPE":1,
+    "MTDTYPE":0,
+    "SCOTYPE":0
+   },
+   {
+    "CLSNAME":"/EXEDMINB/CL_TAX_INTEG_HUB",
+    "CMPNAME":"EXTRACT_STATUS_XML",
+    "SCONAME":"I_XML_XSTRING",
+    "CMPTYPE":1,
+    "MTDTYPE":0,
+    "SCOTYPE":0
+   },
    {
     "CLSNAME":"/EXEDMINB/CL_TAX_INTEG_HUB",
     "CMPNAME":"EXTRACT_XML_SAVE",
@@ -1618,6 +1706,60 @@
   "table":"SEOSUBCODF",
   "data":
   [
+   {
+    "CLSNAME":"/EXEDMINB/CL_TAX_INTEG_HUB",
+    "CMPNAME":"EXTRACT_STATUS_XML",
+    "SCONAME":"CSTAT",
+    "VERSION":1,
+    "EDITORDER":2,
+    "LOCKED":"",
+    "DISPID":0,
+    "AUTHOR":"SAP_CUSTOMER",
+    "CREATEDON":"2026-02-04",
+    "CHANGEDBY":"",
+    "CHANGEDON":"0000-00-00",
+    "PARDECLTYP":3,
+    "PARPASSTYP":0,
+    "TYPTYPE":1,
+    "TYPE":"/EXEDMINB/T_NFEPROTOCOLO-CSTAT",
+    "TABLEOF":"",
+    "SRCROW1":0,
+    "SRCCOLUMN1":0,
+    "SRCROW2":0,
+    "SRCCOLUMN2":0,
+    "PARVALUE":"",
+    "PAROPTIONL":"",
+    "PARPREFERD":"",
+    "EXCDECLTYP":0,
+    "IS_RESUMABLE":""
+   },
+   {
+    "CLSNAME":"/EXEDMINB/CL_TAX_INTEG_HUB",
+    "CMPNAME":"EXTRACT_STATUS_XML",
+    "SCONAME":"I_XML_XSTRING",
+    "VERSION":1,
+    "EDITORDER":1,
+    "LOCKED":"",
+    "DISPID":0,
+    "AUTHOR":"SAP_CUSTOMER",
+    "CREATEDON":"2026-02-04",
+    "CHANGEDBY":"",
+    "CHANGEDON":"0000-00-00",
+    "PARDECLTYP":0,
+    "PARPASSTYP":1,
+    "TYPTYPE":1,
+    "TYPE":"XSTRING",
+    "TABLEOF":"",
+    "SRCROW1":0,
+    "SRCCOLUMN1":0,
+    "SRCROW2":0,
+    "SRCCOLUMN2":0,
+    "PARVALUE":"",
+    "PAROPTIONL":"",
+    "PARPREFERD":"",
+    "EXCDECLTYP":0,
+    "IS_RESUMABLE":""
+   },
    {
     "CLSNAME":"/EXEDMINB/CL_TAX_INTEG_HUB",
     "CMPNAME":"EXTRACT_XML_SAVE",
@@ -2166,6 +2308,20 @@
   [
    {
     "CLSNAME":"/EXEDMINB/CL_TAX_INTEG_HUB",
+    "CMPNAME":"EXTRACT_STATUS_XML",
+    "SCONAME":"CSTAT",
+    "LANGU":"E",
+    "DESCRIPT":""
+   },
+   {
+    "CLSNAME":"/EXEDMINB/CL_TAX_INTEG_HUB",
+    "CMPNAME":"EXTRACT_STATUS_XML",
+    "SCONAME":"I_XML_XSTRING",
+    "LANGU":"E",
+    "DESCRIPT":""
+   },
+   {
+    "CLSNAME":"/EXEDMINB/CL_TAX_INTEG_HUB",
     "CMPNAME":"EXTRACT_XML_SAVE",
     "SCONAME":"I_XML_XSTRING",
     "LANGU":"E",
@@ -2411,6 +2567,12 @@
     "METHODINDX":11,
     "METHODNAME":"GET_NFE_PDF",
     "FLAGS":0
+   },
+   {
+    "CLASSNAME":"/EXEDMINB/CL_TAX_INTEG_HUB",
+    "METHODINDX":12,
+    "METHODNAME":"EXTRACT_STATUS_XML",
+    "FLAGS":0
    }
   ]
  },
@@ -2585,6 +2747,17 @@
    },
    {
     "NAME":"/EXEDMINB/CL_TAX_INTEG_HUB====CM00B",
+    "VARCL":"X",
+    "DBAPL":"S",
+    "DBNA":"D$",
+    "SUBC":"I",
+    "APPL":"S",
+    "FIXPT":"X",
+    "LDBNAME":"D$S",
+    "UCCHECK":"X"
+   },
+   {
+    "NAME":"/EXEDMINB/CL_TAX_INTEG_HUB====CM00C",
     "VARCL":"X",
     "DBAPL":"S",
     "DBNA":"D$",

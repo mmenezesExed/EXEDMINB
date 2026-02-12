@@ -25,7 +25,7 @@
                                 e_status         = lv_status ).
 
     "Extrair a estrutura do XML e salvar nas tabelas
-    if lv_xml_xstring is not initial AND lv_status EQ 200.
+    if lv_xml_xstring is not initial and lv_status eq 200.
       extract_xml_save( exporting i_xml_xstring = lv_xml_xstring ).
     endif.
 

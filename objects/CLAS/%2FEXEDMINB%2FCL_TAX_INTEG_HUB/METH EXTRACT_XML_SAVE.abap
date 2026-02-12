@@ -1273,184 +1273,54 @@
       endcase.
     enddo.
 
-    if lt_nfeheader is not initial.
-      modify /EXEDMINB/t_nfeheader from table @lt_nfeheader.
-    endif.
+    "Save nfs
+    new /exedminb/cl_nfe_inb_processor( )->inicializar_novas_nfs(
+      it_nfeheader    = lt_nfeheader
+      it_nfeissue     = lt_nfeissue
+      it_nfeissueaddr = lt_nfeissueaddr
+      it_nferecip     = lt_nterecip
+      it_nferecipaddr = lt_nterecipaddr
+      it_nfeitem      = lt_nfeitem
+      it_icms00       = lt_icms00
+      it_icms02       = lt_icms02
+      it_icms10       = lt_icms10
+      it_icms15       = lt_icms15
+      it_icms20       = lt_icms20
+      it_icms30       = lt_icms30
+      it_icms40       = lt_icms40
+      it_icms51       = lt_icms51
+      it_icms53       = lt_icms53
+      it_icms60       = lt_icms60
+      it_icms61       = lt_icms61
+      it_icms70       = lt_icms70
+      it_icms90       = lt_icms90
+      it_icmsst       = lt_icmsst
+      it_icmspart     = lt_icmspart
+      it_ii           = lt_ii
+      it_ipi          = lt_ipi
+      it_cofins       = lt_cofins
+      it_pis          = lt_pis
+      it_pisst        = lt_pisst
+      it_cofinsst     = lt_cofinsst
+      it_icmsufdest   = lt_icmsufdest
+      it_icmstax_tot  = lt_icmstax_tot
+      it_transp       = lt_transp
+      it_carrier      = lt_carrier
+      it_rettransp    = lt_rettransp
+      it_veh          = lt_veh
+      it_tow          = lt_tow
+      it_vol          = lt_vol
+      it_seal         = lt_seal
+      it_invoice      = lt_invoice
+      it_install      = lt_install
+      it_payment      = lt_payment
+      it_paycard      = lt_paycard
+      it_addinform    = lt_addinform
+      it_taxinform    = lt_taxinform
+      it_txpayerinf   = lt_txpayerinf
+      it_legprocref   = lt_legprocref
+      it_nfeprot      = lt_nfeprot ).
 
-    if lt_nfeissue is not initial.
-      modify /EXEDMINB/t_nfeissuer from table @lt_nfeissue.
-    endif.
-
-    if lt_nfeissueaddr is not initial.
-      modify /EXEDMINB/t_nfeissueraddr from table @lt_nfeissueaddr.
-    endif.
-
-    if lt_nterecip is not initial.
-      modify /EXEDMINB/t_nferecipient from table @lt_nterecip.
-    endif.
-
-    if lt_nterecipaddr is not initial.
-      modify /EXEDMINB/t_nferecipaddr from table @lt_nterecipaddr.
-    endif.
-
-    if lt_nfeitem is not initial.
-      modify /EXEDMINB/t_nfeitem from table @lt_nfeitem.
-    endif.
-
-    if lt_icms00 is not initial.
-      modify /EXEDMINB/t_nfetaxicms00 from table @lt_icms00.
-    endif.
-
-    if lt_icms02 is not initial.
-      modify /EXEDMINB/t_nfetaxicms02 from table @lt_icms02.
-    endif.
-
-    if lt_icms10 is not initial.
-      modify /EXEDMINB/t_nfetaxicms10 from table @lt_icms10.
-    endif.
-
-    if lt_icms15 is not initial.
-      modify /EXEDMINB/t_nfetaxicms15 from table @lt_icms15.
-    endif.
-
-    if lt_icms20 is not initial.
-      modify /EXEDMINB/t_nfetaxicms20 from table @lt_icms20.
-    endif.
-
-    if lt_icms30 is not initial.
-      modify /EXEDMINB/t_nfetaxicms30 from table @lt_icms30.
-    endif.
-
-    if lt_icms40 is not initial.
-      modify /EXEDMINB/t_nfetaxicms40 from table @lt_icms40.
-    endif.
-
-    if lt_icms51 is not initial.
-      modify /EXEDMINB/t_nfetaxicms51 from table @lt_icms51.
-    endif.
-
-    if lt_icms53 is not initial.
-      modify /EXEDMINB/t_nfetaxicms53 from table @lt_icms53.
-    endif.
-
-    if lt_icms60 is not initial.
-      modify /EXEDMINB/t_nfetaxicms60 from table @lt_icms60.
-    endif.
-
-    if lt_icms61 is not initial.
-      modify /EXEDMINB/t_nfetaxicms61 from table @lt_icms61.
-    endif.
-
-    if lt_icms70 is not initial.
-      modify /EXEDMINB/t_nfetaxicms70 from table @lt_icms70.
-    endif.
-
-    if lt_icms90 is not initial.
-      modify /EXEDMINB/t_nfetaxicms90 from table @lt_icms90.
-    endif.
-
-    if lt_icmsst is not initial.
-      modify /EXEDMINB/t_nfetaxicmsst from table @lt_icmsst.
-    endif.
-
-    if lt_icmspart is not initial.
-      modify /EXEDMINB/t_nfetxicmspart from table @lt_icmspart.
-    endif.
-
-    if lt_ii is not initial.
-      modify /EXEDMINB/t_nfetaxii from table @lt_ii.
-    endif.
-
-    if lt_ipi is not initial.
-      modify /EXEDMINB/t_nfetaxipi from table @lt_ipi.
-    endif.
-
-    if lt_cofins is not initial.
-      modify /EXEDMINB/t_nfetaxcofins from table @lt_cofins.
-    endif.
-
-    if lt_pis is not initial.
-      modify /EXEDMINB/t_nfetaxpis from table @lt_pis.
-    endif.
-
-    if lt_pisst is not initial.
-      modify /EXEDMINB/t_nfetaxpisst from table @lt_pisst.
-    endif.
-
-    if lt_cofinsst is not initial.
-      modify /EXEDMINB/t_nfetxcofinsst from table @lt_cofinsst.
-    endif.
-
-    if lt_icmsufdest is not initial.
-      modify /EXEDMINB/t_nfeicmsufdest from table @lt_icmsufdest.
-    endif.
-
-    if lt_icmstax_tot is not initial.
-      modify /EXEDMINB/t_nfeicmstaxTot from table @lt_icmstax_tot.
-    endif.
-
-    if lt_transp is not initial.
-      modify /EXEDMINB/t_nfetransport from table @lt_transp.
-    endif.
-
-    if lt_carrier is not initial.
-      modify /EXEDMINB/t_nfecarrier from table @lt_carrier.
-    endif.
-
-    if lt_rettransp is not initial.
-      modify /EXEDMINB/t_nfetranspret from table @lt_rettransp.
-    endif.
-
-    if lt_veh is not initial.
-      modify /EXEDMINB/t_nfetranspveh from table @lt_veh.
-    endif.
-
-    if lt_tow is not initial.
-      modify /EXEDMINB/t_nfetransptow from table @lt_tow.
-    endif.
-
-    if lt_vol is not initial.
-      modify /EXEDMINB/t_nfetranspvol from table @lt_vol.
-    endif.
-
-    if lt_seal is not initial.
-      insert /EXEDMINB/t_securityseal from table @lt_seal.
-    endif.
-
-    if lt_invoice is not initial.
-      modify /EXEDMINB/t_nfeinvoice from table @lt_invoice.
-    endif.
-
-    if lt_install is not initial.
-      modify /EXEDMINB/t_nfeinstallm from table @lt_install.
-    endif.
-
-    if lt_payment is not initial.
-      modify /EXEDMINB/t_nfepayment from table @lt_payment.
-    endif.
-
-    if lt_paycard is not initial.
-      modify /EXEDMINB/t_paymentcard from table @lt_paycard.
-    endif.
-
-    if lt_addinform is not initial.
-      modify /EXEDMINB/t_nfeaddinform from table @lt_addinform.
-    endif.
-
-    if lt_taxinform is not initial.
-      modify /EXEDMINB/t_nfetaxinform from table @lt_taxinform.
-    endif.
-
-    if lt_txpayerinf is not initial.
-      modify /EXEDMINB/t_nfetxpayerinf from table @lt_txpayerinf.
-    endif.
-
-    if lt_legprocref is not initial.
-      modify /EXEDMINB/t_nfelegprocref from table @lt_legprocref.
-    endif.
-
-    if lt_nfeprot is not initial.
-      modify /EXEDMINB/T_NFEProtocolo from table @lt_nfeprot.
-    endif.
+    commit entities.
 
   endmethod.

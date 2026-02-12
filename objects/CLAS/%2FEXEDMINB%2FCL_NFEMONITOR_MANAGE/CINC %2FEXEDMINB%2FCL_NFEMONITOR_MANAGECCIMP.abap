@@ -2,11 +2,7 @@
 class lhc_tabs_operations definition.
 
   public section.
-    types: begin of y_fields_chngs_header,
-             id        type /exedminb/t_nfeheader-Id,
-             atividade type /exedminb/t_nfeheader-atividade,
-             cStat     type /EXEDMINB/T_NFEProtocolo-cStat,
-           end of y_fields_chngs_header.
+    constants cc_classe_msg type c length 20 value '/EXEDMINB/NFE_MSGS'.
 
     types: begin of y_item_div_control,
              pedido     type abp_behv_flag,
@@ -16,7 +12,7 @@ class lhc_tabs_operations definition.
              valoricms  type abp_behv_flag,
            end of y_item_div_control.
 
-    class-methods: update_header_data   importing i_header     type y_fields_chngs_header
+    class-methods: update_header_data   importing i_header     type /EXEDMINB/I_NFeMonitorH
                                         returning value(error) type abap_boolean.
     class-methods: read_header_data     importing it_keys   type /exedminb/cl_nfe_inb_processor=>y_keys_header
                                         exporting et_header type /exedminb/cl_nfe_inb_processor=>y_data_header.
@@ -29,25 +25,48 @@ class lhc_tabs_operations definition.
     class-methods: update_item_div      importing is_value     type /exedminb/t_nfeitemdiv
                                                   is_control   type y_item_div_control
                                         returning value(error) type abap_boolean.
+    class-methods: register_historico   importing i_historico  type /exedminb/t_historico
+                                        returning value(error) type abap_boolean.
+
 
     class-methods: delete_item_div      importing is_value     type /exedminb/t_nfeitemdiv
                                         returning value(error) type abap_boolean.
     class-methods: get_data_itens_div exporting et_values       type /exedminb/cl_nfe_inb_processor=>y_data_itens_div.
     class-methods: free_data_itens_div.
-    class-methods: save_div_itens.
-    class-methods: save_itens_changes.
     class-methods: delete_div_itens.
     class-methods: save_header_activ_changes.
+    class-methods: save_div_itens.
+    class-methods: save_itens_changes.
+    class-methods: save_historico.
+    class-methods: efetiva_delecao.
+
+    class-methods: delete_nfes importing it_keys   type /exedminb/cl_nfe_inb_processor=>y_keys_header.
+
+    class-methods get_assist_ref returning value(ref) type ref to /exedminb/cl_nfe_inb_processor.
 
   private section.
-    class-data mt_data_header_changes    type standard table of y_fields_chngs_header.
+    class-data mt_data_header_changes    type /exedminb/cl_nfe_inb_processor=>y_data_header.
+    class-data mr_assist_itens_operation type ref to /exedminb/cl_nfe_inb_processor.
+    class-data mt_keys_to_delete    type /exedminb/cl_nfe_inb_processor=>y_keys_header.
     class-data mt_data_itens_to_change   type /exedminb/cl_nfe_inb_processor=>y_data_itens.
     class-data mt_data_itens_div_to_save type standard table of /exedminb/t_nfeitemdiv.
     class-data mt_data_itens_div_to_dele type standard table of /exedminb/t_nfeitemdiv.
+    class-data mt_data_historico         type standard table of /exedminb/t_historico.
 
 endclass.
 
 class lhc_tabs_operations implementation.
+  method get_assist_ref.
+    if mr_assist_itens_operation is not bound.
+      mr_assist_itens_operation = new /exedminb/cl_nfe_inb_processor( ).
+    endif.
+    ref = mr_assist_itens_operation.
+  endmethod.
+
+  method register_historico.
+    append i_historico to mt_data_historico.
+  endmethod.
+
   method read_header_data.
     data rg_ChaveNFe type range of /EXEDMINB/I_NFeMonitorI-ChaveNFe.
 
@@ -182,14 +201,28 @@ class lhc_tabs_operations implementation.
   method save_header_activ_changes.
     if mt_data_header_changes is not initial.
       loop at mt_data_header_changes into data(ls_chgs).
-        update /exedminb/t_nfeheader set atividade = @ls_chgs-atividade where id = @ls_chgs-id.
-        update /EXEDMINB/T_NFEProtocolo set cStat = @ls_chgs-cStat where id = @ls_chgs-id.
+        lhc_tabs_operations=>get_assist_ref( )->map_entity_to_nfeh_tables(
+          exporting
+            i_entity        = ls_chgs
+          importing
+            e_nfeheader     = data(ls_nfeheader)
+            e_nfeissuer     = data(ls_nfeissuer)
+            e_nferecipient  = data(ls_nferecipient)
+            e_nfeicmstaxtot = data(ls_nfeicmstaxtot)
+            e_nfeprotocolo  = data(ls_nfeprotocolo)
+        ).
+
+        modify /exedminb/t_nfeheader from @ls_nfeheader.
+        modify /EXEDMINB/T_NFeIssuer from @ls_nfeissuer.
+        modify /EXEDMINB/T_NFeRecipient from @ls_nferecipient.
+        modify /EXEDMINB/T_NFeICMSTaxTot from @ls_nfeicmstaxtot.
+        modify /EXEDMINB/T_NFEProtocolo from @ls_nfeprotocolo.
       endloop.
     endif.
   endmethod.
 
   method update_header_data.
-    if line_exists( mt_data_header_changes[ id = i_header-Id ] ).
+    if line_exists( mt_data_header_changes[ ChaveNFe = i_header-ChaveNFe ] ).
       modify table mt_data_header_changes from i_header.
     else.
       insert i_header into table mt_data_header_changes.
@@ -200,11 +233,85 @@ class lhc_tabs_operations implementation.
     endif.
   endmethod.
 
+  method delete_nfes.
+    append lines of it_keys to mt_keys_to_delete.
+  endmethod.
+
+  method efetiva_delecao.
+    loop at mt_keys_to_delete into data(ls_keys).
+      delete from /exedminb/t_nfeheader where id = @ls_keys-ChaveNFe.
+      delete from /exedminb/t_historico where IdNfe = @ls_keys-ChaveNFe.
+
+      delete from /EXEDMINB/t_nfeissuer       where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfeissueraddr   where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nferecipient    where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nferecipaddr    where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfeitem         where id = @ls_keys-ChaveNFe.
+      delete from /exedminb/t_nfeitemdiv      where id = @ls_keys-ChaveNFe.
+
+      delete from /EXEDMINB/t_nfetaxicms00    where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfetaxicms02    where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfetaxicms10    where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfetaxicms15    where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfetaxicms20    where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfetaxicms30    where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfetaxicms40    where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfetaxicms51    where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfetaxicms53    where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfetaxicms60    where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfetaxicms61    where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfetaxicms70    where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfetaxicms90    where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfetaxicmsst    where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfetxicmspart   where id = @ls_keys-ChaveNFe.
+
+      delete from /EXEDMINB/t_nfetaxii        where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfetaxipi       where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfetaxcofins    where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfetaxpis       where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfetaxpisst     where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfetxcofinsst   where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfeicmsufdest   where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfeicmstaxTot   where id = @ls_keys-ChaveNFe.
+
+      delete from /EXEDMINB/t_nfetransport    where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfecarrier      where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfetranspret    where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfetranspveh    where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfetransptow    where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfetranspvol    where id = @ls_keys-ChaveNFe.
+
+      delete from /EXEDMINB/t_securityseal    where id = @ls_keys-ChaveNFe.
+
+      delete from /EXEDMINB/t_nfeinvoice      where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfeinstallm     where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfepayment      where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_paymentcard     where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfeaddinform    where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfetaxinform    where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfetxpayerinf   where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfelegprocref   where id = @ls_keys-ChaveNFe.
+      delete from /EXEDMINB/t_nfeprotocolo    where id = @ls_keys-ChaveNFe.
+    endloop.
+  endmethod.
+
+  method save_historico.
+    modify entities of /exedminb/i_historico
+           entity Historico
+           create fields ( IdNFe Etapa Status Descricao )
+           with value #( for line_hist in mt_data_historico index into idx ( %cid = |Hist_Reg_{ idx }_{ line_hist-IdNfe }|
+                                                                             Id = line_hist-Id
+                                                                             IdNfe = line_hist-IdNfe
+                                                                             IdHistorico = line_hist-IdHistorico
+                                                                             Etapa = line_hist-Etapa
+                                                                             Status = line_hist-Status
+                                                                             Descricao = line_hist-Descricao ) ) .
+  endmethod.
+
 endclass.
 
 class lhc__nfemonitorh definition inheriting from cl_abap_behavior_handler.
   private section.
-    data mr_assist_itens_operation type ref to /exedminb/cl_nfe_inb_processor.
 
     methods get_instance_authorizations for instance authorization
       importing keys request requested_authorizations for _nfemonitorh result result.
@@ -218,22 +325,60 @@ class lhc__nfemonitorh definition inheriting from cl_abap_behavior_handler.
     methods rba_item for read
       importing keys_rba for read _nfemonitorh\_item full result_requested result result link association_links.
 
-    methods migo for modify
-      importing keys for action _nfemonitorh~migo.
+    methods etapa_100 for modify
+      importing keys for action _nfemonitorh~etapa_100.
 
-    methods miro for modify
-      importing keys for action _nfemonitorh~miro.
+    methods etapa_200 for modify
+      importing keys for action _nfemonitorh~etapa_200.
 
-    methods executarprocesso for modify
-      importing keys for action _nfemonitorh~executarprocesso result result.
+    methods etapa_300 for modify
+      importing keys for action _nfemonitorh~etapa_300.
 
-    methods get_assist_ref returning value(ref) type ref to /exedminb/cl_nfe_inb_processor.
+    methods etapa_400 for modify
+      importing keys for action _nfemonitorh~etapa_400.
+
+    methods etapa_500 for modify
+      importing keys for action _nfemonitorh~etapa_500.
+
+    methods etapa_600 for modify
+      importing keys for action _nfemonitorh~etapa_600.
+
+    methods etapa_700 for modify
+      importing keys for action _nfemonitorh~etapa_700.
+
+    methods etapa_800 for modify
+      importing keys for action _nfemonitorh~etapa_800.
+
+    methods etapa_900 for modify
+      importing keys for action _nfemonitorh~etapa_900.
+    methods delete for modify
+      importing keys for delete _nfemonitorh.
 
 endclass.
 
 class lhc__nfemonitorh implementation.
 
   method get_instance_authorizations.
+    select chavenfe, atividade, Status,
+           empresa, LocalDeNegocio
+      from /EXEDMINB/I_NFeMonitorH
+      for all entries in @keys
+      where ChaveNFe eq @keys-ChaveNFe
+      into table @data(lt_monitor_etapa).
+
+    result = value #( for line in lt_monitor_etapa ( ChaveNFe = line-ChaveNFe
+                                                     %update = cond #( when line-Atividade eq 200 and line-Empresa is not initial and line-LocalDeNegocio is not initial
+                                                                       then if_abap_behv=>auth-allowed else if_abap_behv=>auth-unauthorized )
+                                                     %action = value #( etapa_100 = cond #( when line-Atividade = 100 then if_abap_behv=>auth-allowed else if_abap_behv=>auth-unauthorized )
+                                                                        etapa_200 = cond #( when line-Atividade = 200 then if_abap_behv=>auth-allowed else if_abap_behv=>auth-unauthorized )
+                                                                        etapa_300 = cond #( when line-Atividade = 300 then if_abap_behv=>auth-allowed else if_abap_behv=>auth-unauthorized )
+                                                                        etapa_400 = cond #( when line-Atividade = 400 then if_abap_behv=>auth-allowed else if_abap_behv=>auth-unauthorized )
+                                                                        etapa_500 = cond #( when line-Atividade = 500 then if_abap_behv=>auth-allowed else if_abap_behv=>auth-unauthorized )
+                                                                        etapa_600 = cond #( when line-Atividade = 600 then if_abap_behv=>auth-allowed else if_abap_behv=>auth-unauthorized )
+                                                                        etapa_700 = cond #( when line-Atividade = 700 then if_abap_behv=>auth-allowed else if_abap_behv=>auth-unauthorized )
+                                                                        etapa_800 = cond #( when line-Atividade = 800 then if_abap_behv=>auth-allowed else if_abap_behv=>auth-unauthorized )
+                                                                        etapa_900 = cond #( when line-Atividade = 900 then if_abap_behv=>auth-allowed else if_abap_behv=>auth-unauthorized ) ) ) ).
+
   endmethod.
 
   method read.
@@ -245,95 +390,321 @@ class lhc__nfemonitorh implementation.
   method rba_item.
   endmethod.
 
-  method migo.
+  method etapa_100.
     lhc_tabs_operations=>read_header_data( exporting it_keys  = value #( for key in keys ( corresponding #( key ) ) )
                                            importing et_header = data(lt_header) ).
 
     lhc_tabs_operations=>read_item_data( exporting it_keys  = value #( for key in keys ( corresponding #( key ) ) )
                                          importing et_itens = data(lt_items) ).
 
-
     if lt_header is initial.
       "Error
     endif.
 
-    me->get_assist_ref( )->executar_migo( exporting is_header = lt_header[ 1 ]
-                                                    it_items  = lt_items
-                                          changing  mapped    = mapped
-                                                    failed    = failed
-                                                    reported  = reported ).
+    loop at lt_header into data(ls_header).
 
+      lhc_tabs_operations=>get_assist_ref( )->revalida_autorizacao(
+        exporting
+          iv_chave        = ls_header-ChaveNFe
+          is_busca_status = abap_true
+        changing
+          cv_cStatus      = ls_header-StatusNFe
+          mapped          = mapped
+          failed          = failed
+          reported        = reported
+      ).
+
+      "Valida Status NF
+      if failed-_nfemonitorh is initial.
+        if ls_header-StatusNFe eq '100'.
+          "NF liberada
+          ls_header-Status = 3. condense ls_header-Status no-gaps.
+          ls_header-Atividade = 200.
+          lhc_tabs_operations=>register_historico(
+            exporting
+              i_historico = value #( IdNFe = ls_header-ChaveNFe
+                                     Etapa = ls_header-atividade
+                                     Status = ls_header-Status
+                                     Descricao = me->new_message( id = lhc_tabs_operations=>cc_classe_msg
+                                                                  number   = 101
+                                                                  severity = if_abap_behv_message=>severity-success )->if_message~get_text( ) ) ).
+        else.
+          "NF não está liberada
+          ls_header-Status = 1. condense ls_header-Status no-gaps.
+          lhc_tabs_operations=>register_historico(
+            exporting
+              i_historico = value #( IdNFe = ls_header-ChaveNFe
+                                     Etapa = ls_header-atividade
+                                     Status = ls_header-Status
+                                     Descricao = me->new_message( id = lhc_tabs_operations=>cc_classe_msg
+                                                                  number   = 001
+                                                                  severity = if_abap_behv_message=>severity-success )->if_message~get_text( ) ) ).
+        endif.
+
+      else.
+        "Não foi possivel determinar o status da NF
+        ls_header-Status = 1. condense ls_header-Status no-gaps.
+        lhc_tabs_operations=>register_historico(
+            exporting
+              i_historico = value #( IdNFe = ls_header-ChaveNFe
+                                     Etapa = ls_header-atividade
+                                     Status = ls_header-Status
+                                     Descricao = me->new_message( id = lhc_tabs_operations=>cc_classe_msg
+                                                                  number   = 001
+                                                                  severity = if_abap_behv_message=>severity-success )->if_message~get_text( ) ) ).
+      endif.
+
+      lhc_tabs_operations=>update_header_data( ls_header ).
+
+    endloop.
+
+    clear: failed, reported, mapped.
+    reported-_nfemonitorh = value #( for l in lt_header ( ChaveNFe = l-ChaveNFe
+                                                          %msg = me->new_message(
+                                                                      id       = lhc_tabs_operations=>cc_classe_msg
+                                                                      number   = 999
+                                                                      severity = if_abap_behv_message=>severity-information
+                                                                    ) ) ).
+
+    lhc_tabs_operations=>save_historico(  ).
 
   endmethod.
 
-  method miro.
+  method etapa_200.
+    data final_failed type /exedminb/cl_nfe_inb_processor=>yt_failed.
+    data final_reported type /exedminb/cl_nfe_inb_processor=>yt_resported.
+
     lhc_tabs_operations=>read_header_data( exporting it_keys  = value #( for key in keys ( corresponding #( key ) ) )
                                            importing et_header = data(lt_header) ).
 
     lhc_tabs_operations=>read_item_data( exporting it_keys  = value #( for key in keys ( corresponding #( key ) ) )
                                          importing et_itens = data(lt_items) ).
 
-
     if lt_header is initial.
       "Error
     endif.
 
-    me->get_assist_ref( )->executar_miro( exporting is_header = lt_header[ 1 ]
-                                                    it_items  = lt_items
-                                          changing  mapped    = mapped
-                                                    failed    = failed
-                                                    reported  = reported ).
+    data line like line of reported-_nfemonitorh.
 
-  endmethod.
+    loop at lt_header into data(ls_header).
+      "Determina Empresa e Local de negocio a partir do destinario
+      if ls_header-Empresa is initial or ls_header-LocalDeNegocio is initial.
+        clear: failed, mapped, reported.
+        lhc_tabs_operations=>get_assist_ref( )->determina_empresa( changing cs_header = ls_header
+                                                                            mapped    = mapped
+                                                                            failed    = failed
+                                                                            reported  = reported ).
 
-  method executarProcesso.
-    lhc_tabs_operations=>read_header_data( exporting it_keys  = value #( for key in keys ( corresponding #( key ) ) )
-                                           importing et_header = data(lt_header) ).
-
-    lhc_tabs_operations=>read_item_data( exporting it_keys  = value #( for key in keys ( corresponding #( key ) ) )
-                                         importing et_itens = data(lt_items) ).
-
-
-    if lt_header is initial.
-      "Error
-    endif.
-
-    data lt_items_hist type /exedminb/cl_nfe_inb_processor=>y_data_itens.
-    lt_items_hist = lt_items.
-    data(header_changed) = conv lhc_tabs_operations=>y_fields_chngs_header( me->get_assist_ref( )->executar_processo( exporting is_header = lt_header[ 1 ]
-                                                                                                                      changing  it_items  = lt_items
-                                                                                                                                mapped    = mapped
-                                                                                                                                failed    = failed
-                                                                                                                                reported  = reported ) ).
-
-    check failed-_nfemonitorh is initial.
-
-    if header_changed is not initial.
-      lhc_tabs_operations=>update_header_data( header_changed ).
-    endif.
-
-    loop at lt_items into data(ls_item).
-      if line_exists( lt_items_hist[ ChaveNFe = ls_item-ChaveNFe
-                                   ItemNFe = ls_item-ItemNFe
-                                   ItemIdDiv = ls_item-ItemIdDiv ] ).
-
-        data(hist) = lt_items_hist[ ChaveNFe = ls_item-ChaveNFe
-                                     ItemNFe = ls_item-ItemNFe
-                                     ItemIdDiv = ls_item-ItemIdDiv ].
-
-        if ls_item-Pedido ne hist-Pedido or ls_item-ItemPedido ne hist-ItemPedido.
-          lhc_tabs_operations=>update_item_data( ls_item ).
+        if failed-_nfemonitorh is not initial.
+          ls_header-Status = 1. condense ls_header-Status no-gaps.
+          loop at reported-_nfemonitorh into line.
+            lhc_tabs_operations=>register_historico(
+              exporting
+                i_historico = value #( IdNFe = ls_header-ChaveNFe
+                                       Etapa = ls_header-atividade
+                                       Status = ls_header-Status
+                                       Descricao = line-%msg->if_message~get_text( ) ) ).
+          endloop.
         endif.
       endif.
+
+      if ls_header-Status ne 3.
+        lhc_tabs_operations=>update_header_data( ls_header ).
+        continue.
+      endif.
+
+
+      ""Atribução Pedido/Item (validacao_geral)
+      clear: failed, mapped, reported.
+
+      data(itens_sem_pedido) = lhc_tabs_operations=>get_assist_ref( )->validacao_geral(
+        exporting
+          is_header = ls_header
+          it_items  = value #( for item in lt_items where ( ChaveNFe = ls_header-ChaveNFe ) ( item ) )
+        changing
+          mapped    = mapped
+          failed    = failed
+          reported  = reported
+      ).
+
+      if failed-_nfemonitorh is not initial.
+        ls_header-Status = 1. condense ls_header-Status no-gaps.
+        loop at reported-_nfemonitorh into line.
+          lhc_tabs_operations=>register_historico(
+            exporting
+              i_historico = value #( IdNFe = ls_header-ChaveNFe
+                                     Etapa = ls_header-atividade
+                                     Status = ls_header-Status
+                                     Descricao = line-%msg->if_message~get_text( ) ) ).
+        endloop.
+
+      elseif itens_sem_pedido eq abap_true.
+        ls_header-Status = 2. condense ls_header-Status no-gaps.
+        lhc_tabs_operations=>register_historico(
+            exporting
+              i_historico = value #( IdNFe = ls_header-ChaveNFe
+                                     Etapa = ls_header-atividade
+                                     Status = ls_header-Status
+                                     Descricao = me->new_message( id = lhc_tabs_operations=>cc_classe_msg
+                                                                  number   = 004
+                                                                  severity = if_abap_behv_message=>severity-success )->if_message~get_text( ) ) ).
+      endif.
+
+
+      if ls_header-Status ne 3.
+        lhc_tabs_operations=>update_header_data( ls_header ).
+        continue.
+      endif.
+
+      ls_header-atividade = 300.
+      lhc_tabs_operations=>register_historico(
+            exporting
+              i_historico = value #( IdNFe = ls_header-ChaveNFe
+                                     Etapa = ls_header-atividade
+                                     Status = ls_header-Status
+                                     Descricao = me->new_message( id = lhc_tabs_operations=>cc_classe_msg
+                                                                  number   = 102
+                                                                  severity = if_abap_behv_message=>severity-success )->if_message~get_text( ) ) ).
+
+      lhc_tabs_operations=>update_header_data( ls_header ).
+
+    endloop.
+
+    clear: failed, reported, mapped.
+    reported-_nfemonitorh = value #( for l in lt_header ( ChaveNFe = l-ChaveNFe
+                                                          %msg = me->new_message(
+                                                                      id       = lhc_tabs_operations=>cc_classe_msg
+                                                                      number   = 999
+                                                                      severity = if_abap_behv_message=>severity-information
+                                                                    )
+                                                          %action-etapa_200 = if_abap_behv=>mk-on
+                                                          %element-status = if_abap_behv=>mk-on ) ).
+
+    lhc_tabs_operations=>save_historico(  ).
+
+  endmethod.
+
+  method etapa_300.
+    lhc_tabs_operations=>read_header_data( exporting it_keys  = value #( for key in keys ( corresponding #( key ) ) )
+                                           importing et_header = data(lt_header) ).
+
+    lhc_tabs_operations=>read_item_data( exporting it_keys  = value #( for key in keys ( corresponding #( key ) ) )
+                                         importing et_itens = data(lt_items) ).
+
+    if lt_header is initial.
+      "Error
+    endif.
+
+    clear: failed, reported, mapped.
+    reported-_nfemonitorh = value #( for l in lt_header ( ChaveNFe = l-ChaveNFe
+                                                          %msg = me->new_message(
+                                                                      id       = lhc_tabs_operations=>cc_classe_msg
+                                                                      number   = 999
+                                                                      severity = if_abap_behv_message=>severity-information
+                                                                    ) ) ).
+
+  endmethod.
+
+  method etapa_400.
+  endmethod.
+
+  method etapa_500.
+  endmethod.
+
+  method etapa_600.
+    lhc_tabs_operations=>read_header_data( exporting it_keys  = value #( for key in keys ( corresponding #( key ) ) )
+                                           importing et_header = data(lt_header) ).
+
+    lhc_tabs_operations=>read_item_data( exporting it_keys  = value #( for key in keys ( corresponding #( key ) ) )
+                                         importing et_itens = data(lt_items) ).
+
+    if lt_header is initial.
+      "Error
+    endif.
+
+    loop at lt_header into data(ls_header).
+
+      lhc_tabs_operations=>get_assist_ref( )->revalida_autorizacao(
+        exporting
+          iv_chave        = ls_header-ChaveNFe
+          is_busca_status = abap_true
+        changing
+          cv_cStatus      = ls_header-StatusNFe
+          mapped          = mapped
+          failed          = failed
+          reported        = reported
+      ).
+
+    endloop.
+
+    clear: failed, reported, mapped.
+    reported-_nfemonitorh = value #( for l in lt_header ( ChaveNFe = l-ChaveNFe
+                                                          %msg = me->new_message(
+                                                                      id       = lhc_tabs_operations=>cc_classe_msg
+                                                                      number   = 999
+                                                                      severity = if_abap_behv_message=>severity-success
+                                                                    ) ) ).
+
+  endmethod.
+
+  method etapa_700.
+    lhc_tabs_operations=>read_header_data( exporting it_keys  = value #( for key in keys ( corresponding #( key ) ) )
+                                           importing et_header = data(lt_header) ).
+
+    lhc_tabs_operations=>read_item_data( exporting it_keys  = value #( for key in keys ( corresponding #( key ) ) )
+                                         importing et_itens = data(lt_items) ).
+
+
+    if lt_header is initial.
+      "Error
+    endif.
+
+    loop at lt_header into data(ls_header).
+
+      lhc_tabs_operations=>get_assist_ref( )->executar_migo( exporting is_header = ls_header
+                                                      it_items  = value #( for item in lt_items where ( ChaveNFe = ls_header-ChaveNFe ) ( item ) )
+                                            changing  mapped    = mapped
+                                                      failed    = failed
+                                                      reported  = reported ).
+
+    endloop.
+
+
+  endmethod.
+
+  method etapa_800.
+    lhc_tabs_operations=>read_header_data( exporting it_keys  = value #( for key in keys ( corresponding #( key ) ) )
+                                           importing et_header = data(lt_header) ).
+
+    lhc_tabs_operations=>read_item_data( exporting it_keys  = value #( for key in keys ( corresponding #( key ) ) )
+                                         importing et_itens = data(lt_items) ).
+
+
+    if lt_header is initial.
+      "Error
+    endif.
+
+    loop at lt_header into data(ls_header).
+
+      lhc_tabs_operations=>get_assist_ref( )->executar_miro( exporting is_header = ls_header
+                                                      it_items  = value #( for item in lt_items where ( ChaveNFe = ls_header-ChaveNFe ) ( item ) )
+                                            changing  mapped    = mapped
+                                                      failed    = failed
+                                                      reported  = reported ).
+
     endloop.
 
   endmethod.
 
-  method get_assist_ref.
-    if mr_assist_itens_operation is not bound.
-      mr_assist_itens_operation = new /exedminb/cl_nfe_inb_processor( ).
-    endif.
-    ref = mr_assist_itens_operation.
+  method etapa_900.
+  endmethod.
+
+  method delete.
+    check keys is not initial.
+    lhc_tabs_operations=>delete_nfes( value #( for key in keys ( corresponding #( key ) ) ) ).
+    reported-_nfemonitorh = value #( ( %key = value #( chavenfe = keys[ 1 ]-ChaveNFe )
+                                       %msg = me->new_message_with_text( severity = if_abap_behv_message=>severity-success
+                                                                                    text = 'NFe deletada do monitor!' ) ) ).
   endmethod.
 
 endclass.
@@ -418,7 +789,8 @@ class lhc__nfemonitori implementation.
                       ( chavenfe = key-chavenfe
                         itemnfe = key-itemnfe
                         itemiddiv = key-itemiddiv
-                        %action-eliminar = cond #( when key-itemiddiv eq 0 then if_abap_behv=>auth-unauthorized ) ) ).
+                        %action-eliminar = cond #( when key-itemiddiv eq 0 then if_abap_behv=>auth-unauthorized )
+                         ) ).
 
   endmethod.
 
@@ -494,6 +866,7 @@ class lsc_i_nfemonitorh implementation.
     lhc_tabs_operations=>save_header_activ_changes( ).
     lhc_tabs_operations=>delete_div_itens( ).
     lhc_tabs_operations=>save_div_itens( ).
+    lhc_tabs_operations=>efetiva_delecao( ).
   endmethod.
 
   method cleanup.

@@ -55,3 +55,7 @@ class /exedminb/cl_tax_integ_hub definition
 
     "Extrair a estrutura do XML e salvar nas tabelas
     class-methods extract_xml_save importing i_xml_xstring type xstring.
+
+    "Busca status nfe
+    class-methods extract_status_xml importing i_xml_xstring type xstring
+                                     returning value(cstat)  type /EXEDMINB/T_NFEProtocolo-cStat.

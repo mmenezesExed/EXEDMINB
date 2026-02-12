@@ -316,7 +316,7 @@ class lcl_tools implementation.
 
     obj = new lcl_abap_behv_msg(
       textid = value #(
-                 msgid = id
+                 msgid = cond #( when id is initial then '/EXEDMINB/NFE_MSGS' else id )
                  msgno = number
                  attr1 = cond #( when v1 is not initial then 'IF_T100_DYN_MSG~MSGV1' )
                  attr2 = cond #( when v2 is not initial then 'IF_T100_DYN_MSG~MSGV2' )

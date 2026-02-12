@@ -8,12 +8,18 @@ authorization master ( instance )
 {
   field ( readonly ) ChaveNFe;
 
-  //Line Actions
-  action executarProcesso result [1] $self;
+  delete;
 
   //Object Actions
-  action migo;
-  action miro;
+  action etapa_100;
+  action etapa_200;
+  action etapa_300;
+  action etapa_400;
+  action etapa_500;
+  action etapa_600;
+  action etapa_700;
+  action etapa_800;
+  action etapa_900;
 
   association _Item;
 }
@@ -26,8 +32,8 @@ authorization dependent by _Header
   update;
   internal delete;
   field ( readonly )
-  ChaveNFe, ItemNFe, ItemIdDiv, Material, DescricaoMaterial, NCM,
-  CFOP, ValorUnitario, UnidadeMedida, AliquotaICMS, AliquotaIPI, ValorIPI;
+  ChaveNFe, ItemNFe, ItemIdDiv, Plant, Material, DescricaoMaterial, NCM,
+  CFOP, ValorUnitario, UnidadeMedida, ValorICMS, AliquotaICMS, AliquotaIPI, ValorIPI;
 
   action dividir parameter /EXEDMINB/a_dividir_in_param;
   action eliminar;
