@@ -7,9 +7,9 @@
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORI_ME",
     "VERSION":"A",
     "CHANGED_BY":"SAP_CUSTOMER",
-    "CHANGED_ON":"2026-02-05",
-    "CHANGED_AT":"17:50:24",
-    "UUID":"FA163EA4AE5F1FD180D764AA3A569815",
+    "CHANGED_ON":"2026-02-13",
+    "CHANGED_AT":"17:07:37",
+    "UUID":"FA163EA4AE5F1FD1829FCFE019FFB815",
     "ABAP_LANGUAGE_VERSION":"5"
    }
   ]
@@ -34,7 +34,7 @@
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORI_ME",
     "VERSION":"A",
     "UUID":"",
-    "SOURCE":"@Metadata.layer: #CORE\r\n\r\n@UI: {\r\n  headerInfo: {\r\n    typeName:       'Item NF-e (Inbound)',\r\n    typeNamePlural: 'Itens NF-e (Inbound)',\r\n    title: { value: 'ItemNFe' },\r\n    description: { value: 'ChaveNFe' }\r\n  }\r\n}\r\nannotate entity /EXEDMINB/C_NFeMonitorI with\r\n{\r\n\r\n  @UI.facet: [\r\n    {\r\n      id: 'Impostos',\r\n      purpose: #STANDARD,\r\n      type: #IDENTIFICATION_REFERENCE,\r\n      label: 'Impostos',\r\n      targetQualifier: 'Impostos'\r\n    },\r\n    {\r\n      id: 'DadosItem',\r\n      purpose: #STANDARD,\r\n      type: #IDENTIFICATION_REFERENCE,\r\n      label: 'Dados do Item',\r\n      targetQualifier: 'DadosItem'\r\n    }\r\n  ]\r\n\r\n\r\n  // -----------------------------\r\n  // Facet: Dados do Item\r\n  // -----------------------------\r\n  @UI.lineItem: [ { position: 10, label: 'Item NF-e' },\r\n                  { type: #FOR_ACTION, dataAction: 'dividir', label: 'Dividir' },\r\n                  { type: #FOR_ACTION, dataAction: 'eliminar', label: 'Eliminar' } ]\r\n  @UI.identification: [ { qualifier: 'DadosItem', position: 10, label: 'Item NF-e' }]\r\n  ItemNFe;\r\n\r\n  @UI.lineItem: [ { position: 20, label: 'Pedido' } ]\r\n  @UI.identification: [ { qualifier: 'DadosItem', position: 20, label: 'Pedido' } ]\r\n  Pedido;\r\n\r\n  @UI.lineItem: [ { position: 30, label: 'Item Pedido' } ]\r\n  @UI.identification: [ { qualifier: 'DadosItem', position: 30, label: 'Item Pedido' } ]\r\n  ItemPedido;\r\n  \r\n  @UI.lineItem: [ { position: 35, label: 'Lote' } ]\r\n  @UI.identification: [ { qualifier: 'DadosItem', position: 35, label: 'Lote' } ]\r\n  Lote;\r\n  \r\n  @UI.lineItem: [ { position: 40, label: 'Quantidade' } ]\r\n  @UI.identification: [ { qualifier: 'DadosItem', position: 40, label: 'Quantidade' } ]\r\n  Quantidade;\r\n\r\n  @UI.lineItem: [ { position: 49, label: 'Centro' } ]\r\n  @UI.identification: [ { qualifier: 'DadosItem', position: 49, label: 'Centro' } ]\r\n  Plant;\r\n\r\n  @UI.lineItem: [ { position: 50, label: 'Material' } ]\r\n  @UI.identification: [ { qualifier: 'DadosItem', position: 50, label: 'Material' } ]\r\n  Material;\r\n\r\n  @UI.lineItem: [ { position: 60, label: 'Descrição do Material' } ]\r\n  @UI.identification: [ { qualifier: 'DadosItem', position: 60, label: 'Descrição do Material' } ]\r\n  DescricaoMaterial;\r\n\r\n  @UI.lineItem: [ { position: 70, label: 'NCM' } ]\r\n  @UI.identification: [ { qualifier: 'DadosItem', position: 70, label: 'NCM' } ]\r\n  NCM;\r\n\r\n  @UI.lineItem: [ { position: 80, label: 'CFOP' } ]\r\n  @UI.identification: [ { qualifier: 'DadosItem', position: 80, label: 'CFOP' } ]\r\n  CFOP;\r\n\r\n  @UI.lineItem: [ { position: 90, label: 'Valor Unitário' } ]\r\n  @UI.identification: [ { qualifier: 'DadosItem', position: 90, label: 'Valor Unitário' } ]\r\n  ValorUnitario;\r\n\r\n  @UI.lineItem: [ { position: 100, label: 'Unidade de Medida' } ]\r\n  @UI.identification: [ { qualifier: 'DadosItem', position: 100, label: 'Unidade de Medida' } ]\r\n  UnidadeMedida;\r\n\r\n\r\n  // -----------------------------\r\n  // Facet: Impostos\r\n  // -----------------------------\r\n  @UI.lineItem: [ { position: 110, label: 'Alíquota ICMS' } ]\r\n  @UI.identification: [ { qualifier: 'Impostos', position: 10, label: 'Alíquota ICMS' } ]\r\n  AliquotaICMS;\r\n\r\n  @UI.lineItem: [ { position: 120, label: 'Valor ICMS' } ]\r\n  @UI.identification: [ { qualifier: 'Impostos', position: 20, label: 'Valor ICMS' } ]\r\n  ValorICMS;\r\n\r\n  @UI.lineItem: [ { position: 130, label: 'Alíquota IPI' } ]\r\n  @UI.identification: [ { qualifier: 'Impostos', position: 30, label: 'Alíquota IPI' } ]\r\n  AliquotaIPI;\r\n\r\n  @UI.lineItem: [ { position: 140, label: 'Valor IPI' } ]\r\n  @UI.identification: [ { qualifier: 'Impostos', position: 40, label: 'Valor IPI' } ]\r\n  ValorIPI;\r\n\r\n}"
+    "SOURCE":"@Metadata.layer: #CORE\r\n\r\n@UI: {\r\n  headerInfo: {\r\n    typeName:       'Item NF-e (Inbound)',\r\n    typeNamePlural: 'Itens NF-e (Inbound)',\r\n    title: { value: 'ItemNFe' },\r\n    description: { value: 'ChaveNFe' }\r\n  }\r\n}\r\nannotate entity /EXEDMINB/C_NFEMONITORI with\r\n{\r\n\r\n  @UI.facet: [\r\n    {\r\n      id: 'Impostos',\r\n      purpose: #STANDARD,\r\n      type: #IDENTIFICATION_REFERENCE,\r\n      label: 'Impostos',\r\n      targetQualifier: 'Impostos'\r\n    },\r\n    {\r\n      id: 'DadosItem',\r\n      purpose: #STANDARD,\r\n      type: #IDENTIFICATION_REFERENCE,\r\n      label: 'Dados do Item',\r\n      targetQualifier: 'DadosItem'\r\n    }\r\n  ]\r\n\r\n\r\n  // -----------------------------\r\n  // Facet: Dados do Item\r\n  // -----------------------------\r\n  @UI.lineItem: [ { position: 10, label: 'Item NF-e' },\r\n                  { type: #FOR_ACTION, dataAction: 'dividir', label: 'Dividir' },\r\n                  { type: #FOR_ACTION, dataAction: 'eliminar', label: 'Eliminar' } ]\r\n  @UI.identification: [ { qualifier: 'DadosItem', position: 10, label: 'Item NF-e' }]\r\n  ItemNFe;\r\n\r\n  @UI.lineItem: [ { position: 20, label: 'Pedido' } ]\r\n  @UI.identification: [ { qualifier: 'DadosItem', position: 20, label: 'Pedido' } ]\r\n  Pedido;\r\n\r\n  @UI.lineItem: [ { position: 30, label: 'Item Pedido' } ]\r\n  @UI.identification: [ { qualifier: 'DadosItem', position: 30, label: 'Item Pedido' } ]\r\n  ItemPedido;\r\n  \r\n  @UI.lineItem: [ { position: 35, label: 'Lote' } ]\r\n  @UI.identification: [ { qualifier: 'DadosItem', position: 35, label: 'Lote' } ]\r\n  Lote;\r\n  \r\n  @UI.lineItem: [ { position: 40, label: 'Quantidade' } ]\r\n  @UI.identification: [ { qualifier: 'DadosItem', position: 40, label: 'Quantidade' } ]\r\n  Quantidade;\r\n\r\n  @UI.lineItem: [ { position: 49, label: 'Centro' } ]\r\n  @UI.identification: [ { qualifier: 'DadosItem', position: 49, label: 'Centro' } ]\r\n  Plant;\r\n\r\n  @UI.lineItem: [ { position: 50, label: 'Material' } ]\r\n  @UI.identification: [ { qualifier: 'DadosItem', position: 50, label: 'Material' } ]\r\n  Material;\r\n\r\n  @UI.lineItem: [ { position: 60, label: 'Descrição do Material' } ]\r\n  @UI.identification: [ { qualifier: 'DadosItem', position: 60, label: 'Descrição Material' } ]\r\n  DescricaoMaterial;\r\n  \r\n  @UI.lineItem: [ { position: 62, label: 'Descrição do Material' } ]\r\n  @UI.identification: [ { qualifier: 'DadosItem', position: 60, label: 'Descrição Material Fornecedor' } ]\r\n  DescricaoMaterialFornecedor;\r\n\r\n  @UI.lineItem: [ { position: 70, label: 'NCM' } ]\r\n  @UI.identification: [ { qualifier: 'DadosItem', position: 70, label: 'NCM' } ]\r\n  NCM;\r\n\r\n  @UI.lineItem: [ { position: 80, label: 'CFOP' } ]\r\n  @UI.identification: [ { qualifier: 'DadosItem', position: 80, label: 'CFOP' } ]\r\n  CFOP;\r\n\r\n  @UI.lineItem: [ { position: 90, label: 'Valor Unitário' } ]\r\n  @UI.identification: [ { qualifier: 'DadosItem', position: 90, label: 'Valor Unitário' } ]\r\n  ValorUnitario;\r\n\r\n  @UI.lineItem: [ { position: 100, label: 'Unidade de Medida' } ]\r\n  @UI.identification: [ { qualifier: 'DadosItem', position: 100, label: 'Unidade de Medida' } ]\r\n  UnidadeMedida;\r\n\r\n\r\n  // -----------------------------\r\n  // Facet: Impostos\r\n  // -----------------------------\r\n  @UI.lineItem: [ { position: 110, label: 'Alíquota ICMS' } ]\r\n  @UI.identification: [ { qualifier: 'Impostos', position: 10, label: 'Alíquota ICMS' } ]\r\n  AliquotaICMS;\r\n\r\n  @UI.lineItem: [ { position: 120, label: 'Valor ICMS' } ]\r\n  @UI.identification: [ { qualifier: 'Impostos', position: 20, label: 'Valor ICMS' } ]\r\n  ValorICMS;\r\n\r\n  @UI.lineItem: [ { position: 130, label: 'Alíquota IPI' } ]\r\n  @UI.identification: [ { qualifier: 'Impostos', position: 30, label: 'Alíquota IPI' } ]\r\n  AliquotaIPI;\r\n\r\n  @UI.lineItem: [ { position: 140, label: 'Valor IPI' } ]\r\n  @UI.identification: [ { qualifier: 'Impostos', position: 40, label: 'Valor IPI' } ]\r\n  ValorIPI;\r\n\r\n}"
    }
   ]
  },
@@ -180,7 +180,7 @@
     "ELEMENT":"DESCRICAOMATERIAL",
     "NAME":"UI.IDENTIFICATION$1$.LABEL",
     "ELEMENT_TYPE":"S",
-    "VALUE":"'Descrição do Material'"
+    "VALUE":"'Descrição Material'"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORI_ME",
@@ -209,6 +209,41 @@
     "NAME":"UI.LINEITEM$1$.POSITION",
     "ELEMENT_TYPE":"S",
     "VALUE":"60"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/I_NFEMONITORI_ME",
+    "ELEMENT":"DESCRICAOMATERIALFORNECEDOR",
+    "NAME":"UI.IDENTIFICATION$1$.LABEL",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'Descrição Material Fornecedor'"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/I_NFEMONITORI_ME",
+    "ELEMENT":"DESCRICAOMATERIALFORNECEDOR",
+    "NAME":"UI.IDENTIFICATION$1$.POSITION",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"60"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/I_NFEMONITORI_ME",
+    "ELEMENT":"DESCRICAOMATERIALFORNECEDOR",
+    "NAME":"UI.IDENTIFICATION$1$.QUALIFIER",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'DadosItem'"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/I_NFEMONITORI_ME",
+    "ELEMENT":"DESCRICAOMATERIALFORNECEDOR",
+    "NAME":"UI.LINEITEM$1$.LABEL",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'Descrição do Material'"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/I_NFEMONITORI_ME",
+    "ELEMENT":"DESCRICAOMATERIALFORNECEDOR",
+    "NAME":"UI.LINEITEM$1$.POSITION",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"62"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORI_ME",
@@ -809,12 +844,26 @@
     "DDLANGUAGE":"P",
     "ELEMENT":"DESCRICAOMATERIAL",
     "NAME":"UI.IDENTIFICATION$1$.LABEL",
-    "TEXT":"Descrição do Material"
+    "TEXT":"Descrição Material"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORI_ME",
     "DDLANGUAGE":"P",
     "ELEMENT":"DESCRICAOMATERIAL",
+    "NAME":"UI.LINEITEM$1$.LABEL",
+    "TEXT":"Descrição do Material"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/I_NFEMONITORI_ME",
+    "DDLANGUAGE":"P",
+    "ELEMENT":"DESCRICAOMATERIALFORNECEDOR",
+    "NAME":"UI.IDENTIFICATION$1$.LABEL",
+    "TEXT":"Descrição Material Fornecedor"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/I_NFEMONITORI_ME",
+    "DDLANGUAGE":"P",
+    "ELEMENT":"DESCRICAOMATERIALFORNECEDOR",
     "NAME":"UI.LINEITEM$1$.LABEL",
     "TEXT":"Descrição do Material"
    },
@@ -1025,8 +1074,8 @@
     "EXTENDED_ARTIFACT":"/EXEDMINB/C_NFEMONITORI",
     "VARIANT":"",
     "LAYER":1500,
-    "DT_UUID":"FA163EA4AE5F1FD180D764AA3A569815",
-    "RT_HASH":"D25D5DDD63FE81D443D738CCC96C9AA98CBA1016",
+    "DT_UUID":"FA163EA4AE5F1FD1829FCFE019FFB815",
+    "RT_HASH":"2135B84A915CE52967B2B292A4D2440CAAC26285",
     "GEN_VERSION":"0",
     "TYPE":"0"
    }

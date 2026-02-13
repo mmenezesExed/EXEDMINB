@@ -19,6 +19,8 @@
 
      read table ls_destinatario-d-results index 1 into data(ls_supplier).
 
+     ls_supplier-supplier = |{ ls_supplier-supplier WIDTH = 10 ALIGN = RIGHT PAD = '0' }|.
+
      select single companycode
        from I_SupplierCompany
        where Supplier eq @ls_supplier-supplier

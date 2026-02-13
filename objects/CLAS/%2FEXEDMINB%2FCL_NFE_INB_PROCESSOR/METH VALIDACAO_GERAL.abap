@@ -1,6 +1,4 @@
    method validacao_geral.
-     data rg_supplier type tt_rangesupplier.
-
      "Validações Header
 
      "Valida Fornecedor XML x Pedido // Busca ID do emissor com base no CNPJ
@@ -20,8 +18,12 @@
        return.
      endif.
 
+     read table ls_emissor-d-results index 1 into data(ls_supplier).
+
+     ls_supplier-supplier = |{ ls_supplier-supplier WIDTH = 10 ALIGN = RIGHT PAD = '0' }|.
+
      "Verifica se Emitente não bloqueados
-     if not line_exists( ls_emissor-d-results[ businesspartnerisblocked = abap_false ] ).
+     if ls_supplier-businesspartnerisblocked ne abap_false.
        failed-_nfemonitorh = value #( ( %fail = value #( cause = if_abap_behv=>cause-unauthorized )
                                       %key = value #( chavenfe = is_header-ChaveNFe )
                                       %action-etapa_200 = if_abap_behv=>mk-on ) ).
@@ -33,12 +35,9 @@
        return.
      endif.
 
-
-     free rg_supplier.
-     rg_supplier = value tt_rangesupplier( for line in ls_emissor-d-results ( option = 'EQ' sign = 'I' low = line-supplier ) ).
      select * from /exedminb/i_ped_abertos as _PedAbertos
        for all entries in @it_items
-             where _Pedabertos~Supplier in @rg_supplier
+             where _Pedabertos~Supplier eq @ls_supplier-supplier
                and _Pedabertos~Material eq @it_items-Material
                and _Pedabertos~QtdEmAberto > 0
              into table @data(lt_pedidosabertos).
@@ -64,7 +63,7 @@
        select single from I_PurchaseOrderAPI01
         fields @abap_true
        where PurchaseOrder eq @ls_items-Pedido
-         and Supplier in @rg_supplier
+         and Supplier eq @ls_supplier-supplier
        into @data(ls_emissor_valid).
 
        if ls_emissor_valid is initial.
