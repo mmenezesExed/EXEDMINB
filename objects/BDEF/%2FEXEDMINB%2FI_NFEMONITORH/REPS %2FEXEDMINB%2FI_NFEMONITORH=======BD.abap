@@ -4,7 +4,7 @@ auxiliary class /exedminb/cl_nfe_inb_processor;
 
 define behavior for /EXEDMINB/I_NFeMonitorH alias _NFeMonitorH
 lock master
-authorization master ( instance )
+authorization master ( instance, global )
 {
   field ( readonly ) ChaveNFe;
 
@@ -25,10 +25,12 @@ authorization master ( instance )
   internal action etapa_900;
 
   side effects {
+    action processar   affects entity _Historico;
     action reprocessar affects entity _Historico;
   }
 
   association _Item;
+  association _Historico;
 }
 
 define behavior for /EXEDMINB/I_NFeMonitorI alias _NFeMonitorI

@@ -362,4 +362,21 @@ class lcl_tools implementation.
     endif.
   endmethod.
 
+  method format_cnpj.
+    formated = cnpj.
+
+    " Remove tudo que não for número
+    REPLACE ALL OCCURRENCES OF REGEX '[^0-9]' IN formated WITH ''.
+
+    IF strlen( formated ) = 14.
+
+      formated =
+          formated+0(2)  && '.' &&
+          formated+2(3)  && '.' &&
+          formated+5(3)  && '/' &&
+          formated+8(4)  && '-' &&
+          formated+12(2).
+    ENDIF.
+  endmethod.
+
 endclass.

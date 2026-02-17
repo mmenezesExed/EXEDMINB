@@ -60,6 +60,9 @@ class lcl_tools definition.
       returning
         value(obj) type ref to if_abap_behv_message .
 
-    class-methods trata_html_text importing text type string
+    class-methods trata_html_text importing text          type string
                                   returning value(r_text) type string.
+
+    class-methods format_cnpj importing cnpj            type /exedminb/i_nfemonitorh-Emitente
+                              returning value(formated) type string.
 endclass.

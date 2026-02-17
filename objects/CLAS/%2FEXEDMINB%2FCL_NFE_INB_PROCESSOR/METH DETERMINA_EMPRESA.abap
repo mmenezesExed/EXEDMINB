@@ -10,16 +10,16 @@
 
        reported-_nfemonitorh = value #( ( %key = value #( chavenfe = cs_header-ChaveNFe )
                                           %msg = lcl_tools=>new_message(
-                                                     number   = 002
+                                                     number   = 006
                                                      severity = lcl_tools=>ms-error
-                                                           v1 = cs_header-Destinatario ) ) ).
+                                                           v1 = lcl_tools=>format_cnpj( cs_header-Destinatario ) ) ) ).
 
        return.
      endif.
 
      read table ls_destinatario-d-results index 1 into data(ls_supplier).
 
-     ls_supplier-supplier = |{ ls_supplier-supplier WIDTH = 10 ALIGN = RIGHT PAD = '0' }|.
+     ls_supplier-supplier = |{ ls_supplier-supplier width = 10 align = right pad = '0' }|.
 
      select single companycode
        from I_SupplierCompany
@@ -35,7 +35,7 @@
                                           %msg = lcl_tools=>new_message(
                                                      number   = 003
                                                      severity = lcl_tools=>ms-error
-                                                           v1 = cs_header-Destinatario ) ) ).
+                                                           v1 = lcl_tools=>format_cnpj( cs_header-Destinatario ) ) ) ).
 
        return.
      endif.
