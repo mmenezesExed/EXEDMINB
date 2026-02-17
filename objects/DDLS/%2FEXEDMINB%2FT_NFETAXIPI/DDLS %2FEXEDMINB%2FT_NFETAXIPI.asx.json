@@ -12,7 +12,7 @@
     "SOURCE":"@ClientHandling.type: #CLIENT_DEPENDENT\r\n@AbapCatalog.deliveryClass: #APPLICATION_DATA\r\n@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'NFe Tributação IPI'\r\ndefine table entity /EXEDMINB/T_NFeTaxIPI\r\n{\r\n  key Id     : abap.char(44);\r\n  key ItemId : abap.int4;\r\n\r\n      cEnq   : abap.char(3);\r\n      CST    : abap.char(2);\r\n      vBC    : abap.dec(15,2);\r\n      pIPI   : abap.dec(5,2);\r\n      vIPI   : abap.dec(15,2);\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[],\n\"ASSOCIATED\":\n[],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"",
+    "CHGFLAG":"J,4T",
     "SOURCE_TYPE":"T",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"

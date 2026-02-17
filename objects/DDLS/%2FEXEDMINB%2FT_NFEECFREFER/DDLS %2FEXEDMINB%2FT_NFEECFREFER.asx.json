@@ -12,7 +12,7 @@
     "SOURCE":"@ClientHandling.type: #CLIENT_DEPENDENT\r\n@AbapCatalog.deliveryClass: #APPLICATION_DATA\r\n@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'NFe ECF Reference'\r\ndefine table entity /EXEDMINB/T_NFeECFRefer\r\n{\r\n  key Id         : abap.char(44); // FK para Header (chNFe)\r\n  key IdRefer    : abap.int4;     // FK para linha em NFeReferences\r\n  key IdECFRefer : abap.int4;     // Sequência da referência NFP\r\n\r\n      mod        : abap.char(2); // Modelo do documento fiscal (ex: 2B, 2C, 2D)\r\n      nECF       : abap.numc(3); // Número de ordem do ECF\r\n      nCOO       : abap.numc(6); // Número do Contador de Ordem de Operação\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[],\n\"ASSOCIATED\":\n[],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"T43",
+    "CHGFLAG":"J,T4",
     "SOURCE_TYPE":"T",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"

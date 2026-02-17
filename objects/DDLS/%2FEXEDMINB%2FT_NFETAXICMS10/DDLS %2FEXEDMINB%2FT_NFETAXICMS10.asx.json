@@ -12,7 +12,7 @@
     "SOURCE":"@ClientHandling.type: #CLIENT_DEPENDENT\r\n@AbapCatalog.deliveryClass: #APPLICATION_DATA\r\n@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'NFe Tax ICMS 10'\r\ndefine table entity /EXEDMINB/T_NFeTaxICMS10\r\n{\r\n  key Id      : abap.char(44);  // FK para Header (chNFe)\r\n  key ItemId  : abap.int4;      // FK para item (NFeItem)\r\n\r\n      orig    : abap.char(1);   // Origem da mercadoria\r\n      CST     : abap.char(2);   // Código da Situação Tributária (10)\r\n      modBC   : abap.char(1);   // Modalidade de determinação da BC ICMS\r\n      vBC     : abap.dec(15,2); // Valor da base de cálculo ICMS\r\n      pICMS   : abap.dec(5,2);  // Alíquota do ICMS (%)\r\n      vICMS   : abap.dec(15,2); // Valor do ICMS\r\n      modBCST : abap.char(1);   // Modalidade da BC do ICMS ST\r\n      vBCST   : abap.dec(15,2); // Valor da base de cálculo ICMS ST\r\n      pICMSST : abap.dec(5,2);  // Alíquota do ICMS ST (%)\r\n      vICMSST : abap.dec(15,2); // Valor do ICMS ST\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[],\n\"ASSOCIATED\":\n[],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"",
+    "CHGFLAG":"J,4T",
     "SOURCE_TYPE":"T",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"

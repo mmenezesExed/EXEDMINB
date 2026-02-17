@@ -12,7 +12,7 @@
     "SOURCE":"@ClientHandling.type: #CLIENT_DEPENDENT\r\n@AbapCatalog.deliveryClass: #APPLICATION_DATA\r\n@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'NFe Additional Information'\r\ndefine table entity /EXEDMINB/T_NFeAddInform\r\n{\r\n  key Id         : abap.char(44); // FK para Header (chNFe)\r\n\r\n      infAdFisco : abap.char(256); // Informações adicionais de interesse do fisco\r\n      infCpl1    : abap.sstring(1333); // Informações complementares de interesse do contribuinte 1\r\n      infCpl2    : abap.sstring(1333); // Informações complementares de interesse do contribuinte 2\r\n      infCpl3    : abap.sstring(1333); // Informações complementares de interesse do contribuinte 3\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[],\n\"ASSOCIATED\":\n[],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"34",
+    "CHGFLAG":"J,T4",
     "SOURCE_TYPE":"T",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"

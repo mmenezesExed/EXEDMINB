@@ -12,7 +12,7 @@
     "SOURCE":"@ClientHandling.type: #CLIENT_DEPENDENT\r\n@AbapCatalog.deliveryClass: #APPLICATION_DATA\r\n@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'NFe NF Reference'\r\ndefine table entity /EXEDMINB/T_NFeNFRefer\r\n{\r\n  key Id        : abap.char(44); // FK para Header (chNFe)\r\n  key IdRefer   : abap.int4;     // FK para linha em NFeReferences\r\n  key IdNFRefer : abap.int4;     // Sequência da NF referência\r\n\r\n      cUF       : abap.char(2);  // Código da UF (IBGE)\r\n      AAMM      : abap.char(4);  // Ano e mês da emissão (AAMM)\r\n      CNPJ      : abap.char(14); // CNPJ do emitente da NF referenciada\r\n      mod       : abap.char(2);  // Modelo do documento fiscal (01, 1B, 04 etc.)\r\n      serie     : abap.char(3);  // Série da NF\r\n      nNF       : abap.numc(9);  // Número da NF\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[],\n\"ASSOCIATED\":\n[],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"",
+    "CHGFLAG":"J,4T",
     "SOURCE_TYPE":"T",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"

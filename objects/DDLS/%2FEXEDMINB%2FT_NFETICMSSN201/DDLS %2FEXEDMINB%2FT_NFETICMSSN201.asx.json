@@ -12,7 +12,7 @@
     "SOURCE":"@ClientHandling.type: #CLIENT_DEPENDENT\r\n@AbapCatalog.deliveryClass: #APPLICATION_DATA\r\n@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'NFe Tributação ICMS Simples Nacional 201'\r\ndefine table entity /EXEDMINB/T_NFeTICMSSN201\r\n{\r\n  key Id          : abap.char(44);\r\n  key ItemId      : abap.int4;\r\n\r\n      orig        : abap.char(1);\r\n      CSOSN       : abap.char(3);\r\n      modBCST     : abap.char(1);\r\n      vBCST       : abap.dec(15,2);\r\n      pICMSST     : abap.dec(5,2);\r\n      vICMSST     : abap.dec(15,2);\r\n      pCredSN     : abap.dec(5,2);\r\n      vCredICMSSN : abap.dec(15,2);\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[],\n\"ASSOCIATED\":\n[],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"",
+    "CHGFLAG":"J,4T",
     "SOURCE_TYPE":"T",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"

@@ -12,7 +12,7 @@
     "SOURCE":"@ClientHandling.type: #CLIENT_DEPENDENT\n@AbapCatalog.deliveryClass: #APPLICATION_DATA\n@AccessControl.authorizationCheck: #NOT_REQUIRED\n@EndUserText.label: 'NFe Recipient Address'\ndefine table entity /EXEDMINB/T_NFeRecipAddr\n{\n  key Id     : abap.char(44);     // FK para Header (chNFe)\n\n      xLgr   : abap.char(60);     // Logradouro\n      nro    : abap.char(10);     // Número\n      xCpl   : abap.char(60);     // Complemento\n      xBairro: abap.char(60);     // Bairro\n      cMun   : abap.char(7);      // Código do município (IBGE)\n      xMun   : abap.char(60);     // Nome do município\n      UF     : abap.char(2);      // Sigla da UF\n      CEP    : abap.char(8);      // Código Postal\n      cPais  : abap.char(4);      // Código do País (1058 = Brasil)\n      xPais  : abap.char(60);     // Nome do País\n      fone   : abap.char(14);     // Telefone\n}\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[],\n\"ASSOCIATED\":\n[],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"",
+    "CHGFLAG":"J,4T",
     "SOURCE_TYPE":"T",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"

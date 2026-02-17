@@ -12,7 +12,7 @@
     "SOURCE":"@ClientHandling.type: #CLIENT_DEPENDENT\r\n@AbapCatalog.deliveryClass: #APPLICATION_DATA\r\n@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'NFe Legal Process Reference'\r\ndefine table entity /EXEDMINB/T_NFeLegProcRef\r\n{\r\n  key Id      : abap.char(44); // Chave de referência da NFe (Header)\r\n  key ProcId  : abap.char(10); // Identificador único do processo dentro da NF\r\n\r\n      nProc   : abap.char(60); // Número do processo\r\n      indProc : abap.char(1);  // Origem do processo: 0=SEFAZ, 1=Justiça Federal, 2=Justiça Estadual, 3=Secex/RFB, 9=Outros\r\n\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[],\n\"ASSOCIATED\":\n[],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"",
+    "CHGFLAG":"J,T4",
     "SOURCE_TYPE":"T",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"

@@ -12,7 +12,7 @@
     "SOURCE":"@AbapCatalog.viewEnhancementCategory: [#NONE]\r\n@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'NFe CDS References'\r\n@Metadata.ignorePropagatedAnnotations: true\r\n@ObjectModel.usageType:{\r\n    serviceQuality: #X,\r\n    sizeCategory: #S,\r\n    dataClass: #MIXED\r\n}\r\ndefine view entity /EXEDMINB/I_NFEREFERENCES\r\n  as select from /EXEDMINB/T_NFeReferences\r\n\r\n  composition [0..*] of /EXEDMINB/I_NFENFREFER  as _NFRefer\r\n  composition [0..*] of /EXEDMINB/I_NFENFPREFER as _NFPRefer\r\n  composition [0..*] of /EXEDMINB/I_NFEECFREFER as _ECFRefer\r\n\r\n  association to parent /EXEDMINB/I_NFEHEADER   as _Header on _Header.Id = $projection.Id\r\n{\r\n  key Id,\r\n  key IdRefer,\r\n      refNFe,\r\n      refCTe,\r\n\r\n      /* Associações */\r\n      _Header,\r\n      _NFRefer,\r\n      _NFPRefer,\r\n      _ECFRefer\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[],\n\"ASSOCIATED\":\n[\n\"/EXEDMINB/I_NFEECFREFER\",\n\"/EXEDMINB/I_NFEHEADER\",\n\"/EXEDMINB/I_NFENFPREFER\",\n\"/EXEDMINB/I_NFENFREFER\"\n],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"ZD",
+    "CHGFLAG":"J,WT42Z9",
     "SOURCE_TYPE":"W",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"

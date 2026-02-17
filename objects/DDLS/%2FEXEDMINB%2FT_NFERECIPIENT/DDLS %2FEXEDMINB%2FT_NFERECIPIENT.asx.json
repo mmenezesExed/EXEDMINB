@@ -12,7 +12,7 @@
     "SOURCE":"@ClientHandling.type: #CLIENT_DEPENDENT\r\n@AbapCatalog.deliveryClass: #APPLICATION_DATA\r\n@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'NFe Recipient'\r\ndefine table entity /EXEDMINB/T_NFeRecipient\r\n{\r\n  key Id        : abap.char(44);  // FK para Header (chNFe)\r\n\r\n      CNPJ_CPF  : abap.char(14);  // CNPJ ou CPF do destinatário\r\n      xNome     : abap.char(100); // Nome ou Razão social\r\n      indIEDest : abap.numc(1);   // Indicador de IE do destinatário\r\n                                  // 1=Contribuinte ICMS, 2=Isento, 9=Não Contribuinte\r\n      IE        : abap.char(14);  // Inscrição estadual (se aplicável)\r\n      email     : abap.char(100); // E-mail do destinatário\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[],\n\"ASSOCIATED\":\n[],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"",
+    "CHGFLAG":"J,4T",
     "SOURCE_TYPE":"T",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"

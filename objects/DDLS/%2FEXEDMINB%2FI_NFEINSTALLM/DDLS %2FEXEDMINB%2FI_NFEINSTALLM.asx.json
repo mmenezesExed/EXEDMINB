@@ -12,7 +12,7 @@
     "SOURCE":"@AbapCatalog.viewEnhancementCategory: [#NONE]\r\n@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'NFe CDS Installment'\r\n@Metadata.ignorePropagatedAnnotations: true\r\n@ObjectModel.usageType:{\r\n    serviceQuality: #X,\r\n    sizeCategory: #S,\r\n    dataClass: #MIXED\r\n}\r\ndefine view entity /EXEDMINB/I_NFeInstallm\r\n  as select from /EXEDMINB/T_NFeInstallm\r\n  \r\n  association to parent /EXEDMINB/I_NFEINVOICE as _Invoice on _Invoice.Id = $projection.Id\r\n{\r\n  key Id,\r\n  key nDup,\r\n      dVenc,\r\n      vDup,\r\n      \r\n      /* Associaçao com Invoice */\r\n      _Invoice\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[],\n\"ASSOCIATED\":\n[\n\"/EXEDMINB/I_NFEINVOICE\"\n],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"9",
+    "CHGFLAG":"J,W4T29",
     "SOURCE_TYPE":"W",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"

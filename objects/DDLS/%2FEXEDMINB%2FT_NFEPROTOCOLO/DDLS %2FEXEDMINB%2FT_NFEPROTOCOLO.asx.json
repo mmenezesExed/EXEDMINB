@@ -12,7 +12,7 @@
     "SOURCE":"@ClientHandling.type: #CLIENT_DEPENDENT\r\n@AbapCatalog.deliveryClass: #APPLICATION_DATA\r\n@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'Table Entity Protocolo NFe'\r\ndefine table entity /EXEDMINB/T_NFEProtocolo\r\n{\r\n  key Id       : abap.char( 44 ); // Chave da NF-e (chNFe)\r\n      infProt  : abap.char( 100 );\r\n      tpAmb    : abap.char( 1 );\r\n      verAplic : abap.char( 100 );\r\n      dhRecbto : abap.utclong;\r\n      nProt    : abap.char( 100 );\r\n      digVal   : abap.char( 100 );\r\n      cStat    : abap.char( 3 );\r\n      xMotivo  : abap.char( 255 );\r\n\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[],\n\"ASSOCIATED\":\n[],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"",
+    "CHGFLAG":"J,4T",
     "SOURCE_TYPE":"T",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"

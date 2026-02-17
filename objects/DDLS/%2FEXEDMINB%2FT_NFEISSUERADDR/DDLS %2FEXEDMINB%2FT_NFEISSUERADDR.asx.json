@@ -12,7 +12,7 @@
     "SOURCE":"@ClientHandling.type: #CLIENT_DEPENDENT\r\n@AbapCatalog.deliveryClass: #APPLICATION_DATA\r\n@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'NFe Issuer Address'\r\ndefine table entity /EXEDMINB/T_NFeIssuerAddr\r\n{\r\n  key Id           : abap.char(44);  // FK para Header (chNFe)\r\n      xLgr         : abap.char(60); // Logradouro\r\n      nro          : abap.char(10); // Número\r\n      xCpl         : abap.char(60); // Complemento\r\n      xBairro      : abap.char(60); // Bairro\r\n      cMun         : abap.char(7);  // Código do município (IBGE)\r\n      xMun         : abap.char(60); // Nome do município\r\n      UF           : abap.char(2);  // Sigla da UF\r\n      CEP          : abap.char(8);  // Código Postal\r\n      cPais        : abap.char(4);  // Código do País (1058 = Brasil)\r\n      xPais        : abap.char(60); // Nome do País\r\n      fone         : abap.char(14); // Telefone\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[],\n\"ASSOCIATED\":\n[],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"5T3",
+    "CHGFLAG":"J,4T",
     "SOURCE_TYPE":"T",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"
