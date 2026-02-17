@@ -498,6 +498,8 @@ class lhc__nfemonitorh implementation.
     data line like line of reported-_nfemonitorh.
 
     loop at lt_header into data(ls_header).
+      ls_header-Status = 3.
+
       "Determina Empresa e Local de negocio a partir do destinario
       if ls_header-Empresa is initial or ls_header-LocalDeNegocio is initial.
         clear: failed, mapped, reported.
