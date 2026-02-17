@@ -12,7 +12,7 @@
     "SOURCE":"@AbapCatalog.viewEnhancementCategory: [#NONE]\r\n@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'CDS View NFeTransportVolumes'\r\n@Metadata.ignorePropagatedAnnotations: true\r\n@ObjectModel.usageType:{\r\n    serviceQuality: #X,\r\n    sizeCategory: #S,\r\n    dataClass: #MIXED\r\n}\r\n\r\ndefine view entity /EXEDMINB/I_NFeTranspVol\r\n  as select from /EXEDMINB/T_NFeTranspVol\r\n  \r\n  composition [0..*] of /EXEDMINB/I_SecuritySeal as _SecuritySeal\r\n\r\n  association to parent /EXEDMINB/I_NFETRANSPORT as _Transport on _Transport.Id = $projection.Id\r\n\r\n{\r\n  key Id,\r\n  key nVol,\r\n      qVol,\r\n      esp,\r\n      marca,\r\n      pesoL,\r\n      pesoB,\r\n\r\n\r\n      /* Associação com Transport */\r\n      _Transport,\r\n      \r\n      _SecuritySeal\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[],\n\"ASSOCIATED\":\n[\n\"/EXEDMINB/I_NFETRANSPORT\",\n\"/EXEDMINB/I_SECURITYSEAL\"\n],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"J,4T2Z9",
+    "CHGFLAG":"ZD",
     "SOURCE_TYPE":"W",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"

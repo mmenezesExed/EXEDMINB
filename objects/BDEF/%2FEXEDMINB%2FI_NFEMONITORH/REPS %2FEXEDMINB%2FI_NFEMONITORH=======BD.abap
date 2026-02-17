@@ -11,15 +11,22 @@ authorization master ( instance )
   delete;
 
   //Object Actions
-  action etapa_100;
-  action etapa_200;
-  action etapa_300;
-  action etapa_400;
-  action etapa_500;
-  action etapa_600;
-  action etapa_700;
-  action etapa_800;
-  action etapa_900;
+  action processar result [1] $self;
+  action reprocessar result [1] $self;
+
+  internal action etapa_100;
+  internal action etapa_200;
+  internal action etapa_300;
+  internal action etapa_400;
+  internal action etapa_500;
+  internal action etapa_600;
+  internal action etapa_700;
+  internal action etapa_800;
+  internal action etapa_900;
+
+  side effects {
+    action reprocessar affects entity _Historico;
+  }
 
   association _Item;
 }

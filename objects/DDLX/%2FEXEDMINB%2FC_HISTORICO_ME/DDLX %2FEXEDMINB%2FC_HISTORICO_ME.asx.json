@@ -7,9 +7,9 @@
     "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
     "VERSION":"A",
     "CHANGED_BY":"SAP_CUSTOMER",
-    "CHANGED_ON":"2026-02-08",
-    "CHANGED_AT":"22:26:14",
-    "UUID":"FA163EA4AE5F1FD181A7A5B742D5D815",
+    "CHANGED_ON":"2026-02-17",
+    "CHANGED_AT":"03:21:37",
+    "UUID":"FA163EA4AE5F1FD182F5F87F7FCB1824",
     "ABAP_LANGUAGE_VERSION":"5"
    }
   ]
@@ -34,7 +34,7 @@
     "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
     "VERSION":"A",
     "UUID":"",
-    "SOURCE":"@Metadata.layer: #CORE\r\n\r\n@UI: {\r\n  headerInfo: {\r\n    typeName:       'Historico NF-e (Inbound)',\r\n    typeNamePlural: 'Historico NF-e (Inbound)',\r\n    title: { value: 'IdNFe' },\r\n    description: { value: 'Descricao' }\r\n  }\r\n}\r\n\r\nannotate entity /EXEDMINB/C_HISTORICO\r\n    with \r\n{\r\n      @UI.hidden: true\r\n      IdNfe;\r\n      @UI.lineItem: [ { position: 20 } ]\r\n      IdHistorico;\r\n      @UI.lineItem: [ { position: 30 } ]\r\n      Etapa;\r\n      @UI.lineItem: [ { position: 40 } ]\r\n      Status;\r\n      @UI.lineItem: [ { position: 50 } ]\r\n      Descricao;\r\n      @UI.lineItem: [ { position: 60 } ]\r\n      created_by;\r\n      @UI.lineItem: [ { position: 70 } ]\r\n      created_at;\r\n    \r\n}"
+    "SOURCE":"@Metadata.layer: #CORE\r\n\r\n@UI: {\r\n  headerInfo: {\r\n    typeName:       'Historico NF-e (Inbound)',\r\n    typeNamePlural: 'Historico NF-e (Inbound)',\r\n    title: { value: 'AtividadeDescricao' },\r\n    description: { value: 'Descricao' }\r\n  }\r\n}\r\n\r\nannotate entity /EXEDMINB/C_HISTORICO with\r\n{\r\n  @UI.facet: [\r\n  {\r\n  id: 'DadosHistorico',\r\n  position: 10,\r\n  purpose: #STANDARD,\r\n  type: #IDENTIFICATION_REFERENCE,\r\n  label: 'Dados Historico',\r\n  targetQualifier: 'DadosHistorico'\r\n  }]\r\n\r\n  @UI.hidden: true\r\n  IdNfe;\r\n  @EndUserText.label: 'Id Historico'\r\n  @UI.lineItem: [ { position: 20 } ]\r\n  @UI.identification: [ { qualifier: 'DadosHistorico', position: 20 } ]\r\n  IdHistorico;\r\n  @EndUserText.label: 'Etapa'\r\n  @UI.lineItem: [ { position: 30 } ]\r\n  @UI.identification: [ { qualifier: 'DadosHistorico', position: 30 } ]\r\n  Etapa;\r\n  @EndUserText.label: 'Status'\r\n  @UI.lineItem: [ { position: 40, criticality: 'StatusCriticality', criticalityRepresentation: #WITH_ICON } ]\r\n  @UI.identification: [ { qualifier: 'DadosHistorico', position: 40 } ]\r\n  @UI.dataPoint: { criticality: 'StatusCriticality', criticalityRepresentation: #WITH_ICON }\r\n  Status;\r\n  @EndUserText.label: 'Descrição'\r\n  @UI.lineItem: [ { position: 50 } ]\r\n  @UI.identification: [ { qualifier: 'DadosHistorico', position: 60 } ]\r\n  Descricao;\r\n  @UI.lineItem: [ { position: 60 } ]\r\n  @UI.identification: [ { qualifier: 'DadosHistorico', position: 70 } ]\r\n  created_by;\r\n  @UI.lineItem: [ { position: 70 } ]\r\n  @UI.identification: [ { qualifier: 'DadosHistorico', position: 80 } ]\r\n  created_at;\r\n  \r\n  @UI.hidden: true\r\n  StatusCriticality;\r\n\r\n}"
    }
   ]
  },
@@ -54,7 +54,7 @@
     "ELEMENT":"",
     "NAME":"UI.HEADERINFO.TITLE.VALUE",
     "ELEMENT_TYPE":"N",
-    "VALUE":"'IdNFe'"
+    "VALUE":"'AtividadeDescricao'"
    },
    {
     "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
@@ -73,9 +73,37 @@
    {
     "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
     "ELEMENT":"CREATED_AT",
+    "NAME":"UI.IDENTIFICATION$1$.POSITION",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"80"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "ELEMENT":"CREATED_AT",
+    "NAME":"UI.IDENTIFICATION$1$.QUALIFIER",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'DadosHistorico'"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "ELEMENT":"CREATED_AT",
     "NAME":"UI.LINEITEM$1$.POSITION",
     "ELEMENT_TYPE":"S",
     "VALUE":"70"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "ELEMENT":"CREATED_BY",
+    "NAME":"UI.IDENTIFICATION$1$.POSITION",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"70"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "ELEMENT":"CREATED_BY",
+    "NAME":"UI.IDENTIFICATION$1$.QUALIFIER",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'DadosHistorico'"
    },
    {
     "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
@@ -87,9 +115,51 @@
    {
     "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
     "ELEMENT":"DESCRICAO",
+    "NAME":"ENDUSERTEXT.LABEL",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'Descrição'"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "ELEMENT":"DESCRICAO",
+    "NAME":"UI.IDENTIFICATION$1$.POSITION",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"60"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "ELEMENT":"DESCRICAO",
+    "NAME":"UI.IDENTIFICATION$1$.QUALIFIER",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'DadosHistorico'"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "ELEMENT":"DESCRICAO",
     "NAME":"UI.LINEITEM$1$.POSITION",
     "ELEMENT_TYPE":"S",
     "VALUE":"50"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "ELEMENT":"ETAPA",
+    "NAME":"ENDUSERTEXT.LABEL",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'Etapa'"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "ELEMENT":"ETAPA",
+    "NAME":"UI.IDENTIFICATION$1$.POSITION",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"30"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "ELEMENT":"ETAPA",
+    "NAME":"UI.IDENTIFICATION$1$.QUALIFIER",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'DadosHistorico'"
    },
    {
     "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
@@ -101,9 +171,72 @@
    {
     "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
     "ELEMENT":"IDHISTORICO",
+    "NAME":"ENDUSERTEXT.LABEL",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'Id Historico'"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "ELEMENT":"IDHISTORICO",
+    "NAME":"UI.IDENTIFICATION$1$.POSITION",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"20"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "ELEMENT":"IDHISTORICO",
+    "NAME":"UI.IDENTIFICATION$1$.QUALIFIER",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'DadosHistorico'"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "ELEMENT":"IDHISTORICO",
     "NAME":"UI.LINEITEM$1$.POSITION",
     "ELEMENT_TYPE":"S",
     "VALUE":"20"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "ELEMENT":"IDNFE",
+    "NAME":"UI.FACET$1$.ID",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'DadosHistorico'"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "ELEMENT":"IDNFE",
+    "NAME":"UI.FACET$1$.LABEL",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'Dados Historico'"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "ELEMENT":"IDNFE",
+    "NAME":"UI.FACET$1$.POSITION",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"10"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "ELEMENT":"IDNFE",
+    "NAME":"UI.FACET$1$.PURPOSE",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"#STANDARD"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "ELEMENT":"IDNFE",
+    "NAME":"UI.FACET$1$.TARGETQUALIFIER",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'DadosHistorico'"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "ELEMENT":"IDNFE",
+    "NAME":"UI.FACET$1$.TYPE",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"#IDENTIFICATION_REFERENCE"
    },
    {
     "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
@@ -115,9 +248,65 @@
    {
     "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
     "ELEMENT":"STATUS",
+    "NAME":"ENDUSERTEXT.LABEL",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'Status'"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "ELEMENT":"STATUS",
+    "NAME":"UI.DATAPOINT.CRITICALITY",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'StatusCriticality'"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "ELEMENT":"STATUS",
+    "NAME":"UI.DATAPOINT.CRITICALITYREPRESENTATION",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"#WITH_ICON"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "ELEMENT":"STATUS",
+    "NAME":"UI.IDENTIFICATION$1$.POSITION",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"40"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "ELEMENT":"STATUS",
+    "NAME":"UI.IDENTIFICATION$1$.QUALIFIER",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'DadosHistorico'"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "ELEMENT":"STATUS",
+    "NAME":"UI.LINEITEM$1$.CRITICALITY",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'StatusCriticality'"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "ELEMENT":"STATUS",
+    "NAME":"UI.LINEITEM$1$.CRITICALITYREPRESENTATION",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"#WITH_ICON"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "ELEMENT":"STATUS",
     "NAME":"UI.LINEITEM$1$.POSITION",
     "ELEMENT_TYPE":"S",
     "VALUE":"40"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "ELEMENT":"STATUSCRITICALITY",
+    "NAME":"UI.HIDDEN",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"true"
    }
   ]
  },
@@ -138,6 +327,41 @@
     "ELEMENT":"",
     "NAME":"UI.HEADERINFO.TYPENAMEPLURAL",
     "TEXT":"Historico NF-e (Inbound)"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "DDLANGUAGE":"P",
+    "ELEMENT":"DESCRICAO",
+    "NAME":"ENDUSERTEXT.LABEL",
+    "TEXT":"Descrição"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "DDLANGUAGE":"P",
+    "ELEMENT":"ETAPA",
+    "NAME":"ENDUSERTEXT.LABEL",
+    "TEXT":"Etapa"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "DDLANGUAGE":"P",
+    "ELEMENT":"IDHISTORICO",
+    "NAME":"ENDUSERTEXT.LABEL",
+    "TEXT":"Id Historico"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "DDLANGUAGE":"P",
+    "ELEMENT":"IDNFE",
+    "NAME":"UI.FACET$1$.LABEL",
+    "TEXT":"Dados Historico"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "DDLANGUAGE":"P",
+    "ELEMENT":"STATUS",
+    "NAME":"ENDUSERTEXT.LABEL",
+    "TEXT":"Status"
    }
   ]
  },
@@ -150,8 +374,8 @@
     "EXTENDED_ARTIFACT":"/EXEDMINB/C_HISTORICO",
     "VARIANT":"",
     "LAYER":1500,
-    "DT_UUID":"FA163EA4AE5F1FD181A7A5B742D5D815",
-    "RT_HASH":"3854467B56D5C60D2AD7A33FBA7F4A2AE1FBC722",
+    "DT_UUID":"FA163EA4AE5F1FD182F5F87F7FCB1824",
+    "RT_HASH":"2D89DD9D24111E22E0F0FAD8DA2FD96992A1DE0D",
     "GEN_VERSION":"0",
     "TYPE":"0"
    }
@@ -175,11 +399,31 @@
     "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
     "ELEMENT":"",
     "NAME":"UI.HEADERINFO.TITLE.VALUE",
-    "PATH":"IDNFE",
+    "PATH":"ATIVIDADEDESCRICAO",
     "REF_OBJECT_TYPE":"STOB",
     "REF_OBJECT_SUBTYPE":"DOF",
     "REF_OBJECT_NAME":"/EXEDMINB/C_HISTORICO",
-    "REF_OBJECT_ELEMENT":"IDNFE"
+    "REF_OBJECT_ELEMENT":"ATIVIDADEDESCRICAO"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "ELEMENT":"STATUS",
+    "NAME":"UI.DATAPOINT.CRITICALITY",
+    "PATH":"STATUSCRITICALITY",
+    "REF_OBJECT_TYPE":"STOB",
+    "REF_OBJECT_SUBTYPE":"DOF",
+    "REF_OBJECT_NAME":"/EXEDMINB/C_HISTORICO",
+    "REF_OBJECT_ELEMENT":"STATUSCRITICALITY"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/C_HISTORICO_ME",
+    "ELEMENT":"STATUS",
+    "NAME":"UI.LINEITEM$1$.CRITICALITY",
+    "PATH":"STATUSCRITICALITY",
+    "REF_OBJECT_TYPE":"STOB",
+    "REF_OBJECT_SUBTYPE":"DOF",
+    "REF_OBJECT_NAME":"/EXEDMINB/C_HISTORICO",
+    "REF_OBJECT_ELEMENT":"STATUSCRITICALITY"
    }
   ]
  },

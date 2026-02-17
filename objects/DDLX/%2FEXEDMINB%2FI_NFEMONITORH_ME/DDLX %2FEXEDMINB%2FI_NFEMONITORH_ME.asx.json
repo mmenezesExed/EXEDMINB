@@ -7,9 +7,9 @@
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "VERSION":"A",
     "CHANGED_BY":"SAP_CUSTOMER",
-    "CHANGED_ON":"2026-02-12",
-    "CHANGED_AT":"18:50:25",
-    "UUID":"FA163EA4AE5F1FD18288760EEFADD815",
+    "CHANGED_ON":"2026-02-16",
+    "CHANGED_AT":"23:41:30",
+    "UUID":"FA163EA4AE5F1FD182F2207F72C8F824",
     "ABAP_LANGUAGE_VERSION":"5"
    }
   ]
@@ -34,7 +34,7 @@
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "VERSION":"A",
     "UUID":"",
-    "SOURCE":"@Metadata.layer: #CORE\r\n\r\n@UI: {\r\n  headerInfo: {\r\n    typeName:       'Cabeçalho NF-e (Inbound)',\r\n    typeNamePlural: 'Cabeçalhos NF-e (Inbound)',\r\n    title: { value: 'NumeroNFe' },\r\n    description: { value: 'ChaveNFe' }\r\n  }\r\n}\r\nannotate entity /EXEDMINB/C_NFEMONITORH with\r\n{\r\n\r\n  @UI.facet: [\r\n  {\r\n    id: 'DadosNotaFiscal',\r\n    position: 10,\r\n    purpose: #STANDARD,\r\n    type: #IDENTIFICATION_REFERENCE,\r\n    label: 'Dados da Nota Fiscal',\r\n    targetQualifier: 'DadosNotaFiscal'\r\n  },\r\n  {\r\n    id: 'Emitente',\r\n    position: 20,\r\n    purpose: #STANDARD,\r\n    type: #IDENTIFICATION_REFERENCE,\r\n    label: 'Emitente',\r\n    targetQualifier: 'Emitente'\r\n  },\r\n  {\r\n    id: 'Destinatario',\r\n    position: 30,\r\n    purpose: #STANDARD,\r\n    type: #IDENTIFICATION_REFERENCE,\r\n    label: 'Destinatário',\r\n    targetQualifier: 'Destinatario'\r\n  },\r\n  {\r\n    id: 'Valores',\r\n    position: 40,\r\n    purpose: #STANDARD,\r\n    type: #IDENTIFICATION_REFERENCE,\r\n    label: 'Totais da Nota',\r\n    targetQualifier: 'Valores'\r\n  },\r\n  {\r\n    id: 'Itens',\r\n    position: 50,\r\n    purpose: #STANDARD,\r\n    type: #LINEITEM_REFERENCE,\r\n    label: 'Itens da Nota',\r\n    targetElement: '_Item'\r\n  },\r\n  {\r\n    id: 'Historico',\r\n    position: 60,\r\n    purpose: #STANDARD,\r\n    type: #LINEITEM_REFERENCE,\r\n    label: 'Historico',\r\n    targetElement: '_Historico'\r\n  }\r\n  ]\r\n\r\n  @EndUserText.label: 'Status'\r\n  @UI.lineItem: [{ position: 3, criticality: 'StatusCriticality', criticalityRepresentation: #WITH_ICON }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 2 } ]\r\n  @UI.dataPoint: { criticality: 'StatusCriticality', criticalityRepresentation: #WITH_ICON }\r\n  @UI.selectionField: [{ position: 1 }]\r\n  Status;\r\n  \r\n  @EndUserText.label: 'Chave NF-e'\r\n  @UI.lineItem: [ { position: 10 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 20 },\r\n                        { type: #FOR_ACTION, dataAction: 'etapa_100', label: 'Verificar autorização' },\r\n                        { type: #FOR_ACTION, dataAction: 'etapa_200', label: 'Validar Atribuição itens' },\r\n                        { type: #FOR_ACTION, dataAction: 'etapa_300', label: 'Simular fatura/NF-e' },\r\n                        { type: #FOR_ACTION, dataAction: 'etapa_400', label: 'Gerar Delivery' },\r\n                        { type: #FOR_ACTION, dataAction: 'etapa_500', label: 'Entrada DANFE' },\r\n                        { type: #FOR_ACTION, dataAction: 'etapa_600', label: 'Revalidar autorização' },\r\n                        { type: #FOR_ACTION, dataAction: 'etapa_700', label: 'Entrada de Mercadoria' },\r\n                        { type: #FOR_ACTION, dataAction: 'etapa_800', label: 'Lançar Fatura' },\r\n                        { type: #FOR_ACTION, dataAction: 'etapa_900', label: 'Confirmar' } ]\r\n  @UI.selectionField: [{ position: 10 }]\r\n  ChaveNFe;\r\n\r\n  @EndUserText.label: 'Empresa'\r\n  @UI.lineItem: [ { position: 20 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 30 } ]\r\n  @UI.selectionField: [{ position: 20 }]\r\n  Empresa;\r\n  \r\n  @EndUserText.label: 'Filial'\r\n  @UI.lineItem: [ { position: 30 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 40 } ]\r\n  @UI.selectionField: [{ position: 30 }]\r\n  LocalDeNegocio;\r\n  \r\n  @EndUserText.label: 'Processo'\r\n  @UI.lineItem: [ { position: 40 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 3 } ]\r\n  @UI.selectionField: [{ position: 35 }]\r\n  ProcessoSAP;\r\n  \r\n  @EndUserText.label: 'Etapa Atual'\r\n  @UI.lineItem: [ { position: 4}]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 4 } ]\r\n  @UI.selectionField: [{ position: 40 }]\r\n  Atividade;\r\n\r\n  @EndUserText.label: 'Número NF-e'\r\n  @UI.lineItem: [ { position: 60 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 70 } ]\r\n  @UI.selectionField: [{ position: 50 }]\r\n  NumeroNFe;\r\n\r\n  @EndUserText.label: 'Série'\r\n  @UI.lineItem: [ { position: 70 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 80 } ]\r\n  @UI.selectionField: [{ position: 60 }]\r\n  Serie;\r\n  \r\n  @EndUserText.label: 'Data de Emissão'\r\n  @UI.lineItem: [ { position: 80 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 90 } ]\r\n  @UI.selectionField: [{ position: 70 }]\r\n  DataEmissao;\r\n   \r\n  @EndUserText.label: 'Entrada de Mercadoria'\r\n  @UI.lineItem: [ { position: 83 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 83 } ]\r\n  EntradaMercadoria;\r\n\r\n  @EndUserText.label: 'Entrada de Fatura'\r\n  @UI.lineItem: [ { position: 84 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 84 } ]\r\n  EntradaFatura;\r\n\r\n  @EndUserText.label: 'CNPJ Emitente'\r\n  @UI.lineItem: [ { position: 90 }]\r\n  @UI.identification: [ { qualifier: 'Emitente', position: 10 } ]\r\n  @UI.selectionField: [{ position: 80 }]\r\n  Emitente;\r\n\r\n  @EndUserText.label: 'Nome Emitente'\r\n  @UI.lineItem: [ { position: 100 }]\r\n  @UI.identification: [ { qualifier: 'Emitente', position: 20 } ]\r\n  NomeEmitente;\r\n\r\n  @EndUserText.label: 'CNPJ/CPF Destinatário'\r\n  @UI.lineItem: [ { position: 110 }]\r\n  @UI.identification: [ { qualifier: 'Destinatario', position: 10 } ]\r\n  Destinatario;\r\n\r\n  @EndUserText.label: 'Nome Destinatário'\r\n  @UI.lineItem: [ { position: 120 }]\r\n  @UI.identification: [ { qualifier: 'Destinatario', position: 20 } ]\r\n  NomeDestinatario;\r\n\r\n  @EndUserText.label: 'Valor Total NF-e'\r\n  @UI.lineItem: [ { position: 130 }]\r\n  @UI.identification: [ { qualifier: 'Valores', position: 10 } ]\r\n  ValorTotalNFe;\r\n\r\n  @EndUserText.label: 'Valor Total ICMS'\r\n  @UI.lineItem: [ { position: 140 }]\r\n  @UI.identification: [ { qualifier: 'Valores', position: 20 } ]\r\n  ValorTotalICMS;\r\n\r\n  @EndUserText.label: 'Valor Total IPI'\r\n  @UI.lineItem: [ { position: 145 }]\r\n  @UI.identification: [ { qualifier: 'Valores', position: 25 } ]\r\n  ValorTotalIPI;\r\n\r\n  @EndUserText.label: 'Valor ICMS ST'\r\n  @UI.lineItem: [ { position: 150 }]\r\n  @UI.identification: [ { qualifier: 'Valores', position: 30 } ]\r\n  ValorTotalICMSST;\r\n\r\n  @EndUserText.label: 'Valor Frete'\r\n  @UI.lineItem: [ { position: 160 }]\r\n  @UI.identification: [ { qualifier: 'Valores', position: 40 } ]\r\n  ValorFrete;\r\n\r\n  @EndUserText.label: 'Valor Seguro'\r\n  @UI.lineItem: [ { position: 170 }]\r\n  @UI.identification: [ { qualifier: 'Valores', position: 50 } ]\r\n  ValorSeguro;\r\n\r\n  @EndUserText.label: 'Outras Despesas'\r\n  @UI.lineItem: [ { position: 180 }]\r\n  @UI.identification: [ { qualifier: 'Valores', position: 60 } ]\r\n  ValorOutrasDesp;\r\n  \r\n  @EndUserText.label: 'Status NF-e'\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 100 } ]\r\n  StatusNFe;\r\n  \r\n  @UI.hidden: true\r\n  AtividadeDescricao;\r\n  @UI.hidden: true\r\n  CompanyCodeName;\r\n  @UI.hidden: true\r\n  BusinessPlaceName;\r\n  @UI.hidden: true\r\n  StatusCriticality;\r\n  @UI.hidden: true\r\n  StatusNFeDescricao;\r\n\r\n}"
+    "SOURCE":"@Metadata.layer: #CORE\r\n\r\n@UI: {\r\n  headerInfo: {\r\n    typeName:       'Cabeçalho NF-e (Inbound)',\r\n    typeNamePlural: 'Cabeçalhos NF-e (Inbound)',\r\n    title: { value: 'NumeroNFe' },\r\n    description: { value: 'ChaveNFe' }\r\n  }\r\n}\r\n\r\nannotate entity /EXEDMINB/C_NFEMONITORH with\r\n{\r\n\r\n  @UI.facet: [\r\n  {\r\n    id: 'DadosNotaFiscal',\r\n    position: 10,\r\n    purpose: #STANDARD,\r\n    type: #IDENTIFICATION_REFERENCE,\r\n    label: 'Dados da Nota Fiscal',\r\n    targetQualifier: 'DadosNotaFiscal'\r\n  },\r\n  {\r\n    id: 'Emitente',\r\n    position: 20,\r\n    purpose: #STANDARD,\r\n    type: #IDENTIFICATION_REFERENCE,\r\n    label: 'Emitente',\r\n    targetQualifier: 'Emitente'\r\n  },\r\n  {\r\n    id: 'Destinatario',\r\n    position: 30,\r\n    purpose: #STANDARD,\r\n    type: #IDENTIFICATION_REFERENCE,\r\n    label: 'Destinatário',\r\n    targetQualifier: 'Destinatario'\r\n  },\r\n  {\r\n    id: 'Valores',\r\n    position: 40,\r\n    purpose: #STANDARD,\r\n    type: #IDENTIFICATION_REFERENCE,\r\n    label: 'Totais da Nota',\r\n    targetQualifier: 'Valores'\r\n  },\r\n  {\r\n    id: 'Itens',\r\n    position: 50,\r\n    purpose: #STANDARD,\r\n    type: #LINEITEM_REFERENCE,\r\n    label: 'Itens da Nota',\r\n    targetElement: '_Item'\r\n  },\r\n  {\r\n    id: 'Historico',\r\n    position: 60,\r\n    purpose: #STANDARD,\r\n    type: #LINEITEM_REFERENCE,\r\n    label: 'Historico',\r\n    targetElement: '_Historico'\r\n  }\r\n  ]\r\n\r\n  @EndUserText.label: 'Status'\r\n  @UI.lineItem: [{ position: 3, criticality: 'StatusCriticality', criticalityRepresentation: #WITH_ICON }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 2 } ]\r\n  @UI.dataPoint: { criticality: 'StatusCriticality', criticalityRepresentation: #WITH_ICON }\r\n  @UI.selectionField: [{ position: 1 }]\r\n  Status;\r\n  \r\n  @EndUserText.label: 'Chave NF-e'\r\n  @UI.lineItem: [ { position: 10 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 20 },\r\n                          { type: #FOR_ACTION, dataAction: 'processar', label: 'Continuar Processo' }, \r\n                          { type: #FOR_ACTION, dataAction: 'reprocessar', label: 'Reprocessar' } ]\r\n                        //{ type: #FOR_ACTION, dataAction: 'etapa_100', label: 'Verificar autorização' },\r\n                        //{ type: #FOR_ACTION, dataAction: 'etapa_200', label: 'Validar Atribuição itens' },\r\n                        //{ type: #FOR_ACTION, dataAction: 'etapa_300', label: 'Simular fatura/NF-e' },\r\n                        //{ type: #FOR_ACTION, dataAction: 'etapa_400', label: 'Gerar Delivery' },\r\n                        //{ type: #FOR_ACTION, dataAction: 'etapa_500', label: 'Entrada DANFE' },\r\n                        //{ type: #FOR_ACTION, dataAction: 'etapa_600', label: 'Revalidar autorização' },\r\n                        //{ type: #FOR_ACTION, dataAction: 'etapa_700', label: 'Entrada de Mercadoria' },\r\n                        //{ type: #FOR_ACTION, dataAction: 'etapa_800', label: 'Lançar Fatura' },\r\n                        //{ type: #FOR_ACTION, dataAction: 'etapa_900', label: 'Confirmar' } ]\r\n  @UI.selectionField: [{ position: 10 }]\r\n  ChaveNFe;\r\n\r\n  @EndUserText.label: 'Empresa'\r\n  @UI.lineItem: [ { position: 20 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 30 } ]\r\n  @UI.selectionField: [{ position: 20 }]\r\n  Empresa;\r\n  \r\n  @EndUserText.label: 'Filial'\r\n  @UI.lineItem: [ { position: 30 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 40 } ]\r\n  @UI.selectionField: [{ position: 30 }]\r\n  LocalDeNegocio;\r\n  \r\n  @EndUserText.label: 'Processo'\r\n  @UI.lineItem: [ { position: 40 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 3 } ]\r\n  @UI.selectionField: [{ position: 35 }]\r\n  ProcessoSAP;\r\n  \r\n  @EndUserText.label: 'Etapa Atual'\r\n  @UI.lineItem: [ { position: 4}]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 4 } ]\r\n  @UI.selectionField: [{ position: 40 }]\r\n  Atividade;\r\n\r\n  @EndUserText.label: 'Número NF-e'\r\n  @UI.lineItem: [ { position: 60 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 70 } ]\r\n  @UI.selectionField: [{ position: 50 }]\r\n  NumeroNFe;\r\n\r\n  @EndUserText.label: 'Série'\r\n  @UI.lineItem: [ { position: 70 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 80 } ]\r\n  @UI.selectionField: [{ position: 60 }]\r\n  Serie;\r\n  \r\n  @EndUserText.label: 'Data de Emissão'\r\n  @UI.lineItem: [ { position: 80 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 90 } ]\r\n  @UI.selectionField: [{ position: 70 }]\r\n  DataEmissao;\r\n   \r\n  @EndUserText.label: 'Entrada de Mercadoria'\r\n  @UI.lineItem: [ { position: 83 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 83 } ]\r\n  EntradaMercadoria;\r\n\r\n  @EndUserText.label: 'Entrada de Fatura'\r\n  @UI.lineItem: [ { position: 84 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 84 } ]\r\n  EntradaFatura;\r\n\r\n  @EndUserText.label: 'CNPJ Emitente'\r\n  @UI.lineItem: [ { position: 90 }]\r\n  @UI.identification: [ { qualifier: 'Emitente', position: 10 } ]\r\n  @UI.selectionField: [{ position: 80 }]\r\n  Emitente;\r\n\r\n  @EndUserText.label: 'Nome Emitente'\r\n  @UI.lineItem: [ { position: 100 }]\r\n  @UI.identification: [ { qualifier: 'Emitente', position: 20 } ]\r\n  NomeEmitente;\r\n\r\n  @EndUserText.label: 'CNPJ/CPF Destinatário'\r\n  @UI.lineItem: [ { position: 110 }]\r\n  @UI.identification: [ { qualifier: 'Destinatario', position: 10 } ]\r\n  Destinatario;\r\n\r\n  @EndUserText.label: 'Nome Destinatário'\r\n  @UI.lineItem: [ { position: 120 }]\r\n  @UI.identification: [ { qualifier: 'Destinatario', position: 20 } ]\r\n  NomeDestinatario;\r\n\r\n  @EndUserText.label: 'Valor Total NF-e'\r\n  @UI.lineItem: [ { position: 130 }]\r\n  @UI.identification: [ { qualifier: 'Valores', position: 10 } ]\r\n  ValorTotalNFe;\r\n\r\n  @EndUserText.label: 'Valor Total ICMS'\r\n  @UI.lineItem: [ { position: 140 }]\r\n  @UI.identification: [ { qualifier: 'Valores', position: 20 } ]\r\n  ValorTotalICMS;\r\n\r\n  @EndUserText.label: 'Valor Total IPI'\r\n  @UI.lineItem: [ { position: 145 }]\r\n  @UI.identification: [ { qualifier: 'Valores', position: 25 } ]\r\n  ValorTotalIPI;\r\n\r\n  @EndUserText.label: 'Valor ICMS ST'\r\n  @UI.lineItem: [ { position: 150 }]\r\n  @UI.identification: [ { qualifier: 'Valores', position: 30 } ]\r\n  ValorTotalICMSST;\r\n\r\n  @EndUserText.label: 'Valor Frete'\r\n  @UI.lineItem: [ { position: 160 }]\r\n  @UI.identification: [ { qualifier: 'Valores', position: 40 } ]\r\n  ValorFrete;\r\n\r\n  @EndUserText.label: 'Valor Seguro'\r\n  @UI.lineItem: [ { position: 170 }]\r\n  @UI.identification: [ { qualifier: 'Valores', position: 50 } ]\r\n  ValorSeguro;\r\n\r\n  @EndUserText.label: 'Outras Despesas'\r\n  @UI.lineItem: [ { position: 180 }]\r\n  @UI.identification: [ { qualifier: 'Valores', position: 60 } ]\r\n  ValorOutrasDesp;\r\n  \r\n  @EndUserText.label: 'Status NF-e'\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 100 } ]\r\n  StatusNFe;\r\n  \r\n  @UI.hidden: true\r\n  AtividadeDescricao;\r\n  @UI.hidden: true\r\n  CompanyCodeName;\r\n  @UI.hidden: true\r\n  BusinessPlaceName;\r\n  @UI.hidden: true\r\n  StatusCriticality;\r\n  @UI.hidden: true\r\n  StatusNFeDescricao;\r\n\r\n}"
    }
   ]
  },
@@ -143,37 +143,16 @@
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "ELEMENT":"CHAVENFE",
-    "NAME":"UI.IDENTIFICATION$10$.DATAACTION",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"'etapa_900'"
-   },
-   {
-    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
-    "ELEMENT":"CHAVENFE",
-    "NAME":"UI.IDENTIFICATION$10$.LABEL",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"'Confirmar'"
-   },
-   {
-    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
-    "ELEMENT":"CHAVENFE",
-    "NAME":"UI.IDENTIFICATION$10$.TYPE",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"#FOR_ACTION"
-   },
-   {
-    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
-    "ELEMENT":"CHAVENFE",
     "NAME":"UI.IDENTIFICATION$2$.DATAACTION",
     "ELEMENT_TYPE":"S",
-    "VALUE":"'etapa_100'"
+    "VALUE":"'processar'"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "ELEMENT":"CHAVENFE",
     "NAME":"UI.IDENTIFICATION$2$.LABEL",
     "ELEMENT_TYPE":"S",
-    "VALUE":"'Verificar autorização'"
+    "VALUE":"'Continuar Processo'"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
@@ -187,145 +166,19 @@
     "ELEMENT":"CHAVENFE",
     "NAME":"UI.IDENTIFICATION$3$.DATAACTION",
     "ELEMENT_TYPE":"S",
-    "VALUE":"'etapa_200'"
+    "VALUE":"'reprocessar'"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "ELEMENT":"CHAVENFE",
     "NAME":"UI.IDENTIFICATION$3$.LABEL",
     "ELEMENT_TYPE":"S",
-    "VALUE":"'Validar Atribuição itens'"
+    "VALUE":"'Reprocessar'"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "ELEMENT":"CHAVENFE",
     "NAME":"UI.IDENTIFICATION$3$.TYPE",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"#FOR_ACTION"
-   },
-   {
-    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
-    "ELEMENT":"CHAVENFE",
-    "NAME":"UI.IDENTIFICATION$4$.DATAACTION",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"'etapa_300'"
-   },
-   {
-    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
-    "ELEMENT":"CHAVENFE",
-    "NAME":"UI.IDENTIFICATION$4$.LABEL",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"'Simular fatura/NF-e'"
-   },
-   {
-    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
-    "ELEMENT":"CHAVENFE",
-    "NAME":"UI.IDENTIFICATION$4$.TYPE",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"#FOR_ACTION"
-   },
-   {
-    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
-    "ELEMENT":"CHAVENFE",
-    "NAME":"UI.IDENTIFICATION$5$.DATAACTION",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"'etapa_400'"
-   },
-   {
-    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
-    "ELEMENT":"CHAVENFE",
-    "NAME":"UI.IDENTIFICATION$5$.LABEL",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"'Gerar Delivery'"
-   },
-   {
-    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
-    "ELEMENT":"CHAVENFE",
-    "NAME":"UI.IDENTIFICATION$5$.TYPE",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"#FOR_ACTION"
-   },
-   {
-    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
-    "ELEMENT":"CHAVENFE",
-    "NAME":"UI.IDENTIFICATION$6$.DATAACTION",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"'etapa_500'"
-   },
-   {
-    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
-    "ELEMENT":"CHAVENFE",
-    "NAME":"UI.IDENTIFICATION$6$.LABEL",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"'Entrada DANFE'"
-   },
-   {
-    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
-    "ELEMENT":"CHAVENFE",
-    "NAME":"UI.IDENTIFICATION$6$.TYPE",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"#FOR_ACTION"
-   },
-   {
-    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
-    "ELEMENT":"CHAVENFE",
-    "NAME":"UI.IDENTIFICATION$7$.DATAACTION",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"'etapa_600'"
-   },
-   {
-    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
-    "ELEMENT":"CHAVENFE",
-    "NAME":"UI.IDENTIFICATION$7$.LABEL",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"'Revalidar autorização'"
-   },
-   {
-    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
-    "ELEMENT":"CHAVENFE",
-    "NAME":"UI.IDENTIFICATION$7$.TYPE",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"#FOR_ACTION"
-   },
-   {
-    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
-    "ELEMENT":"CHAVENFE",
-    "NAME":"UI.IDENTIFICATION$8$.DATAACTION",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"'etapa_700'"
-   },
-   {
-    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
-    "ELEMENT":"CHAVENFE",
-    "NAME":"UI.IDENTIFICATION$8$.LABEL",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"'Entrada de Mercadoria'"
-   },
-   {
-    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
-    "ELEMENT":"CHAVENFE",
-    "NAME":"UI.IDENTIFICATION$8$.TYPE",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"#FOR_ACTION"
-   },
-   {
-    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
-    "ELEMENT":"CHAVENFE",
-    "NAME":"UI.IDENTIFICATION$9$.DATAACTION",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"'etapa_800'"
-   },
-   {
-    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
-    "ELEMENT":"CHAVENFE",
-    "NAME":"UI.IDENTIFICATION$9$.LABEL",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"'Lançar Fatura'"
-   },
-   {
-    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
-    "ELEMENT":"CHAVENFE",
-    "NAME":"UI.IDENTIFICATION$9$.TYPE",
     "ELEMENT_TYPE":"S",
     "VALUE":"#FOR_ACTION"
    },
@@ -1319,64 +1172,15 @@
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "DDLANGUAGE":"P",
     "ELEMENT":"CHAVENFE",
-    "NAME":"UI.IDENTIFICATION$10$.LABEL",
-    "TEXT":"Confirmar"
-   },
-   {
-    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
-    "DDLANGUAGE":"P",
-    "ELEMENT":"CHAVENFE",
     "NAME":"UI.IDENTIFICATION$2$.LABEL",
-    "TEXT":"Verificar autorização"
+    "TEXT":"Continuar Processo"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "DDLANGUAGE":"P",
     "ELEMENT":"CHAVENFE",
     "NAME":"UI.IDENTIFICATION$3$.LABEL",
-    "TEXT":"Validar Atribuição itens"
-   },
-   {
-    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
-    "DDLANGUAGE":"P",
-    "ELEMENT":"CHAVENFE",
-    "NAME":"UI.IDENTIFICATION$4$.LABEL",
-    "TEXT":"Simular fatura/NF-e"
-   },
-   {
-    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
-    "DDLANGUAGE":"P",
-    "ELEMENT":"CHAVENFE",
-    "NAME":"UI.IDENTIFICATION$5$.LABEL",
-    "TEXT":"Gerar Delivery"
-   },
-   {
-    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
-    "DDLANGUAGE":"P",
-    "ELEMENT":"CHAVENFE",
-    "NAME":"UI.IDENTIFICATION$6$.LABEL",
-    "TEXT":"Entrada DANFE"
-   },
-   {
-    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
-    "DDLANGUAGE":"P",
-    "ELEMENT":"CHAVENFE",
-    "NAME":"UI.IDENTIFICATION$7$.LABEL",
-    "TEXT":"Revalidar autorização"
-   },
-   {
-    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
-    "DDLANGUAGE":"P",
-    "ELEMENT":"CHAVENFE",
-    "NAME":"UI.IDENTIFICATION$8$.LABEL",
-    "TEXT":"Entrada de Mercadoria"
-   },
-   {
-    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
-    "DDLANGUAGE":"P",
-    "ELEMENT":"CHAVENFE",
-    "NAME":"UI.IDENTIFICATION$9$.LABEL",
-    "TEXT":"Lançar Fatura"
+    "TEXT":"Reprocessar"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
@@ -1578,8 +1382,8 @@
     "EXTENDED_ARTIFACT":"/EXEDMINB/C_NFEMONITORH",
     "VARIANT":"",
     "LAYER":1500,
-    "DT_UUID":"FA163EA4AE5F1FD18288760EEFADD815",
-    "RT_HASH":"0F08D6CFC912E23151C8A09CF94EB93DC07B1814",
+    "DT_UUID":"FA163EA4AE5F1FD182F2207F72C8F824",
+    "RT_HASH":"247B31FDAE3CF7EE6BA796AE7B0A0053817A004B",
     "GEN_VERSION":"0",
     "TYPE":"0"
    }

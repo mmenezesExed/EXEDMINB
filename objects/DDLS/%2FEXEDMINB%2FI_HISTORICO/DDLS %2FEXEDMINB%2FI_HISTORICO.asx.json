@@ -9,10 +9,10 @@
     "AS4USER":"SAP_CUSTOMER",
     "AS4DATE":"0000-00-00",
     "AS4TIME":"00:00:00",
-    "SOURCE":"@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'Historico de atividades na NF'\r\n@Metadata.ignorePropagatedAnnotations: true\r\ndefine root view entity /EXEDMINB/I_HISTORICO\r\n  as select from /EXEDMINB/T_HISTORICO\r\n  \r\n  association to /EXEDMINB/T_ATIVIDADES         as _Atividades      on  $projection.Etapa = _Atividades.atividade\r\n\r\n{ \r\n  key Id,\r\n  key IdNfe,\r\n      IdHistorico,\r\n      Etapa,\r\n      Status,\r\n      Descricao,\r\n      created_by,\r\n      created_at,\r\n      _Atividades.descricao          as AtividadeDescricao\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[],\n\"ASSOCIATED\":\n[],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
+    "SOURCE":"@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'Historico de atividades na NF'\r\n@Metadata.ignorePropagatedAnnotations: true\r\ndefine root view entity /EXEDMINB/I_HISTORICO\r\n  as select from /EXEDMINB/T_HISTORICO\r\n\r\n  association to /EXEDMINB/T_ATIVIDADES as _Atividades on $projection.Etapa = _Atividades.atividade\r\n\r\n{\r\n  key Id,\r\n  key IdNfe,\r\n      IdHistorico,\r\n      Etapa,\r\n      case /EXEDMINB/T_HISTORICO.Status\r\n        when 1 then 'Erro'\r\n        when 2 then 'Pendente'\r\n        when 3 then 'Sucesso'\r\n        else 'Erro'\r\n      end                   as Status,\r\n      case\r\n        when /EXEDMINB/T_HISTORICO.Status is not initial then /EXEDMINB/T_HISTORICO.Status\r\n        else 1\r\n      end                   as StatusCriticality,\r\n      Descricao,\r\n      created_by,\r\n      created_at,\r\n      _Atividades.descricao as AtividadeDescricao\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[],\n\"ASSOCIATED\":\n[],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"42",
+    "CHGFLAG":"574",
     "SOURCE_TYPE":"W",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"

@@ -12,7 +12,7 @@
     "SOURCE":"@AbapCatalog.viewEnhancementCategory: [#NONE]\r\n@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'NFe CDS Additional Information'\r\n@Metadata.ignorePropagatedAnnotations: true\r\n@ObjectModel.usageType:{\r\n    serviceQuality: #X,\r\n    sizeCategory: #S,\r\n    dataClass: #MIXED\r\n}\r\ndefine view entity /EXEDMINB/I_NFEADDINFORM\r\n  as select from /EXEDMINB/T_NFeAddInform\r\n\r\n  composition [0..*] of /EXEDMINB/I_NFETXPAYERINF as _TaxPayerInformation\r\n  composition [0..*] of /EXEDMINB/I_NFETAXINFORM  as _TaxInformation\r\n  composition [0..*] of /EXEDMINB/I_NFELEGPROCREF as _LegalProcessReference\r\n\r\n  association to parent /EXEDMINB/I_NFEHEADER     as _Header on _Header.Id = $projection.Id\r\n{\r\n  key Id,\r\n      infAdFisco,\r\n      infCpl1,\r\n      infCpl2,\r\n      infCpl3,\r\n\r\n      /* Associaçao com Cabeçalho */\r\n      _Header,\r\n\r\n      _TaxPayerInformation,\r\n      _TaxInformation,\r\n      _LegalProcessReference\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[],\n\"ASSOCIATED\":\n[\n\"/EXEDMINB/I_NFEHEADER\",\n\"/EXEDMINB/I_NFELEGPROCREF\",\n\"/EXEDMINB/I_NFETAXINFORM\",\n\"/EXEDMINB/I_NFETXPAYERINF\"\n],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"J,WT429Z",
+    "CHGFLAG":"DZ",
     "SOURCE_TYPE":"W",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"

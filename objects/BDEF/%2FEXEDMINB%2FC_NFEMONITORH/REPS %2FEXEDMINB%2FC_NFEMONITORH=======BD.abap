@@ -1,20 +1,14 @@
 projection;
 strict ( 2 );
+use side effects;
 
 define behavior for /EXEDMINB/C_NFEMONITORH //alias <alias_name>
 {
 
   use delete;
 
-  use action etapa_100;
-  use action etapa_200;
-  use action etapa_300;
-  use action etapa_400;
-  use action etapa_500;
-  use action etapa_600;
-  use action etapa_700;
-  use action etapa_800;
-  use action etapa_900;
+  use action processar;
+  use action reprocessar;
 
   use association _Item;
 }

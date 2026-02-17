@@ -293,6 +293,42 @@
    },
    {
     "ID":"NA",
+    "OBJECT":"/EXEDMINB/NFE_MSGS997",
+    "LANGU":"D",
+    "TYP":"E",
+    "DOKVERSION":1,
+    "DOKSTATE":"N",
+    "DOKFORM":"S_DOCU_SHOW",
+    "DOKSTYLE":"S_DOCUS1",
+    "DOKFUSER":"SAP_CUSTOMER",
+    "DOKFRELES":"",
+    "DOKFDATE":"0000-00-00",
+    "DOKFTIME":"00:00:00",
+    "DOKLUSER":"SAP_CUSTOMER",
+    "DOKLRELES":"",
+    "DOKLDATE":"0000-00-00",
+    "DOKLTIME":"00:00:00"
+   },
+   {
+    "ID":"NA",
+    "OBJECT":"/EXEDMINB/NFE_MSGS998",
+    "LANGU":"D",
+    "TYP":"E",
+    "DOKVERSION":1,
+    "DOKSTATE":"N",
+    "DOKFORM":"S_DOCU_SHOW",
+    "DOKSTYLE":"S_DOCUS1",
+    "DOKFUSER":"SAP_CUSTOMER",
+    "DOKFRELES":"",
+    "DOKFDATE":"0000-00-00",
+    "DOKFTIME":"00:00:00",
+    "DOKLUSER":"SAP_CUSTOMER",
+    "DOKLRELES":"",
+    "DOKLDATE":"0000-00-00",
+    "DOKLTIME":"00:00:00"
+   },
+   {
+    "ID":"NA",
     "OBJECT":"/EXEDMINB/NFE_MSGS999",
     "LANGU":"D",
     "TYP":"E",
@@ -493,6 +529,28 @@
    },
    {
     "ID":"NA",
+    "OBJECT":"/EXEDMINB/NFE_MSGS997",
+    "LANGU":"D",
+    "TYP":"E",
+    "VERSION":1,
+    "MASTERLANG":"X",
+    "TXTLINES":0,
+    "DOKSTATE":"N",
+    "SELFDEF":"3"
+   },
+   {
+    "ID":"NA",
+    "OBJECT":"/EXEDMINB/NFE_MSGS998",
+    "LANGU":"D",
+    "TYP":"E",
+    "VERSION":1,
+    "MASTERLANG":"X",
+    "TXTLINES":0,
+    "DOKSTATE":"N",
+    "SELFDEF":"3"
+   },
+   {
+    "ID":"NA",
     "OBJECT":"/EXEDMINB/NFE_MSGS999",
     "LANGU":"D",
     "TYP":"E",
@@ -603,6 +661,18 @@
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"109",
     "TEXT":"Disparado o evento de confirmação da NF-e para o governo!"
+   },
+   {
+    "SPRSL":"P",
+    "ARBGB":"/EXEDMINB/NFE_MSGS",
+    "MSGNR":"997",
+    "TEXT":"Reprocessar etapa atual?"
+   },
+   {
+    "SPRSL":"P",
+    "ARBGB":"/EXEDMINB/NFE_MSGS",
+    "MSGNR":"998",
+    "TEXT":"Erro ao selecionar dados."
    },
    {
     "SPRSL":"P",
@@ -757,6 +827,20 @@
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
+    "MSGNR":"997",
+    "NAME":"SAP_CUSTOMER",
+    "DATUM":"2026-02-17",
+    "SELFDEF":"3"
+   },
+   {
+    "ARBGB":"/EXEDMINB/NFE_MSGS",
+    "MSGNR":"998",
+    "NAME":"SAP_CUSTOMER",
+    "DATUM":"2026-02-17",
+    "SELFDEF":"3"
+   },
+   {
+    "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"999",
     "NAME":"SAP_CUSTOMER",
     "DATUM":"2026-02-17",
@@ -788,8 +872,8 @@
     "CRELEASE":"",
     "DELFLAG":"",
     "TRANSLTTXT":"",
-    "CREATED_ON":"2026-02-11",
-    "CHECK_DATE":"2026-02-11",
+    "CREATED_ON":"2026-02-17",
+    "CHECK_DATE":"2026-02-17",
     "CHECK_CFG":""
    }
   ]

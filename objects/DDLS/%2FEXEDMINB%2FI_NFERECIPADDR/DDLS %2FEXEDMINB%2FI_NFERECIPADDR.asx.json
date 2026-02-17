@@ -12,7 +12,7 @@
     "SOURCE":"@AbapCatalog.viewEnhancementCategory: [#NONE]\r\n@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'NFe CDS Recipient Address'\r\n@Metadata.ignorePropagatedAnnotations: true\r\n@ObjectModel.usageType:{\r\n    serviceQuality: #X,\r\n    sizeCategory: #S,\r\n    dataClass: #MIXED\r\n}\r\ndefine view entity /EXEDMINB/I_NFERECIPADDR\r\n  as select from /EXEDMINB/T_NFeRecipAddr\r\n  \r\n  association to parent /EXEDMINB/I_NFERECIPIENT as _Recipient on _Recipient.Id = $projection.Id\r\n{\r\n  key Id,\r\n      xLgr,\r\n      nro,\r\n      xCpl,\r\n      xBairro,\r\n      cMun,\r\n      xMun,\r\n      UF,\r\n      CEP,\r\n      cPais,\r\n      xPais,\r\n      fone,\r\n      \r\n      /* Associaçao com Cabeçalho */\r\n      _Recipient\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[],\n\"ASSOCIATED\":\n[\n\"/EXEDMINB/I_NFERECIPIENT\"\n],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"J,W4T29",
+    "CHGFLAG":"9",
     "SOURCE_TYPE":"W",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"
