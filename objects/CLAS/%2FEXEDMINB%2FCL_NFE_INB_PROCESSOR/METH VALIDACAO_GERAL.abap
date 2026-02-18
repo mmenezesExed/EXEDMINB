@@ -43,9 +43,7 @@
        into @data(lv_destinatario).
 
      select * from /exedminb/i_ped_abertos as _PedAbertos
-       for all entries in @it_items
              where _Pedabertos~Supplier eq @ls_supplier-supplier
-               and _Pedabertos~Material eq @it_items-Material
                and _Pedabertos~QtdEmAberto > 0
              into table @data(lt_pedidosabertos).
 
