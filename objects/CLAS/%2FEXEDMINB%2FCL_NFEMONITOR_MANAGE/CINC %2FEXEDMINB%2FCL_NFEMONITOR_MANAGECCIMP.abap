@@ -807,100 +807,95 @@ class lhc__nfemonitorh implementation.
 
 
   method reprocessar.
-    if lhc_tabs_operations=>second_execution is not initial.
+    lhc_tabs_operations=>read_header_data( exporting it_keys  = value #( for key in keys ( corresponding #( key ) ) )
+                                           importing et_header = data(lt_header) ).
 
-      lhc_tabs_operations=>read_header_data( exporting it_keys  = value #( for key in keys ( corresponding #( key ) ) )
-                                             importing et_header = data(lt_header) ).
+    loop at lt_header assigning field-symbol(<f_header>).
+      case <f_header>-Atividade.
+        when 100.
+          modify entities of /EXEDMINB/I_NFeMonitorH
+              in local mode
+              entity _NFeMonitorH
+              execute etapa_100
+              from value #( for line in keys where ( ChaveNFe = <f_header>-ChaveNFe )
+                                                   ( corresponding #( line ) ) ).
 
-      loop at lt_header assigning field-symbol(<f_header>).
-        case <f_header>-Atividade.
-          when 100.
-            modify entities of /EXEDMINB/I_NFeMonitorH
-                in local mode
-                entity _NFeMonitorH
-                execute etapa_100
-                from value #( for line in keys where ( ChaveNFe = <f_header>-ChaveNFe )
-                                                     ( corresponding #( line ) ) ).
+        when 200.
+          modify entities of /EXEDMINB/I_NFeMonitorH
+              in local mode
+              entity _NFeMonitorH
+              execute etapa_200
+              from value #( for line in keys where ( ChaveNFe = <f_header>-ChaveNFe )
+                                                   ( corresponding #( line ) ) ).
 
-          when 200.
-            modify entities of /EXEDMINB/I_NFeMonitorH
-                in local mode
-                entity _NFeMonitorH
-                execute etapa_200
-                from value #( for line in keys where ( ChaveNFe = <f_header>-ChaveNFe )
-                                                     ( corresponding #( line ) ) ).
+        when 300.
+          modify entities of /EXEDMINB/I_NFeMonitorH
+              in local mode
+              entity _NFeMonitorH
+              execute etapa_300
+              from value #( for line in keys where ( ChaveNFe = <f_header>-ChaveNFe )
+                                                   ( corresponding #( line ) ) ).
 
-          when 300.
-            modify entities of /EXEDMINB/I_NFeMonitorH
-                in local mode
-                entity _NFeMonitorH
-                execute etapa_300
-                from value #( for line in keys where ( ChaveNFe = <f_header>-ChaveNFe )
-                                                     ( corresponding #( line ) ) ).
+        when 400.
+          modify entities of /EXEDMINB/I_NFeMonitorH
+              in local mode
+              entity _NFeMonitorH
+              execute etapa_400
+              from value #( for line in keys where ( ChaveNFe = <f_header>-ChaveNFe )
+                                                   ( corresponding #( line ) ) ).
 
-          when 400.
-            modify entities of /EXEDMINB/I_NFeMonitorH
-                in local mode
-                entity _NFeMonitorH
-                execute etapa_400
-                from value #( for line in keys where ( ChaveNFe = <f_header>-ChaveNFe )
-                                                     ( corresponding #( line ) ) ).
+        when 500.
+          modify entities of /EXEDMINB/I_NFeMonitorH
+              in local mode
+              entity _NFeMonitorH
+              execute etapa_500
+              from value #( for line in keys where ( ChaveNFe = <f_header>-ChaveNFe )
+                                                   ( corresponding #( line ) ) ).
 
-          when 500.
-            modify entities of /EXEDMINB/I_NFeMonitorH
-                in local mode
-                entity _NFeMonitorH
-                execute etapa_500
-                from value #( for line in keys where ( ChaveNFe = <f_header>-ChaveNFe )
-                                                     ( corresponding #( line ) ) ).
+        when 600.
+          modify entities of /EXEDMINB/I_NFeMonitorH
+              in local mode
+              entity _NFeMonitorH
+              execute etapa_600
+              from value #( for line in keys where ( ChaveNFe = <f_header>-ChaveNFe )
+                                                   ( corresponding #( line ) ) ).
 
-          when 600.
-            modify entities of /EXEDMINB/I_NFeMonitorH
-                in local mode
-                entity _NFeMonitorH
-                execute etapa_600
-                from value #( for line in keys where ( ChaveNFe = <f_header>-ChaveNFe )
-                                                     ( corresponding #( line ) ) ).
+        when 700.
+          modify entities of /EXEDMINB/I_NFeMonitorH
+              in local mode
+              entity _NFeMonitorH
+              execute etapa_700
+              from value #( for line in keys where ( ChaveNFe = <f_header>-ChaveNFe )
+                                                   ( corresponding #( line ) ) ).
 
-          when 700.
-            modify entities of /EXEDMINB/I_NFeMonitorH
-                in local mode
-                entity _NFeMonitorH
-                execute etapa_700
-                from value #( for line in keys where ( ChaveNFe = <f_header>-ChaveNFe )
-                                                     ( corresponding #( line ) ) ).
+        when 800.
+          modify entities of /EXEDMINB/I_NFeMonitorH
+              in local mode
+              entity _NFeMonitorH
+              execute etapa_800
+              from value #( for line in keys where ( ChaveNFe = <f_header>-ChaveNFe )
+                                                   ( corresponding #( line ) ) ).
 
-          when 800.
-            modify entities of /EXEDMINB/I_NFeMonitorH
-                in local mode
-                entity _NFeMonitorH
-                execute etapa_800
-                from value #( for line in keys where ( ChaveNFe = <f_header>-ChaveNFe )
-                                                     ( corresponding #( line ) ) ).
+        when 900.
+          modify entities of /EXEDMINB/I_NFeMonitorH
+              in local mode
+              entity _NFeMonitorH
+              execute etapa_900
+              from value #( for line in keys where ( ChaveNFe = <f_header>-ChaveNFe )
+                                                   ( corresponding #( line ) ) ).
 
-          when 900.
-            modify entities of /EXEDMINB/I_NFeMonitorH
-                in local mode
-                entity _NFeMonitorH
-                execute etapa_900
-                from value #( for line in keys where ( ChaveNFe = <f_header>-ChaveNFe )
-                                                     ( corresponding #( line ) ) ).
+      endcase.
+    endloop.
 
-        endcase.
-      endloop.
-
-    else.
-      lhc_tabs_operations=>second_execution = abap_true.
-      result = value #( for key in keys ( %tky = key-%tky
-                                          %param-ChaveNFe = key-ChaveNFe ) ).
-      reported-_nfemonitorh = value #( ( %msg = me->new_message( id       = lhc_tabs_operations=>cc_classe_msg
-                                                                 number   = 997
-                                                                 severity = if_abap_behv_message=>severity-warning ) ) ).
-    endif.
+    result = value #( for key in keys ( %tky = key-%tky
+                                        %param-ChaveNFe = key-ChaveNFe ) ).
+    reported-_nfemonitorh = value #( ( %msg = me->new_message( id       = lhc_tabs_operations=>cc_classe_msg
+                                                               number   = 997
+                                                               severity = if_abap_behv_message=>severity-warning ) ) ).
   endmethod.
 
-  METHOD rba_Historico.
-  ENDMETHOD.
+  method rba_Historico.
+  endmethod.
 
 endclass.
 
