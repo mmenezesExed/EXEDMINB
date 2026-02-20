@@ -12,7 +12,7 @@
     "SOURCE":"@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'Projection Cadastro De x Para UN'\r\n@Metadata.ignorePropagatedAnnotations: true\r\n@Metadata.allowExtensions: true\r\ndefine root view entity /EXEDMINB/C_CAD_UN\r\n  provider contract transactional_query\r\n  as projection on /EXEDMINB/I_CAD_UN\r\n{\r\n      @Consumption.valueHelpDefinition: [{ entity: { name: 'I_Supplier', element: 'Supplier'  }}]\r\n      @ObjectModel.text.element: [ '_Fornecedor.SupplierName' ]\r\n  key Fornecedor,\r\n  key unFor,\r\n      DescUnFor,\r\n      @Consumption.valueHelpDefinition: [{ entity: { name: 'I_UnitOfMeasureText', element: 'UnitOfMeasure'  }}]\r\n      @ObjectModel.text.element: [ '_Unit.UnitOfMeasureName' ]\r\n      unSap,\r\n      /* Associations */\r\n      _Fornecedor,\r\n      _Unit\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[\n\"/EXEDMINB/I_CAD_UN\"\n],\n\"ASSOCIATED\":\n[\n\"I_SUPPLIER\",\n\"I_UNITOFMEASURETEXT\"\n],\n\"BASE\":\n[\n\"/EXEDMINB/I_CAD_UN\"\n],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"D",
+    "CHGFLAG":"76",
     "SOURCE_TYPE":"P",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"

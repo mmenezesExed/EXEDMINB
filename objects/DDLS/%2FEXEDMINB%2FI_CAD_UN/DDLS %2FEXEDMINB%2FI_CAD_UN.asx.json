@@ -12,7 +12,7 @@
     "SOURCE":"@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'Interface Cadastro De x Para UN'\r\n@Metadata.ignorePropagatedAnnotations: true\r\ndefine root view entity /EXEDMINB/I_CAD_UN\r\n  as select from /EXEDMINB/T_CAD_UN\r\n\r\n  association [0..1] to I_Supplier          as _Fornecedor on $projection.Fornecedor = _Fornecedor.Supplier\r\n  association [0..1] to I_UnitOfMeasureText as _Unit       on $projection.unSap = _Unit.UnitOfMeasure \r\n                                                          and _Unit.Language = $session.system_language\r\n\r\n{\r\n  key Fornecedor,\r\n  key unFor,\r\n      DescUnFor,\r\n      unSap,\r\n      \r\n      _Fornecedor,\r\n      _Unit\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[],\n\"ASSOCIATED\":\n[\n\"I_SUPPLIER\",\n\"I_UNITOFMEASURETEXT\"\n],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"31D",
+    "CHGFLAG":"76",
     "SOURCE_TYPE":"W",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"
