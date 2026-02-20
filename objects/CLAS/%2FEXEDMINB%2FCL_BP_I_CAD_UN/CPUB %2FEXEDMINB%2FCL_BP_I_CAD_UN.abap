@@ -1,0 +1,1 @@
+class /exedminb/cl_bp_i_cad_un definition public abstract final for behavior of /exedminb/i_cad_un.

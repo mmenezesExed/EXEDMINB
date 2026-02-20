@@ -49,7 +49,7 @@ class lhc_tabs_operations definition.
 
     class-methods get_assist_ref returning value(ref) type ref to /exedminb/cl_nfe_inb_processor.
 
-    class-data: second_execution type abap_boolean.
+    class-data: is_processar type abap_boolean.
 
   private section.
     class-data mt_data_header_changes    type /exedminb/cl_nfe_inb_processor=>y_data_header.
@@ -436,7 +436,11 @@ class lhc__nfemonitorh implementation.
         if ls_header-StatusNFe eq '100'.
           "NF liberada
           ls_header-Status = 3. condense ls_header-Status no-gaps.
-          ls_header-Atividade = 200.
+
+          if lhc_tabs_operations=>is_processar is not initial.
+            ls_header-Atividade = 200.
+          endif.
+
           lhc_tabs_operations=>register_historico(
             exporting
               i_historico = value #( IdNFe = ls_header-ChaveNFe
@@ -583,7 +587,10 @@ class lhc__nfemonitorh implementation.
         continue.
       endif.
 
-      ls_header-atividade = 300.
+      if lhc_tabs_operations=>is_processar is not initial.
+        ls_header-Atividade = 300.
+      endif.
+
       lhc_tabs_operations=>register_historico(
             exporting
               i_historico = value #( IdNFe = ls_header-ChaveNFe
@@ -613,14 +620,19 @@ class lhc__nfemonitorh implementation.
       "Error
     endif.
 
-    clear: failed, reported, mapped.
-    reported-_nfemonitorh = value #( for l in lt_header ( ChaveNFe = l-ChaveNFe
-                                                          %msg = me->new_message(
-                                                                      id       = lhc_tabs_operations=>cc_classe_msg
-                                                                      number   = 999
-                                                                      severity = if_abap_behv_message=>severity-information
-                                                                    ) ) ).
+    loop at lt_header into data(ls_header).
+      if lhc_tabs_operations=>is_processar is not initial.
+        ls_header-Atividade = 400.
+        ls_header-Status = 3.
+      endif.
 
+      lhc_tabs_operations=>update_header_data( ls_header ).
+
+    endloop.
+
+
+
+    clear: failed, reported, mapped.
   endmethod.
 
   method etapa_400.
@@ -729,13 +741,15 @@ class lhc__nfemonitorh implementation.
     lhc_tabs_operations=>read_header_data( exporting it_keys  = value #( for key in keys ( corresponding #( key ) ) )
                                            importing et_header = data(lt_header) ).
 
+    lhc_tabs_operations=>is_processar = abap_true.
+
     loop at lt_header assigning field-symbol(<f_header>).
       case <f_header>-Atividade.
         when 100.
           modify entities of /EXEDMINB/I_NFeMonitorH
               in local mode
               entity _NFeMonitorH
-              execute etapa_200
+              execute etapa_100
               from value #( for line in keys where ( ChaveNFe = <f_header>-ChaveNFe )
                                                    ( corresponding #( line ) ) ).
 
@@ -743,7 +757,7 @@ class lhc__nfemonitorh implementation.
           modify entities of /EXEDMINB/I_NFeMonitorH
               in local mode
               entity _NFeMonitorH
-              execute etapa_300
+              execute etapa_200
               from value #( for line in keys where ( ChaveNFe = <f_header>-ChaveNFe )
                                                    ( corresponding #( line ) ) ).
 
@@ -751,7 +765,7 @@ class lhc__nfemonitorh implementation.
           modify entities of /EXEDMINB/I_NFeMonitorH
               in local mode
               entity _NFeMonitorH
-              execute etapa_400
+              execute etapa_300
               from value #( for line in keys where ( ChaveNFe = <f_header>-ChaveNFe )
                                                    ( corresponding #( line ) ) ).
 
@@ -759,7 +773,7 @@ class lhc__nfemonitorh implementation.
           modify entities of /EXEDMINB/I_NFeMonitorH
               in local mode
               entity _NFeMonitorH
-              execute etapa_500
+              execute etapa_400
               from value #( for line in keys where ( ChaveNFe = <f_header>-ChaveNFe )
                                                    ( corresponding #( line ) ) ).
 
@@ -767,7 +781,7 @@ class lhc__nfemonitorh implementation.
           modify entities of /EXEDMINB/I_NFeMonitorH
               in local mode
               entity _NFeMonitorH
-              execute etapa_600
+              execute etapa_500
               from value #( for line in keys where ( ChaveNFe = <f_header>-ChaveNFe )
                                                    ( corresponding #( line ) ) ).
 
@@ -775,7 +789,7 @@ class lhc__nfemonitorh implementation.
           modify entities of /EXEDMINB/I_NFeMonitorH
               in local mode
               entity _NFeMonitorH
-              execute etapa_700
+              execute etapa_600
               from value #( for line in keys where ( ChaveNFe = <f_header>-ChaveNFe )
                                                    ( corresponding #( line ) ) ).
 
@@ -783,11 +797,19 @@ class lhc__nfemonitorh implementation.
           modify entities of /EXEDMINB/I_NFeMonitorH
               in local mode
               entity _NFeMonitorH
-              execute etapa_800
+              execute etapa_700
               from value #( for line in keys where ( ChaveNFe = <f_header>-ChaveNFe )
                                                    ( corresponding #( line ) ) ).
 
         when 800.
+          modify entities of /EXEDMINB/I_NFeMonitorH
+              in local mode
+              entity _NFeMonitorH
+              execute etapa_800
+              from value #( for line in keys where ( ChaveNFe = <f_header>-ChaveNFe )
+                                                   ( corresponding #( line ) ) ).
+
+        when 900.
           modify entities of /EXEDMINB/I_NFeMonitorH
               in local mode
               entity _NFeMonitorH
@@ -801,7 +823,7 @@ class lhc__nfemonitorh implementation.
     result = value #( for key in keys ( %tky = key-%tky
                                         %param-ChaveNFe = key-ChaveNFe ) ).
     reported-_nfemonitorh = value #( ( %msg = me->new_message( id       = lhc_tabs_operations=>cc_classe_msg
-                                                               number   = 997
+                                                               number   = 996
                                                                severity = if_abap_behv_message=>severity-warning ) ) ).
   endmethod.
 
@@ -937,6 +959,12 @@ class lhc__nfemonitori implementation.
 
   method update.
     loop at entities into data(entitie).
+      if entitie-PedidoItem is not initial.
+        split entitie-PedidoItem at '/' into: entitie-Pedido entitie-ItemPedido.
+        entitie-%control-Pedido = if_abap_behv=>mk-on.
+        entitie-%control-ItemPedido = if_abap_behv=>mk-on.
+      endif.
+
       if lhc_tabs_operations=>update_item_div( is_value   = value #( Id = entitie-ChaveNFe
                                                                   ItemId = entitie-ItemNFe
                                                                ItemIdDiv = entitie-ItemIdDiv

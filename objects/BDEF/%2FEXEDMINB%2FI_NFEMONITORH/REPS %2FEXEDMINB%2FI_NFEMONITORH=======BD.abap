@@ -1,14 +1,25 @@
 unmanaged implementation in class /exedminb/cl_nfemonitor_manage unique;
 strict ( 2 );
+//with draft;
 auxiliary class /exedminb/cl_nfe_inb_processor;
 
 define behavior for /EXEDMINB/I_NFeMonitorH alias _NFeMonitorH
-lock master
+//draft table /exedminb/nfhdrf
+lock master //total etag DataEmissao
 authorization master ( instance, global )
 {
   field ( readonly ) ChaveNFe;
 
+  //internal create;
+  //internal update;
+
   delete;
+
+  //draft action Edit;
+  //draft action Activate optimized;
+  //draft action Discard;
+  //draft action Resume;
+  //draft determine action Prepare;
 
   //Object Actions
   action processar result [1] $self;
@@ -34,6 +45,7 @@ authorization master ( instance, global )
 }
 
 define behavior for /EXEDMINB/I_NFeMonitorI alias _NFeMonitorI
+//draft table /exedminb/nfidrf
 lock dependent by _Header
 authorization dependent by _Header
 {
@@ -41,11 +53,15 @@ authorization dependent by _Header
   update;
   internal delete;
   field ( readonly )
-  ChaveNFe, ItemNFe, ItemIdDiv, Plant, Material, DescricaoMaterial, NCM,
-  CFOP, ValorUnitario, UnidadeMedida, ValorICMS, AliquotaICMS, AliquotaIPI, ValorIPI;
+  ChaveNFe, ItemNFe, ItemIdDiv, Plant, Material, DescricaoMaterial, NCM, UnidadeMedidaXML, Pedido, ItemPedido,
+  CFOP, ValorUnitario, UnidadeMedida, ValorICMS, AliquotaICMS, AliquotaIPI, ValorIPI, DescricaoMaterialFornecedor;
 
   action dividir parameter /EXEDMINB/a_dividir_in_param;
   action eliminar;
+
+  side effects {
+    field Pedido affects field ItemPedido;
+  }
 
   association _Header;
 }
