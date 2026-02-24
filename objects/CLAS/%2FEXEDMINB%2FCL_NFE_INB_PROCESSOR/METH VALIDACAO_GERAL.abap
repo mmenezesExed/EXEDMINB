@@ -37,11 +37,6 @@
        return.
      endif.
 
-     select single from I_Supplier
-       fields Supplier
-       where TaxNumber1 eq @is_header-Destinatario
-       into @data(lv_destinatario).
-
      select * from /exedminb/i_ped_abertos as _PedAbertos
              where _Pedabertos~Supplier eq @ls_supplier-supplier
                and _Pedabertos~QtdEmAberto > 0
@@ -71,10 +66,12 @@
                inner join I_PurchaseOrderItemAPI01  as _POItem on _PO~PurchaseOrder = _POItem~PurchaseOrder
                inner join /exedminb/i_ped_abertos   as _POIAberto on _POItem~PurchaseOrder = _POIAberto~Pedido
                                                                  and _POItem~PurchaseOrderItem = _POIAberto~ItemPedido
+          left outer join I_Plant                   as _Centro on _Centro~Plant = _POItem~Plant
+
           left outer join I_ProductValuationBasic   as _PVB    on _PVB~Product = _POItem~Material
                                                               and _PVB~ValuationArea = _POItem~Plant
 
-        fields _PO~PurchaseOrder, _POItem~PurchaseOrderItem, _PO~PurchasingProcessingStatus, _PVB~ProductOriginType,
+        fields _PO~PurchaseOrder, _POItem~PurchaseOrderItem, _PO~PurchasingProcessingStatus, _PVB~ProductOriginType, _PO~CompanyCode, _Centro~BusinessPlace,
                _PO~PurchasingDocumentDeletionCode, _PO~Supplier, _PO~Customer, _POItem~Material, _POItem~Plant, _POIAberto~QtdConsumida, _POIAberto~QtdEmAberto
 
        where _PO~PurchaseOrder eq @ls_items-Pedido
@@ -110,8 +107,9 @@
          continue.
        endif.
 
-       "Valida Destinatario XML = Destinatario Pedido
-       if ls_pedido-Customer ne lv_destinatario.
+       "Valida Local Negocio Destinatario X Centro Pedido
+       if ls_pedido-BusinessPlace eq is_header-LocalDeNegocio and
+          ls_pedido-CompanyCode eq is_header-Empresa.
          failed-_nfemonitorh = value #( ( %fail = value #( cause = if_abap_behv=>cause-unauthorized )
                                           %key = value #( chavenfe = is_header-ChaveNFe )
                                           %action-etapa_200 = if_abap_behv=>mk-on ) ).

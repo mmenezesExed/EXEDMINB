@@ -1,6 +1,6 @@
    method determina_empresa.
      "Valida Destinatario XML x Pedido
-     "Valida Emissor x Fornecedor // Busca ID do destinatario com base no CNPJ
+     "Valida Emissor // Busca ID do destinatario com base no CNPJ
      data(ls_destinatario) = lcl_api_hub_read=>read_supplier( taxnumber1 = conv #( cs_header-Destinatario ) ).
 
      if ls_destinatario-d-results is initial.
