@@ -108,24 +108,12 @@ class lcl_api_hub_read implementation.
   endmethod.
 
   method read_product_plant.
-    try.
-        data(lo_client) = lcl_api_hub_read=>instance_http_client( ).
-        lo_client->get_http_request( )->set_uri_path( |/sap/opu/odata/sap/API_PRODUCT_SRV/A_ProductPlant(Product=`{ Product }`,Plant=`{ Plant }`)?$format=json| ).
-        data(lo_response) = lo_client->execute( if_web_http_client=>get ).
+    select * from I_ProductPlantBasic
+      where plant eq @plant
+        and Product eq @product
+    into table @data(lt_producstplants).
 
-        if lo_response->get_status( )-code eq 200.
-          /ui2/cl_json=>deserialize(
-            exporting
-              json = lo_response->get_text( )
-            changing
-              data = es_results
-          ).
-        endif.
-      catch  cx_web_http_client_error  into data(lx_error).
-        register_message( msg = lcl_tools=>new_message_with_text( severity = lcl_tools=>ms-error
-                                                                      text = lx_error->get_text( ) ) ).
-        return.
-    endtry.
+    es_results-d-results = value #( for line in lt_producstplants ( corresponding #( line ) ) ).
   endmethod.
 
   method read_supplier.
@@ -366,9 +354,9 @@ class lcl_tools implementation.
     formated = cnpj.
 
     " Remove tudo que não for número
-    REPLACE ALL OCCURRENCES OF REGEX '[^0-9]' IN formated WITH ''.
+    replace all occurrences of regex '[^0-9]' in formated with ''.
 
-    IF strlen( formated ) = 14.
+    if strlen( formated ) = 14.
 
       formated =
           formated+0(2)  && '.' &&
@@ -376,7 +364,7 @@ class lcl_tools implementation.
           formated+5(3)  && '/' &&
           formated+8(4)  && '-' &&
           formated+12(2).
-    ENDIF.
+    endif.
   endmethod.
 
 endclass.

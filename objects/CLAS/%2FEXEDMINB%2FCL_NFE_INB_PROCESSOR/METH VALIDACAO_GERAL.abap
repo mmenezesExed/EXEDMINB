@@ -181,7 +181,8 @@
                                             %msg = lcl_tools=>new_message(
                                                      number   = 013
                                                      severity = lcl_tools=>ms-error
-                                                           v1 = ls_items-Pedido ) ) ).
+                                                           v1 = ls_pedido-Material
+                                                           v2 = ls_pedido-Plant ) ) ).
 
          continue.
 
