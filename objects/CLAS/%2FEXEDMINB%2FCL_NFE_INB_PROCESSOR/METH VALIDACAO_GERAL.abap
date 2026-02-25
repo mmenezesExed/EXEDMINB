@@ -108,8 +108,8 @@
        endif.
 
        "Valida Local Negocio Destinatario X Centro Pedido
-       if ls_pedido-BusinessPlace eq is_header-LocalDeNegocio and
-          ls_pedido-CompanyCode eq is_header-Empresa.
+       if ls_pedido-BusinessPlace ne is_header-LocalDeNegocio or
+          ls_pedido-CompanyCode ne is_header-Empresa.
          failed-_nfemonitorh = value #( ( %fail = value #( cause = if_abap_behv=>cause-unauthorized )
                                           %key = value #( chavenfe = is_header-ChaveNFe )
                                           %action-etapa_200 = if_abap_behv=>mk-on ) ).
