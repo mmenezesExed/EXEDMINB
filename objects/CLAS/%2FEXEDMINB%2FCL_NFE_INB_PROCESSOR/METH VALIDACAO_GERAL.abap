@@ -172,6 +172,7 @@
                                                                       Plant   = conv #( ls_pedido-Plant ) ).
 
        "Valida NCM
+       ls_items-ncm = replace( val = ls_items-ncm sub = '.' with = '' occ = 0 ).
        if ls_product_plant-d-results is initial.
          failed-_nfemonitorh = value #( ( %fail = value #( cause = if_abap_behv=>cause-unauthorized )
                                           %key = value #( chavenfe = is_header-ChaveNFe )

@@ -113,6 +113,10 @@ class lcl_api_hub_read implementation.
         and Product eq @product
     into table @data(lt_producstplants).
 
+    loop at lt_producstplants assigning field-symbol(<f>).
+      <f>-ConsumptionTaxCtrlCode = replace( val = <f>-ConsumptionTaxCtrlCode sub = '.' with = '' occ = 0 ).
+    endloop.
+
     es_results-d-results = value #( for line in lt_producstplants ( corresponding #( line ) ) ).
   endmethod.
 
