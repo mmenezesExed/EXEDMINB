@@ -12,7 +12,7 @@
     "SOURCE":"@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'Composition Monitor Item'\r\n@Metadata.ignorePropagatedAnnotations: true\r\n@Metadata.allowExtensions: true\r\ndefine view entity /EXEDMINB/C_NFEMONITORI\r\n  as projection on /EXEDMINB/I_NFeMonitorI\r\n{\r\n  key ChaveNFe,\r\n  key ItemNFe,\r\n  key ItemIdDiv,      \r\n      Pedido,\r\n      ItemPedido,\r\n      @Consumption.valueHelpDefinition: [{ entity: { name: '/EXEDMINB/I_PedidoItem_VH', element: 'PedidoItem'  }}]\r\n      PedidoItem,\r\n      Plant,\r\n      @Consumption.valueHelpDefinition: [{ entity: { name: '/EXEDMINB/I_Product_VH', element: 'Product'  }}]\r\n      Material,\r\n      DescricaoMaterial,\r\n      DescricaoMaterialFornecedor,\r\n      NCM,\r\n      CFOP,\r\n      Quantidade,\r\n      ValorUnitario,\r\n      UnidadeMedidaXML,\r\n      UnidadeMedida,\r\n      Lote,\r\n      Origem,\r\n      AliquotaICMS,\r\n      ValorICMS,\r\n      AliquotaIPI,\r\n      ValorIPI,\r\n      /* Associations */\r\n      _Header: redirected to parent /EXEDMINB/C_NFEMONITORH\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[\n\"/EXEDMINB/I_NFEMONITORI\"\n],\n\"ASSOCIATED\":\n[\n\"/EXEDMINB/C_NFEMONITORH\",\n\"/EXEDMINB/I_NFEMONITORH\"\n],\n\"BASE\":\n[\n\"/EXEDMINB/I_NFEMONITORI\"\n],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"",
+    "CHGFLAG":"7",
     "SOURCE_TYPE":"P",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"

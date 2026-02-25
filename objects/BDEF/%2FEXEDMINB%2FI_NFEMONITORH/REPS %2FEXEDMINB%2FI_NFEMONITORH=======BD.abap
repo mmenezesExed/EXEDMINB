@@ -1,27 +1,12 @@
 unmanaged implementation in class /exedminb/cl_nfemonitor_manage unique;
-strict ( 2 );
-//with draft;
-auxiliary class /exedminb/cl_nfe_inb_processor;
+strict ( 2 ); auxiliary class /exedminb/cl_nfe_inb_processor;
 
 define behavior for /EXEDMINB/I_NFeMonitorH alias _NFeMonitorH
-//draft table /exedminb/nfhdrf
-lock master //total etag DataEmissao
-authorization master ( instance, global )
+lock master authorization master ( instance, global )
 {
   field ( readonly ) ChaveNFe;
 
-  //internal create;
-  //internal update;
-
   delete;
-
-  //draft action Edit;
-  //draft action Activate optimized;
-  //draft action Discard;
-  //draft action Resume;
-  //draft determine action Prepare;
-
-  //Object Actions
   action processar result [1] $self;
   action reprocessar result [1] $self;
 
@@ -45,7 +30,6 @@ authorization master ( instance, global )
 }
 
 define behavior for /EXEDMINB/I_NFeMonitorI alias _NFeMonitorI
-//draft table /exedminb/nfidrf
 lock dependent by _Header
 authorization dependent by _Header
 {

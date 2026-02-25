@@ -224,7 +224,7 @@
 
 
        "Validar saldo quantidade disponivel
-       if ls_pedido-QtdEmAberto ge ls_items-Quantidade.
+       if ls_pedido-QtdEmAberto lt ls_items-Quantidade.
          failed-_nfemonitorh = value #( ( %fail = value #( cause = if_abap_behv=>cause-unauthorized )
                                           %key = value #( chavenfe = is_header-ChaveNFe )
                                           %action-etapa_200 = if_abap_behv=>mk-on ) ).
