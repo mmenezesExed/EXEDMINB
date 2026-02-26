@@ -133,6 +133,9 @@
 
 
          check <f_nfeheader>-statusProc = 3.
+         <f_nfeheader>-bukrs = ls_nfemonitorh-empresa.
+         <f_nfeheader>-branch = ls_nfemonitorh-localdenegocio.
+
 
 
          ""Atribução Pedido/Item (validacao_geral)
