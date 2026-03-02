@@ -20,6 +20,7 @@
      types: yt_resported type response for reported early /exedminb/i_nfemonitorh.
      types: yt_mapped type response for mapped early /exedminb/i_nfemonitorh.
 
+
      types: tt_nfeheader    type standard table of /EXEDMINB/t_nfeheader,
             tt_nfeissue     type standard table of /EXEDMINB/t_nfeissuer,
             tt_nfeissueaddr type standard table of /EXEDMINB/t_nfeissueraddr,
