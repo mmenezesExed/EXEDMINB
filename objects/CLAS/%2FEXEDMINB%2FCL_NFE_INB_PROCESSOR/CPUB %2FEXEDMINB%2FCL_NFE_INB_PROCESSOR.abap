@@ -102,6 +102,8 @@
                                         failed    type yt_failed
                                         reported  type yt_resported.
 
+     methods cria_delivery.
+
      methods inicializar_novas_nfs
        importing
          it_nfeheader    type tt_nfeheader

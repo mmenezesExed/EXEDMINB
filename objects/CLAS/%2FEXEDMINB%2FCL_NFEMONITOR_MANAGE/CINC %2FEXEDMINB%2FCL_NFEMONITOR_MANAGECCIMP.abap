@@ -624,6 +624,15 @@ class lhc__nfemonitorh implementation.
       if lhc_tabs_operations=>is_processar is not initial.
         ls_header-Atividade = 400.
         ls_header-Status = 3.
+
+        lhc_tabs_operations=>register_historico(
+            exporting
+              i_historico = value #( IdNFe = ls_header-ChaveNFe
+                                     Etapa = ls_header-atividade
+                                     Status = ls_header-Status
+                                     Descricao = me->new_message( id = lhc_tabs_operations=>cc_classe_msg
+                                                                  number   = 018
+                                                                  severity = if_abap_behv_message=>severity-success )->if_message~get_text( ) ) ).
       endif.
 
       lhc_tabs_operations=>update_header_data( ls_header ).
@@ -636,6 +645,10 @@ class lhc__nfemonitorh implementation.
   endmethod.
 
   method etapa_400.
+
+
+
+
   endmethod.
 
   method etapa_500.

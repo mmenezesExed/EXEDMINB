@@ -62,19 +62,19 @@
                                             and ItemPedido is not initial.
 
        "Busca dados pedido/item
-       select single from I_PurchaseOrderAPI01      as _PO
-               inner join I_PurchaseOrderItemAPI01  as _POItem on _PO~PurchaseOrder = _POItem~PurchaseOrder
+       select single from I_PurchaseOrderAPI01      as _po
+               inner join I_PurchaseOrderItemAPI01  as _POItem on _po~PurchaseOrder = _POItem~PurchaseOrder
                inner join /exedminb/i_ped_abertos   as _POIAberto on _POItem~PurchaseOrder = _POIAberto~Pedido
                                                                  and _POItem~PurchaseOrderItem = _POIAberto~ItemPedido
           left outer join I_Plant                   as _Centro on _Centro~Plant = _POItem~Plant
 
-          left outer join I_ProductValuationBasic   as _PVB    on _PVB~Product = _POItem~Material
-                                                              and _PVB~ValuationArea = _POItem~Plant
+          left outer join I_ProductValuationBasic   as _pvb    on _pvb~Product = _POItem~Material
+                                                              and _pvb~ValuationArea = _POItem~Plant
 
-        fields _PO~PurchaseOrder, _POItem~PurchaseOrderItem, _PO~PurchasingProcessingStatus, _PVB~ProductOriginType, _PO~CompanyCode, _Centro~BusinessPlace,
-               _PO~PurchasingDocumentDeletionCode, _PO~Supplier, _PO~Customer, _POItem~Material, _POItem~Plant, _POIAberto~QtdConsumida, _POIAberto~QtdEmAberto
+        fields _po~PurchaseOrder, _POItem~PurchaseOrderItem, _po~PurchasingProcessingStatus, _pvb~ProductOriginType, _po~CompanyCode, _Centro~BusinessPlace,
+               _po~PurchasingDocumentDeletionCode, _po~Supplier, _po~Customer, _POItem~Material, _POItem~Plant, _POIAberto~QtdConsumida, _POIAberto~QtdEmAberto
 
-       where _PO~PurchaseOrder eq @ls_items-Pedido
+       where _po~PurchaseOrder eq @ls_items-Pedido
          and _POItem~PurchaseOrderItem eq @ls_items-ItemPedido
        into @data(ls_pedido).
 
