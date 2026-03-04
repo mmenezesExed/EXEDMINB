@@ -365,6 +365,10 @@
        modify /EXEDMINB/T_NFEProtocolo from table @it_nfeprot.
      endif.
 
+     if it_files is not initial.
+        modify /exedminb/t_nfefiles from table @it_files.
+     endif.
+
      if lt_historico is not initial.
        modify entities of /exedminb/i_historico
           entity Historico

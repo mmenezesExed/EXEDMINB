@@ -7,9 +7,9 @@
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "VERSION":"A",
     "CHANGED_BY":"SAP_CUSTOMER",
-    "CHANGED_ON":"2026-02-20",
-    "CHANGED_AT":"13:19:06",
-    "UUID":"FA163EA4AE5F1FD183CBD7646AA43824",
+    "CHANGED_ON":"2026-03-04",
+    "CHANGED_AT":"12:09:24",
+    "UUID":"FA163EA4AE5F1FD185F85F7F74DDD830",
     "ABAP_LANGUAGE_VERSION":"5"
    }
   ]
@@ -34,7 +34,7 @@
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "VERSION":"A",
     "UUID":"",
-    "SOURCE":"@Metadata.layer: #CORE\r\n\r\n@UI: {\r\n  headerInfo: {\r\n    typeName:       'Cabeçalho NF-e (Inbound)',\r\n    typeNamePlural: 'Cabeçalhos NF-e (Inbound)',\r\n    title: { value: 'ChaveNFe' },\r\n    description: { value: 'ProcessoSAP' }\r\n  }\r\n}\r\n\r\nannotate entity /EXEDMINB/C_NFEMONITORH with\r\n{\r\n\r\n  @UI.facet: [\r\n  {\r\n      id: 'HeaderData',\r\n      purpose: #HEADER,\r\n      type: #FIELDGROUP_REFERENCE,\r\n      position: 10,\r\n      label: '',\r\n      targetQualifier: 'HeaderGroup'\r\n  },\r\n  {\r\n    id: 'DadosNotaFiscal',\r\n    position: 10,\r\n    purpose: #STANDARD,\r\n    type: #IDENTIFICATION_REFERENCE,\r\n    label: 'Dados da Nota Fiscal',\r\n    targetQualifier: 'DadosNotaFiscal'\r\n  },\r\n  {\r\n    id: 'Emitente',\r\n    position: 20,\r\n    purpose: #STANDARD,\r\n    type: #IDENTIFICATION_REFERENCE,\r\n    label: 'Emitente',\r\n    targetQualifier: 'Emitente'\r\n  },\r\n  {\r\n    id: 'Destinatario',\r\n    position: 30,\r\n    purpose: #STANDARD,\r\n    type: #IDENTIFICATION_REFERENCE,\r\n    label: 'Destinatário',\r\n    targetQualifier: 'Destinatario'\r\n  },\r\n  {\r\n    id: 'Valores',\r\n    position: 40,\r\n    purpose: #STANDARD,\r\n    type: #IDENTIFICATION_REFERENCE,\r\n    label: 'Totais da Nota',\r\n    targetQualifier: 'Valores'\r\n  },\r\n  {\r\n    id: 'Itens',\r\n    position: 50,\r\n    purpose: #STANDARD,\r\n    type: #LINEITEM_REFERENCE,\r\n    label: 'Itens da Nota',\r\n    targetElement: '_Item'\r\n  },\r\n  {\r\n    id: 'Historico',\r\n    position: 60,\r\n    purpose: #STANDARD,\r\n    type: #LINEITEM_REFERENCE,\r\n    label: 'Historico',\r\n    targetElement: '_Historico'\r\n  }\r\n  ]\r\n\r\n  @EndUserText.label: 'Status'\r\n  @UI.lineItem: [{ position: 3, criticality: 'StatusCriticality', criticalityRepresentation: #WITH_ICON }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 2 } ]\r\n  @UI.dataPoint: { criticality: 'StatusCriticality', criticalityRepresentation: #WITH_ICON }\r\n  @UI.selectionField: [{ position: 1 }]\r\n  @UI.fieldGroup: [{ qualifier: 'HeaderGroup', position: 1 }]\r\n  Status;\r\n\r\n  @EndUserText.label: 'Chave NF-e'\r\n  @UI.lineItem: [ { position: 10 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 20 },\r\n                          { type: #FOR_ACTION, dataAction: 'processar', label: 'Continuar Processo' },\r\n                          { type: #FOR_ACTION, dataAction: 'reprocessar', label: 'Reprocessar' } ]\r\n                        //{ type: #FOR_ACTION, dataAction: 'etapa_100', label: 'Verificar autorização' },\r\n                        //{ type: #FOR_ACTION, dataAction: 'etapa_200', label: 'Validar Atribuição itens' },\r\n                        //{ type: #FOR_ACTION, dataAction: 'etapa_300', label: 'Simular fatura/NF-e' },\r\n                        //{ type: #FOR_ACTION, dataAction: 'etapa_400', label: 'Gerar Delivery' },\r\n                        //{ type: #FOR_ACTION, dataAction: 'etapa_500', label: 'Entrada DANFE' },\r\n                        //{ type: #FOR_ACTION, dataAction: 'etapa_600', label: 'Revalidar autorização' },\r\n                        //{ type: #FOR_ACTION, dataAction: 'etapa_700', label: 'Entrada de Mercadoria' },\r\n                        //{ type: #FOR_ACTION, dataAction: 'etapa_800', label: 'Lançar Fatura' },\r\n                        //{ type: #FOR_ACTION, dataAction: 'etapa_900', label: 'Confirmar' } ]\r\n  @UI.selectionField: [{ position: 10 }]\r\n  ChaveNFe;\r\n\r\n  @EndUserText.label: 'Empresa'\r\n  @UI.lineItem: [ { position: 20 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 30 } ]\r\n  @UI.selectionField: [{ position: 20 }]\r\n  Empresa;\r\n\r\n  @EndUserText.label: 'Filial'\r\n  @UI.lineItem: [ { position: 30 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 40 } ]\r\n  @UI.selectionField: [{ position: 30 }]\r\n  LocalDeNegocio;\r\n\r\n  @EndUserText.label: 'Processo'\r\n  @UI.lineItem: [ { position: 40 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 3 } ]\r\n  @UI.selectionField: [{ position: 35 }]\r\n  ProcessoSAP;\r\n\r\n  @EndUserText.label: 'Etapa Atual'\r\n  @UI.lineItem: [ { position: 4}]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 4 } ]\r\n  @UI.selectionField: [{ position: 40 }]\r\n  @UI.fieldGroup: [{ qualifier: 'HeaderGroup', position: 10 }]\r\n  Atividade;\r\n\r\n  @EndUserText.label: 'Número NF-e'\r\n  @UI.lineItem: [ { position: 60 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 70 } ]\r\n  @UI.selectionField: [{ position: 50 }]\r\n  @UI.fieldGroup: [{ qualifier: 'HeaderGroup', position: 20 }]\r\n  NumeroNFe;\r\n\r\n  @EndUserText.label: 'Série'\r\n  @UI.lineItem: [ { position: 70 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 80 } ]\r\n  @UI.selectionField: [{ position: 60 }]\r\n  Serie;\r\n\r\n  @EndUserText.label: 'Data de Emissão'\r\n  @UI.lineItem: [ { position: 80 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 90 } ]\r\n  @UI.selectionField: [{ position: 70 }]\r\n  DataEmissao;\r\n\r\n  @EndUserText.label: 'Entrada de Mercadoria'\r\n  @UI.lineItem: [ { position: 83 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 83 } ]\r\n  EntradaMercadoria;\r\n\r\n  @EndUserText.label: 'Entrada de Fatura'\r\n  @UI.lineItem: [ { position: 84 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 84 } ]\r\n  EntradaFatura;\r\n\r\n  @EndUserText.label: 'CNPJ Emitente'\r\n  @UI.lineItem: [ { position: 90 }]\r\n  @UI.identification: [ { qualifier: 'Emitente', position: 10 } ]\r\n  @UI.selectionField: [{ position: 80 }]\r\n  Emitente;\r\n\r\n  @EndUserText.label: 'Nome Emitente'\r\n  @UI.lineItem: [ { position: 100 }]\r\n  @UI.identification: [ { qualifier: 'Emitente', position: 20 } ]\r\n  NomeEmitente;\r\n\r\n  @EndUserText.label: 'CNPJ/CPF Destinatário'\r\n  @UI.lineItem: [ { position: 110 }]\r\n  @UI.identification: [ { qualifier: 'Destinatario', position: 10 } ]\r\n  Destinatario;\r\n\r\n  @EndUserText.label: 'Nome Destinatário'\r\n  @UI.lineItem: [ { position: 120 }]\r\n  @UI.identification: [ { qualifier: 'Destinatario', position: 20 } ]\r\n  NomeDestinatario;\r\n\r\n  @EndUserText.label: 'Valor Total NF-e'\r\n  @UI.lineItem: [ { position: 130 }]\r\n  @UI.identification: [ { qualifier: 'Valores', position: 10 } ]\r\n  ValorTotalNFe;\r\n\r\n  @EndUserText.label: 'Valor Total ICMS'\r\n  @UI.lineItem: [ { position: 140 }]\r\n  @UI.identification: [ { qualifier: 'Valores', position: 20 } ]\r\n  ValorTotalICMS;\r\n\r\n  @EndUserText.label: 'Valor Total IPI'\r\n  @UI.lineItem: [ { position: 145 }]\r\n  @UI.identification: [ { qualifier: 'Valores', position: 25 } ]\r\n  ValorTotalIPI;\r\n\r\n  @EndUserText.label: 'Valor ICMS ST'\r\n  @UI.lineItem: [ { position: 150 }]\r\n  @UI.identification: [ { qualifier: 'Valores', position: 30 } ]\r\n  ValorTotalICMSST;\r\n\r\n  @EndUserText.label: 'Valor Frete'\r\n  @UI.lineItem: [ { position: 160 }]\r\n  @UI.identification: [ { qualifier: 'Valores', position: 40 } ]\r\n  ValorFrete;\r\n\r\n  @EndUserText.label: 'Valor Seguro'\r\n  @UI.lineItem: [ { position: 170 }]\r\n  @UI.identification: [ { qualifier: 'Valores', position: 50 } ]\r\n  ValorSeguro;\r\n\r\n  @EndUserText.label: 'Outras Despesas'\r\n  @UI.lineItem: [ { position: 180 }]\r\n  @UI.identification: [ { qualifier: 'Valores', position: 60 } ]\r\n  ValorOutrasDesp;\r\n\r\n  @EndUserText.label: 'Status NF-e'\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 100 } ]\r\n  StatusNFe;\r\n\r\n  @UI.hidden: true\r\n  AtividadeDescricao;\r\n  @UI.hidden: true\r\n  CompanyCodeName;\r\n  @UI.hidden: true\r\n  BusinessPlaceName;\r\n  @UI.hidden: true\r\n  StatusCriticality;\r\n  @UI.hidden: true\r\n  StatusNFeDescricao;\r\n\r\n}"
+    "SOURCE":"@Metadata.layer: #CORE\r\n\r\n@UI: {\r\n  headerInfo: {\r\n    typeName:       'Cabeçalho NF-e (Inbound)',\r\n    typeNamePlural: 'Cabeçalhos NF-e (Inbound)',\r\n    title: { value: 'ChaveNFe' },\r\n    description: { value: 'ProcessoSAP' }\r\n  }\r\n}\r\n\r\nannotate entity /EXEDMINB/C_NFEMONITORH with\r\n{\r\n\r\n  @UI.facet: [\r\n  {\r\n      id: 'HeaderData',\r\n      purpose: #HEADER,\r\n      type: #FIELDGROUP_REFERENCE,\r\n      position: 10,\r\n      label: '',\r\n      targetQualifier: 'HeaderGroup'\r\n  },\r\n  {\r\n    id: 'DadosNotaFiscal',\r\n    position: 10,\r\n    purpose: #STANDARD,\r\n    type: #IDENTIFICATION_REFERENCE,\r\n    label: 'Dados da Nota Fiscal',\r\n    targetQualifier: 'DadosNotaFiscal'\r\n  },\r\n  {\r\n    id: 'idFiles',\r\n    position: 11,\r\n    purpose: #STANDARD,\r\n    type: #LINEITEM_REFERENCE,\r\n    label: 'Arquivos',\r\n    targetElement: '_Files'\r\n  },\r\n  {\r\n    id: 'Emitente',\r\n    position: 20,\r\n    purpose: #STANDARD,\r\n    type: #IDENTIFICATION_REFERENCE,\r\n    label: 'Emitente',\r\n    targetQualifier: 'Emitente'\r\n  },\r\n  {\r\n    id: 'Destinatario',\r\n    position: 30,\r\n    purpose: #STANDARD,\r\n    type: #IDENTIFICATION_REFERENCE,\r\n    label: 'Destinatário',\r\n    targetQualifier: 'Destinatario'\r\n  },\r\n  {\r\n    id: 'Valores',\r\n    position: 40,\r\n    purpose: #STANDARD,\r\n    type: #IDENTIFICATION_REFERENCE,\r\n    label: 'Totais da Nota',\r\n    targetQualifier: 'Valores'\r\n  },\r\n  {\r\n    id: 'Itens',\r\n    position: 50,\r\n    purpose: #STANDARD,\r\n    type: #LINEITEM_REFERENCE,\r\n    label: 'Itens da Nota',\r\n    targetElement: '_Item'\r\n  },\r\n  {\r\n    id: 'Historico',\r\n    position: 60,\r\n    purpose: #STANDARD,\r\n    type: #LINEITEM_REFERENCE,\r\n    label: 'Historico',\r\n    targetElement: '_Historico'\r\n  }\r\n  ]\r\n\r\n  @EndUserText.label: 'Status'\r\n  @UI.lineItem: [{ position: 3, criticality: 'StatusCriticality', criticalityRepresentation: #WITH_ICON }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 2 } ]\r\n  @UI.dataPoint: { criticality: 'StatusCriticality', criticalityRepresentation: #WITH_ICON }\r\n  @UI.selectionField: [{ position: 1 }]\r\n  @UI.fieldGroup: [{ qualifier: 'HeaderGroup', position: 1 }]\r\n  Status;\r\n\r\n  @EndUserText.label: 'Chave NF-e'\r\n  @UI.lineItem: [ { position: 10 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 20 },\r\n                          { type: #FOR_ACTION, dataAction: 'processar', label: 'Continuar Processo' },\r\n                          { type: #FOR_ACTION, dataAction: 'reprocessar', label: 'Reprocessar' } ]\r\n  @UI.selectionField: [{ position: 10 }]\r\n  ChaveNFe;\r\n\r\n  @EndUserText.label: 'Empresa'\r\n  @UI.lineItem: [ { position: 20 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 30 } ]\r\n  @UI.selectionField: [{ position: 20 }]\r\n  Empresa;\r\n\r\n  @EndUserText.label: 'Filial'\r\n  @UI.lineItem: [ { position: 30 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 40 } ]\r\n  @UI.selectionField: [{ position: 30 }]\r\n  LocalDeNegocio;\r\n\r\n  @EndUserText.label: 'Processo'\r\n  @UI.lineItem: [ { position: 40 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 3 } ]\r\n  @UI.selectionField: [{ position: 35 }]\r\n  ProcessoSAP;\r\n\r\n  @EndUserText.label: 'Etapa Atual'\r\n  @UI.lineItem: [ { position: 4}]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 4 } ]\r\n  @UI.selectionField: [{ position: 40 }]\r\n  @UI.fieldGroup: [{ qualifier: 'HeaderGroup', position: 10 }]\r\n  Atividade;\r\n\r\n  @EndUserText.label: 'Número NF-e'\r\n  @UI.lineItem: [ { position: 60 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 70 } ]\r\n  @UI.selectionField: [{ position: 50 }]\r\n  @UI.fieldGroup: [{ qualifier: 'HeaderGroup', position: 20 }]\r\n  NumeroNFe;\r\n\r\n  @EndUserText.label: 'Série'\r\n  @UI.lineItem: [ { position: 70 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 80 } ]\r\n  @UI.selectionField: [{ position: 60 }]\r\n  Serie;\r\n\r\n  @EndUserText.label: 'Data de Emissão'\r\n  @UI.lineItem: [ { position: 80 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 90 } ]\r\n  @UI.selectionField: [{ position: 70 }]\r\n  DataEmissao;\r\n\r\n  @EndUserText.label: 'Entrada de Mercadoria'\r\n  @UI.lineItem: [ { position: 83 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 83 } ]\r\n  EntradaMercadoria;\r\n  \r\n  @UI.lineItem: [ { position: 84 }]\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 84 } ]\r\n  EntradaFatura;\r\n\r\n  @EndUserText.label: 'CNPJ Emitente'\r\n  @UI.lineItem: [ { position: 90 }]\r\n  @UI.identification: [ { qualifier: 'Emitente', position: 10 } ]\r\n  @UI.selectionField: [{ position: 80 }]\r\n  Emitente;\r\n\r\n  @EndUserText.label: 'Nome Emitente'\r\n  @UI.lineItem: [ { position: 100 }]\r\n  @UI.identification: [ { qualifier: 'Emitente', position: 20 } ]\r\n  NomeEmitente;\r\n\r\n  @EndUserText.label: 'CNPJ/CPF Destinatário'\r\n  @UI.lineItem: [ { position: 110 }]\r\n  @UI.identification: [ { qualifier: 'Destinatario', position: 10 } ]\r\n  Destinatario;\r\n\r\n  @EndUserText.label: 'Nome Destinatário'\r\n  @UI.lineItem: [ { position: 120 }]\r\n  @UI.identification: [ { qualifier: 'Destinatario', position: 20 } ]\r\n  NomeDestinatario;\r\n\r\n  @EndUserText.label: 'Valor Total NF-e'\r\n  @UI.lineItem: [ { position: 130 }]\r\n  @UI.identification: [ { qualifier: 'Valores', position: 10 } ]\r\n  ValorTotalNFe;\r\n\r\n  @EndUserText.label: 'Valor Total ICMS'\r\n  @UI.lineItem: [ { position: 140 }]\r\n  @UI.identification: [ { qualifier: 'Valores', position: 20 } ]\r\n  ValorTotalICMS;\r\n\r\n  @EndUserText.label: 'Valor Total IPI'\r\n  @UI.lineItem: [ { position: 145 }]\r\n  @UI.identification: [ { qualifier: 'Valores', position: 25 } ]\r\n  ValorTotalIPI;\r\n\r\n  @EndUserText.label: 'Valor ICMS ST'\r\n  @UI.lineItem: [ { position: 150 }]\r\n  @UI.identification: [ { qualifier: 'Valores', position: 30 } ]\r\n  ValorTotalICMSST;\r\n\r\n  @EndUserText.label: 'Valor Frete'\r\n  @UI.lineItem: [ { position: 160 }]\r\n  @UI.identification: [ { qualifier: 'Valores', position: 40 } ]\r\n  ValorFrete;\r\n\r\n  @EndUserText.label: 'Valor Seguro'\r\n  @UI.lineItem: [ { position: 170 }]\r\n  @UI.identification: [ { qualifier: 'Valores', position: 50 } ]\r\n  ValorSeguro;\r\n\r\n  @EndUserText.label: 'Outras Despesas'\r\n  @UI.lineItem: [ { position: 180 }]\r\n  @UI.identification: [ { qualifier: 'Valores', position: 60 } ]\r\n  ValorOutrasDesp;\r\n\r\n  @EndUserText.label: 'Status NF-e'\r\n  @UI.identification: [ { qualifier: 'DadosNotaFiscal', position: 100 } ]\r\n  StatusNFe;\r\n\r\n  @UI.hidden: true\r\n  AtividadeDescricao;\r\n  @UI.hidden: true\r\n  CompanyCodeName;\r\n  @UI.hidden: true\r\n  BusinessPlaceName;\r\n  @UI.hidden: true\r\n  StatusCriticality;\r\n  @UI.hidden: true\r\n  StatusNFeDescricao;\r\n\r\n}"
    }
   ]
  },
@@ -349,13 +349,6 @@
     "NAME":"UI.SELECTIONFIELD$1$.POSITION",
     "ELEMENT_TYPE":"S",
     "VALUE":"20"
-   },
-   {
-    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
-    "ELEMENT":"ENTRADAFATURA",
-    "NAME":"ENDUSERTEXT.LABEL",
-    "ELEMENT_TYPE":"S",
-    "VALUE":"'Entrada de Fatura'"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
@@ -726,21 +719,21 @@
     "ELEMENT":"STATUS",
     "NAME":"UI.FACET$3$.ID",
     "ELEMENT_TYPE":"S",
-    "VALUE":"'Emitente'"
+    "VALUE":"'idFiles'"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "ELEMENT":"STATUS",
     "NAME":"UI.FACET$3$.LABEL",
     "ELEMENT_TYPE":"S",
-    "VALUE":"'Emitente'"
+    "VALUE":"'Arquivos'"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "ELEMENT":"STATUS",
     "NAME":"UI.FACET$3$.POSITION",
     "ELEMENT_TYPE":"S",
-    "VALUE":"20"
+    "VALUE":"11"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
@@ -752,37 +745,37 @@
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "ELEMENT":"STATUS",
-    "NAME":"UI.FACET$3$.TARGETQUALIFIER",
+    "NAME":"UI.FACET$3$.TARGETELEMENT",
     "ELEMENT_TYPE":"S",
-    "VALUE":"'Emitente'"
+    "VALUE":"'_Files'"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "ELEMENT":"STATUS",
     "NAME":"UI.FACET$3$.TYPE",
     "ELEMENT_TYPE":"S",
-    "VALUE":"#IDENTIFICATION_REFERENCE"
+    "VALUE":"#LINEITEM_REFERENCE"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "ELEMENT":"STATUS",
     "NAME":"UI.FACET$4$.ID",
     "ELEMENT_TYPE":"S",
-    "VALUE":"'Destinatario'"
+    "VALUE":"'Emitente'"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "ELEMENT":"STATUS",
     "NAME":"UI.FACET$4$.LABEL",
     "ELEMENT_TYPE":"S",
-    "VALUE":"'Destinatário'"
+    "VALUE":"'Emitente'"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "ELEMENT":"STATUS",
     "NAME":"UI.FACET$4$.POSITION",
     "ELEMENT_TYPE":"S",
-    "VALUE":"30"
+    "VALUE":"20"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
@@ -796,7 +789,7 @@
     "ELEMENT":"STATUS",
     "NAME":"UI.FACET$4$.TARGETQUALIFIER",
     "ELEMENT_TYPE":"S",
-    "VALUE":"'Destinatario'"
+    "VALUE":"'Emitente'"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
@@ -810,21 +803,21 @@
     "ELEMENT":"STATUS",
     "NAME":"UI.FACET$5$.ID",
     "ELEMENT_TYPE":"S",
-    "VALUE":"'Valores'"
+    "VALUE":"'Destinatario'"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "ELEMENT":"STATUS",
     "NAME":"UI.FACET$5$.LABEL",
     "ELEMENT_TYPE":"S",
-    "VALUE":"'Totais da Nota'"
+    "VALUE":"'Destinatário'"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "ELEMENT":"STATUS",
     "NAME":"UI.FACET$5$.POSITION",
     "ELEMENT_TYPE":"S",
-    "VALUE":"40"
+    "VALUE":"30"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
@@ -838,7 +831,7 @@
     "ELEMENT":"STATUS",
     "NAME":"UI.FACET$5$.TARGETQUALIFIER",
     "ELEMENT_TYPE":"S",
-    "VALUE":"'Valores'"
+    "VALUE":"'Destinatario'"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
@@ -852,21 +845,21 @@
     "ELEMENT":"STATUS",
     "NAME":"UI.FACET$6$.ID",
     "ELEMENT_TYPE":"S",
-    "VALUE":"'Itens'"
+    "VALUE":"'Valores'"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "ELEMENT":"STATUS",
     "NAME":"UI.FACET$6$.LABEL",
     "ELEMENT_TYPE":"S",
-    "VALUE":"'Itens da Nota'"
+    "VALUE":"'Totais da Nota'"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "ELEMENT":"STATUS",
     "NAME":"UI.FACET$6$.POSITION",
     "ELEMENT_TYPE":"S",
-    "VALUE":"50"
+    "VALUE":"40"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
@@ -878,37 +871,37 @@
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "ELEMENT":"STATUS",
-    "NAME":"UI.FACET$6$.TARGETELEMENT",
+    "NAME":"UI.FACET$6$.TARGETQUALIFIER",
     "ELEMENT_TYPE":"S",
-    "VALUE":"'_Item'"
+    "VALUE":"'Valores'"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "ELEMENT":"STATUS",
     "NAME":"UI.FACET$6$.TYPE",
     "ELEMENT_TYPE":"S",
-    "VALUE":"#LINEITEM_REFERENCE"
+    "VALUE":"#IDENTIFICATION_REFERENCE"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "ELEMENT":"STATUS",
     "NAME":"UI.FACET$7$.ID",
     "ELEMENT_TYPE":"S",
-    "VALUE":"'Historico'"
+    "VALUE":"'Itens'"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "ELEMENT":"STATUS",
     "NAME":"UI.FACET$7$.LABEL",
     "ELEMENT_TYPE":"S",
-    "VALUE":"'Historico'"
+    "VALUE":"'Itens da Nota'"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "ELEMENT":"STATUS",
     "NAME":"UI.FACET$7$.POSITION",
     "ELEMENT_TYPE":"S",
-    "VALUE":"60"
+    "VALUE":"50"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
@@ -922,12 +915,54 @@
     "ELEMENT":"STATUS",
     "NAME":"UI.FACET$7$.TARGETELEMENT",
     "ELEMENT_TYPE":"S",
-    "VALUE":"'_Historico'"
+    "VALUE":"'_Item'"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "ELEMENT":"STATUS",
     "NAME":"UI.FACET$7$.TYPE",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"#LINEITEM_REFERENCE"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
+    "ELEMENT":"STATUS",
+    "NAME":"UI.FACET$8$.ID",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'Historico'"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
+    "ELEMENT":"STATUS",
+    "NAME":"UI.FACET$8$.LABEL",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'Historico'"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
+    "ELEMENT":"STATUS",
+    "NAME":"UI.FACET$8$.POSITION",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"60"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
+    "ELEMENT":"STATUS",
+    "NAME":"UI.FACET$8$.PURPOSE",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"#STANDARD"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
+    "ELEMENT":"STATUS",
+    "NAME":"UI.FACET$8$.TARGETELEMENT",
+    "ELEMENT_TYPE":"S",
+    "VALUE":"'_Historico'"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
+    "ELEMENT":"STATUS",
+    "NAME":"UI.FACET$8$.TYPE",
     "ELEMENT_TYPE":"S",
     "VALUE":"#LINEITEM_REFERENCE"
    },
@@ -1297,13 +1332,6 @@
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "DDLANGUAGE":"P",
-    "ELEMENT":"ENTRADAFATURA",
-    "NAME":"ENDUSERTEXT.LABEL",
-    "TEXT":"Entrada de Fatura"
-   },
-   {
-    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
-    "DDLANGUAGE":"P",
     "ELEMENT":"ENTRADAMERCADORIA",
     "NAME":"ENDUSERTEXT.LABEL",
     "TEXT":"Entrada de Mercadoria"
@@ -1376,34 +1404,41 @@
     "DDLANGUAGE":"P",
     "ELEMENT":"STATUS",
     "NAME":"UI.FACET$3$.LABEL",
-    "TEXT":"Emitente"
+    "TEXT":"Arquivos"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "DDLANGUAGE":"P",
     "ELEMENT":"STATUS",
     "NAME":"UI.FACET$4$.LABEL",
-    "TEXT":"Destinatário"
+    "TEXT":"Emitente"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "DDLANGUAGE":"P",
     "ELEMENT":"STATUS",
     "NAME":"UI.FACET$5$.LABEL",
-    "TEXT":"Totais da Nota"
+    "TEXT":"Destinatário"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "DDLANGUAGE":"P",
     "ELEMENT":"STATUS",
     "NAME":"UI.FACET$6$.LABEL",
-    "TEXT":"Itens da Nota"
+    "TEXT":"Totais da Nota"
    },
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "DDLANGUAGE":"P",
     "ELEMENT":"STATUS",
     "NAME":"UI.FACET$7$.LABEL",
+    "TEXT":"Itens da Nota"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
+    "DDLANGUAGE":"P",
+    "ELEMENT":"STATUS",
+    "NAME":"UI.FACET$8$.LABEL",
     "TEXT":"Historico"
    },
    {
@@ -1473,8 +1508,8 @@
     "EXTENDED_ARTIFACT":"/EXEDMINB/C_NFEMONITORH",
     "VARIANT":"",
     "LAYER":1500,
-    "DT_UUID":"FA163EA4AE5F1FD183CBD7646AA43824",
-    "RT_HASH":"8B6B51828762E19B4D86CFA41A6C64232D8B206F",
+    "DT_UUID":"FA163EA4AE5F1FD185F85F7F74DDD830",
+    "RT_HASH":"0EE83B8629506121A453A6E4A849973315A75A7F",
     "GEN_VERSION":"0",
     "TYPE":"0"
    }
@@ -1517,7 +1552,27 @@
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "ELEMENT":"STATUS",
-    "NAME":"UI.FACET$6$.TARGETELEMENT",
+    "NAME":"UI.FACET$3$.TARGETELEMENT",
+    "PATH":"_FILES",
+    "REF_OBJECT_TYPE":"STOB",
+    "REF_OBJECT_SUBTYPE":"DO",
+    "REF_OBJECT_NAME":"/EXEDMINB/C_NFEFILES",
+    "REF_OBJECT_ELEMENT":""
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
+    "ELEMENT":"STATUS",
+    "NAME":"UI.FACET$3$.TARGETELEMENT",
+    "PATH":"_FILES",
+    "REF_OBJECT_TYPE":"STOB",
+    "REF_OBJECT_SUBTYPE":"DOF",
+    "REF_OBJECT_NAME":"/EXEDMINB/C_NFEMONITORH",
+    "REF_OBJECT_ELEMENT":"_FILES"
+   },
+   {
+    "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
+    "ELEMENT":"STATUS",
+    "NAME":"UI.FACET$7$.TARGETELEMENT",
     "PATH":"_ITEM",
     "REF_OBJECT_TYPE":"STOB",
     "REF_OBJECT_SUBTYPE":"DO",
@@ -1527,7 +1582,7 @@
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "ELEMENT":"STATUS",
-    "NAME":"UI.FACET$6$.TARGETELEMENT",
+    "NAME":"UI.FACET$7$.TARGETELEMENT",
     "PATH":"_ITEM",
     "REF_OBJECT_TYPE":"STOB",
     "REF_OBJECT_SUBTYPE":"DOF",
@@ -1537,7 +1592,7 @@
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "ELEMENT":"STATUS",
-    "NAME":"UI.FACET$7$.TARGETELEMENT",
+    "NAME":"UI.FACET$8$.TARGETELEMENT",
     "PATH":"_HISTORICO",
     "REF_OBJECT_TYPE":"STOB",
     "REF_OBJECT_SUBTYPE":"DO",
@@ -1547,7 +1602,7 @@
    {
     "DDLXNAME":"/EXEDMINB/I_NFEMONITORH_ME",
     "ELEMENT":"STATUS",
-    "NAME":"UI.FACET$7$.TARGETELEMENT",
+    "NAME":"UI.FACET$8$.TARGETELEMENT",
     "PATH":"_HISTORICO",
     "REF_OBJECT_TYPE":"STOB",
     "REF_OBJECT_SUBTYPE":"DOF",

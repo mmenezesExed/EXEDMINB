@@ -1,5 +1,7 @@
   method extract_xml_save.
 
+    data file_Attachment type xstring.
+
     data: lt_nfeheader    type table of /exedminb/t_nfeheader,
           lt_nfeissue     type table of /EXEDMINB/T_NFeIssuer,
           lt_nfeissueaddr type table of /EXEDMINB/T_NFeIssuerAddr,
@@ -45,6 +47,7 @@
           lt_txpayerinf   type table of /EXEDMINB/t_nfetxpayerinf,
           lt_legprocref   type table of /EXEDMINB/t_nfelegprocref,
           lt_nfeprot      type table of /EXEDMINB/T_NFEProtocolo,
+          lt_files        type table of /exedminb/t_nfefiles,
           lt_stack        type standard table of string with empty key.
 
     data: ls_nfeheader    like line of lt_nfeheader,
@@ -1223,6 +1226,36 @@
               " Cabeçalho
               if ls_nfeheader-id is not initial.
                 append ls_nfeheader to lt_nfeheader.
+
+                "Arquivos
+                /exedminb/cl_tax_integ_hub=>get_nfe_xml(
+                  exporting
+                    i_accesskey   = conv #( ls_nfeheader-id )
+                  importing
+                    e_xml_xstring = file_Attachment
+                ).
+                append value #( id = ls_nfeheader-id
+                                idfile = 1
+                                Attachment = file_Attachment
+                                MimeType = 'text/xml'
+                                FileName = |{ ls_nfeheader-id }.xml|
+                                Descricao = 'XML da Nota Fiscal' ) to lt_files.
+
+                /exedminb/cl_tax_integ_hub=>get_nfe_pdf(
+                  exporting
+                    i_accesskey = conv #( ls_nfeheader-id )
+                  importing
+                    e_pdf       = data(pdf)
+                ).
+                file_Attachment = cl_abap_conv_codepage=>create_out( )->convert( source = pdf ).
+
+
+                append value #( id = ls_nfeheader-id
+                                idfile = 2
+                                Attachment = file_Attachment
+                                MimeType = 'application/pdf'
+                                FileName = |{ ls_nfeheader-id }.pdf|
+                                Descricao = 'PDF da Nota Fiscal' ) to lt_files.
               endif.
 
               " Emitente
@@ -1319,7 +1352,8 @@
       it_taxinform    = lt_taxinform
       it_txpayerinf   = lt_txpayerinf
       it_legprocref   = lt_legprocref
-      it_nfeprot      = lt_nfeprot ).
+      it_nfeprot      = lt_nfeprot
+      it_files        = lt_files ).
 
     commit entities.
 

@@ -931,7 +931,6 @@ class lhc__nfemonitorh implementation.
 
   method rba_Historico.
   endmethod.
-
 endclass.
 
 class lhc__nfemonitori definition inheriting from cl_abap_behavior_handler.

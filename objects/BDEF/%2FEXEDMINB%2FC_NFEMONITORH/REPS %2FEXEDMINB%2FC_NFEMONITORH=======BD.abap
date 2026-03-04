@@ -4,7 +4,7 @@ use side effects;
 
 define behavior for /EXEDMINB/C_NFEMONITORH //alias <alias_name>
 {
-
+  use update;
   use delete;
 
   use action processar;

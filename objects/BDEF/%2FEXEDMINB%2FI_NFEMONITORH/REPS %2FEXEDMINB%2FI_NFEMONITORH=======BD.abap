@@ -6,6 +6,7 @@ lock master authorization master ( instance, global )
 {
   field ( readonly ) ChaveNFe;
 
+  update;
   delete;
   action processar result [1] $self;
   action reprocessar result [1] $self;

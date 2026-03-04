@@ -65,7 +65,8 @@
             tt_taxinform    type standard table of /EXEDMINB/t_nfetaxinform,
             tt_txpayerinf   type standard table of /EXEDMINB/t_nfetxpayerinf,
             tt_legprocref   type standard table of /EXEDMINB/t_nfelegprocref,
-            tt_nfeprot      type standard table of /EXEDMINB/t_nfeprotocolo.
+            tt_nfeprot      type standard table of /EXEDMINB/t_nfeprotocolo,
+            tt_files        type standard table of /exedminb/t_nfefiles.
 
 
      methods dividir_item importing it_keys  type y_dividir_itens_key
@@ -151,7 +152,8 @@
          it_taxinform    type tt_taxinform
          it_txpayerinf   type tt_txpayerinf
          it_legprocref   type tt_legprocref
-         it_nfeprot      type tt_nfeprot.
+         it_nfeprot      type tt_nfeprot
+         it_files        type tt_files.
 
 
      methods map_nfeh_tables_to_entity importing i_nfeheader     type /exedminb/t_nfeheader
