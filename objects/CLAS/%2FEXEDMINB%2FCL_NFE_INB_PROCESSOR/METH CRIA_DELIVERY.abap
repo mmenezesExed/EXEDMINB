@@ -90,23 +90,9 @@
                                                       severity = lcl_tools=>ms-error
                                                       v1 = lx_error->get_longtext( ) ) ) to reported-_nfemonitorh.
 
-         lx_error->get_message_container( )->get_leading_message_for_user(
-           importing
-             ev_msg_id               = data(ev_msg_id)
-             ev_msg_number           = data(ev_msg_number)
-             ev_msg_text             = data(ev_msg_text)
-             ev_msg_container_number = data(ev_msg_container_number)
-             es_msg_variables        = data(es_msg_variables)
-         ).
 
-         append value #( %key = value #( chavenfe = is_header-ChaveNFe )
-                                           %msg = lcl_tools=>new_message(
-                                                      id = ev_msg_id
-                                                      number   = ev_msg_number
-                                                      severity = lcl_tools=>ms-error
-                                                      v1 = es_msg_variables-msgv1
-                                                      v2 = es_msg_variables-msgv2
-                                                      v3 = es_msg_variables-msgv3
-                                                      v4 = es_msg_variables-msgv4 ) ) to reported-_nfemonitorh.
+         data(p1) = lx_error->previous.
+         data(p2) = p1->previous.
+         data(p3) = p2->previous.
      endtry.
    endmethod.
