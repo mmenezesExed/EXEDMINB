@@ -4,6 +4,7 @@
 CLASS /exedminb/sc_api_delivery DEFINITION
   PUBLIC
   INHERITING FROM /iwbep/cl_v4_abs_pm_model_prov
+
   CREATE PUBLIC.
 
   PUBLIC SECTION.
