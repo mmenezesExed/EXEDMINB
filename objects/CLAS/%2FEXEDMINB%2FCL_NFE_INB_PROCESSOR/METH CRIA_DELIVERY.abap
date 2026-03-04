@@ -23,22 +23,22 @@
 *lo_http_client = cl_web_http_client_manager=>create_by_http_destination( lo_destination ).
 
          " Create http client
-*         data(lo_destination) = cl_http_destination_provider=>create_by_comm_arrangement(
-*           comm_scenario = '/EXEDMINB/SCN_API_DELIVERY' ).
-**                                                     comm_system_id = 'ZOUT_API_INBOUND_DELIVERY_REST' ) .
-**                                             service_id     = '<Service Id>' ).
-*         lo_http_client = cl_web_http_client_manager=>create_by_http_destination( lo_destination ).
-*
-**          " Create http client
-*         lo_client_proxy = /iwbep/cl_cp_factory_remote=>create_v2_remote_proxy(
-*           exporting
-*              is_proxy_model_key       = value #( repository_id       = 'DEFAULT'
-*                                                  proxy_model_id      = '/EXEDMINB/SC_API_DELIVERY'
-*                                                  proxy_model_version = '0001' )
-*             io_http_client             = lo_http_client
-*             iv_relative_service_root   = '' ).
-*
-*         assert lo_http_client is bound.
+         data(lo_destination) = cl_http_destination_provider=>create_by_comm_arrangement(
+           comm_scenario = '/EXEDMINB/SCN_API_DELIVERY' ).
+*                                                     comm_system_id = 'ZOUT_API_INBOUND_DELIVERY_REST' ) .
+*                                             service_id     = '<Service Id>' ).
+         lo_http_client = cl_web_http_client_manager=>create_by_http_destination( lo_destination ).
+
+*          " Create http client
+         lo_client_proxy = /iwbep/cl_cp_factory_remote=>create_v2_remote_proxy(
+           exporting
+              is_proxy_model_key       = value #( repository_id       = 'DEFAULT'
+                                                  proxy_model_id      = '/EXEDMINB/SC_API_DELIVERY'
+                                                  proxy_model_version = '0001' )
+             io_http_client             = lo_http_client
+             iv_relative_service_root   = '' ).
+
+         assert lo_http_client is bound.
 
 
 *        Prepare business data
@@ -48,44 +48,44 @@
              to_delivery_document_item = value #( for line in it_items ( delivery_document = '' reference_sddocument = line-Pedido ) )
          ).
 
-*         " Navigate to the resource and create a request for the create operation
-*         lo_request = lo_client_proxy->create_resource_for_entity_set( 'A_INB_DELIVERY_HEADER' )->create_request_for_create( ).
+         " Navigate to the resource and create a request for the create operation
+         lo_request = lo_client_proxy->create_resource_for_entity_set( 'A_INB_DELIVERY_HEADER' )->create_request_for_create( ).
+
+         " Return a data description node for the deep inboud delivery
+         data(lo_data_desc_node_so) = lo_request->create_data_descripton_node( ).
+*        Set the properties of the Header node
+         lo_data_desc_node_so->set_properties( value #( ( |DELIVERY_DOCUMENT| )  )  ).
+
+         " Add a child node Item for a navigation property
+         data(lo_data_desc_node_so_item) = lo_data_desc_node_so->add_child( 'TO_DELIVERY_DOCUMENT_ITEM' ).
+         " Set the properties of the Item node
+         lo_data_desc_node_so_item->set_properties( value #( ( |DELIVERY_DOCUMENT| )
+                                                                 ( |REFERENCE_SDDOCUMENT| )
+                                                                 ( |REFERENCE_SDDOCUMENT_ITEM| )
+                                                                   ) ).
+
+
+
+*         data(lv_response) = lcl_api_hub_read=>post_inbound_delivery( ls_business_data ).
 *
-*         " Return a data description node for the deep inboud delivery
-*         data(lo_data_desc_node_so) = lo_request->create_data_descripton_node( ).
-**        Set the properties of the Header node
-*         lo_data_desc_node_so->set_properties( value #( ( |DELIVERY_DOCUMENT| )  )  ).
+*         if lv_response-code ne 200.
+*           failed-_nfemonitorh = value #( ( %fail = value #( cause = if_abap_behv=>cause-unauthorized )
+*                                            %key = value #( chavenfe = is_header-ChaveNFe )
+*                                            %action-etapa_700 = if_abap_behv=>mk-on ) ).
+*         endif.
 *
-*         " Add a child node Item for a navigation property
-*         data(lo_data_desc_node_so_item) = lo_data_desc_node_so->add_child( 'TO_DELIVERY_DOCUMENT_ITEM' ).
-*         " Set the properties of the Item node
-*         lo_data_desc_node_so_item->set_properties( value #( ( |DELIVERY_DOCUMENT| )
-*                                                                 ( |REFERENCE_SDDOCUMENT| )
-*                                                                 ( |REFERENCE_SDDOCUMENT_ITEM| )
-*                                                                   ) ).
-
-
-
-         data(lv_response) = lcl_api_hub_read=>post_inbound_delivery( ls_business_data ).
-
-         if lv_response-code ne 200.
-           failed-_nfemonitorh = value #( ( %fail = value #( cause = if_abap_behv=>cause-unauthorized )
-                                            %key = value #( chavenfe = is_header-ChaveNFe )
-                                            %action-etapa_700 = if_abap_behv=>mk-on ) ).
-         endif.
-
-         lcl_api_hub_read=>get_messages( importing t_message = data(lt_message) ).
-
-         loop at lt_message into data(ls_message).
-           append value #( %key = value #( chavenfe = is_header-ChaveNFe )
-                           %msg = ls_message-msg ) to reported-_nfemonitorh.
-         endloop.
-
-*         lo_request->set_deep_business_data( is_business_data    = ls_business_data
-*                                             io_data_description = lo_data_desc_node_so ).
+*         lcl_api_hub_read=>get_messages( importing t_message = data(lt_message) ).
 *
-*         " Execute the request
-*         lo_response = lo_request->execute( ).
+*         loop at lt_message into data(ls_message).
+*           append value #( %key = value #( chavenfe = is_header-ChaveNFe )
+*                           %msg = ls_message-msg ) to reported-_nfemonitorh.
+*         endloop.
+
+         lo_request->set_deep_business_data( is_business_data    = ls_business_data
+                                             io_data_description = lo_data_desc_node_so ).
+
+         " Execute the request
+         lo_response = lo_request->execute( ).
          " Get the after image
 *lo_response->get_business_data( IMPORTING es_business_data = ls_business_data ).
 
