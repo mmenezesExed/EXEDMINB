@@ -1,9 +1,9 @@
    method cria_delivery.
      types:
        begin of ty_deep.
-         include type zscm_inbound_delivery=>tys_a_inb_delivery_header_type.
+         include type /EXEDMINB/SC_API_DELIVERY=>tys_a_inb_delivery_header_type.
      types:
-         to_delivery_document_item type zscm_inbound_delivery=>tyt_a_inb_delivery_item_type,
+         to_delivery_document_item type /EXEDMINB/SC_API_DELIVERY=>tyt_a_inb_delivery_item_type,
        end of ty_deep.
 
      data:
