@@ -9,6 +9,7 @@ define behavior for /EXEDMINB/C_NFEMONITORH //alias <alias_name>
 
   use action processar;
   use action reprocessar;
+  use action etapa_500;
 
   use association _Item;
 }

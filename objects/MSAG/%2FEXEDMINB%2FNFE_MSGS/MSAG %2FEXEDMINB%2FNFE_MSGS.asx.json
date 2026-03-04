@@ -365,6 +365,24 @@
    },
    {
     "ID":"NA",
+    "OBJECT":"/EXEDMINB/NFE_MSGS020",
+    "LANGU":"D",
+    "TYP":"E",
+    "DOKVERSION":1,
+    "DOKSTATE":"N",
+    "DOKFORM":"S_DOCU_SHOW",
+    "DOKSTYLE":"S_DOCUS1",
+    "DOKFUSER":"SAP_CUSTOMER",
+    "DOKFRELES":"",
+    "DOKFDATE":"0000-00-00",
+    "DOKFTIME":"00:00:00",
+    "DOKLUSER":"SAP_CUSTOMER",
+    "DOKLRELES":"",
+    "DOKLDATE":"0000-00-00",
+    "DOKLTIME":"00:00:00"
+   },
+   {
+    "ID":"NA",
     "OBJECT":"/EXEDMINB/NFE_MSGS100",
     "LANGU":"D",
     "TYP":"E",
@@ -528,6 +546,24 @@
    {
     "ID":"NA",
     "OBJECT":"/EXEDMINB/NFE_MSGS109",
+    "LANGU":"D",
+    "TYP":"E",
+    "DOKVERSION":1,
+    "DOKSTATE":"N",
+    "DOKFORM":"S_DOCU_SHOW",
+    "DOKSTYLE":"S_DOCUS1",
+    "DOKFUSER":"SAP_CUSTOMER",
+    "DOKFRELES":"",
+    "DOKFDATE":"0000-00-00",
+    "DOKFTIME":"00:00:00",
+    "DOKLUSER":"SAP_CUSTOMER",
+    "DOKLRELES":"",
+    "DOKLDATE":"0000-00-00",
+    "DOKLTIME":"00:00:00"
+   },
+   {
+    "ID":"NA",
+    "OBJECT":"/EXEDMINB/NFE_MSGS900",
     "LANGU":"D",
     "TYP":"E",
     "DOKVERSION":1,
@@ -861,6 +897,17 @@
    },
    {
     "ID":"NA",
+    "OBJECT":"/EXEDMINB/NFE_MSGS020",
+    "LANGU":"D",
+    "TYP":"E",
+    "VERSION":1,
+    "MASTERLANG":"X",
+    "TXTLINES":0,
+    "DOKSTATE":"N",
+    "SELFDEF":"3"
+   },
+   {
+    "ID":"NA",
     "OBJECT":"/EXEDMINB/NFE_MSGS100",
     "LANGU":"D",
     "TYP":"E",
@@ -961,6 +1008,17 @@
    {
     "ID":"NA",
     "OBJECT":"/EXEDMINB/NFE_MSGS109",
+    "LANGU":"D",
+    "TYP":"E",
+    "VERSION":1,
+    "MASTERLANG":"X",
+    "TXTLINES":0,
+    "DOKSTATE":"N",
+    "SELFDEF":"3"
+   },
+   {
+    "ID":"NA",
+    "OBJECT":"/EXEDMINB/NFE_MSGS900",
     "LANGU":"D",
     "TYP":"E",
     "VERSION":1,
@@ -1153,6 +1211,12 @@
    {
     "SPRSL":"P",
     "ARBGB":"/EXEDMINB/NFE_MSGS",
+    "MSGNR":"020",
+    "TEXT":"DANFE &1 adicionada com sucesso!"
+   },
+   {
+    "SPRSL":"P",
+    "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"100",
     "TEXT":"Registrada NFe no Monitor!"
    },
@@ -1209,6 +1273,12 @@
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"109",
     "TEXT":"Disparado o evento de confirmação da NF-e para o governo!"
+   },
+   {
+    "SPRSL":"P",
+    "ARBGB":"/EXEDMINB/NFE_MSGS",
+    "MSGNR":"900",
+    "TEXT":"&1"
    },
    {
     "SPRSL":"P",
@@ -1415,6 +1485,13 @@
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
+    "MSGNR":"020",
+    "NAME":"SAP_CUSTOMER",
+    "DATUM":"2026-03-04",
+    "SELFDEF":"3"
+   },
+   {
+    "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"100",
     "NAME":"SAP_CUSTOMER",
     "DATUM":"2026-03-04",
@@ -1479,6 +1556,13 @@
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"109",
+    "NAME":"SAP_CUSTOMER",
+    "DATUM":"2026-03-04",
+    "SELFDEF":"3"
+   },
+   {
+    "ARBGB":"/EXEDMINB/NFE_MSGS",
+    "MSGNR":"900",
     "NAME":"SAP_CUSTOMER",
     "DATUM":"2026-03-04",
     "SELFDEF":"3"

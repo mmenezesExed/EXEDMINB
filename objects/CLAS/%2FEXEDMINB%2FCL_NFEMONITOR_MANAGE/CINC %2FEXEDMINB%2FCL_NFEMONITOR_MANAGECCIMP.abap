@@ -345,7 +345,7 @@ class lhc__nfemonitorh definition inheriting from cl_abap_behavior_handler.
       importing keys for action _nfemonitorh~etapa_400.
 
     methods etapa_500 for modify
-      importing keys for action _nfemonitorh~etapa_500.
+      importing keys for action _nfemonitorh~etapa_500 result result.
 
     methods etapa_600 for modify
       importing keys for action _nfemonitorh~etapa_600.
@@ -393,8 +393,9 @@ class lhc__nfemonitorh implementation.
     result = value #( for line in lt_monitor_etapa ( ChaveNFe = line-ChaveNFe
                                                      %update = cond #( when line-Atividade eq 200 and line-Empresa is not initial and line-LocalDeNegocio is not initial
                                                                        then if_abap_behv=>auth-allowed else if_abap_behv=>auth-unauthorized )
-                                                     %action = value #( processar = cond #( when line-Status ne lhc_tabs_operations=>cc_status-erro then if_abap_behv=>auth-allowed else if_abap_behv=>auth-unauthorized )
-                                                                        reprocessar = cond #( when line-Status eq lhc_tabs_operations=>cc_status-erro then if_abap_behv=>auth-allowed else if_abap_behv=>auth-unauthorized ) ) ) ).
+                                                     %action = value #( processar = cond #( when line-Atividade ne 500 and line-Status ne lhc_tabs_operations=>cc_status-erro then if_abap_behv=>auth-allowed else if_abap_behv=>auth-unauthorized )
+                                                                        reprocessar = cond #( when line-Atividade ne 500 and line-Status eq lhc_tabs_operations=>cc_status-erro then if_abap_behv=>auth-allowed else if_abap_behv=>auth-unauthorized )
+                                                                        etapa_500 = cond #( when line-Atividade eq 500 then if_abap_behv=>auth-allowed else if_abap_behv=>auth-unauthorized ) ) ) ).
 
   endmethod.
 
@@ -702,6 +703,33 @@ class lhc__nfemonitorh implementation.
   endmethod.
 
   method etapa_500.
+    lhc_tabs_operations=>read_header_data( exporting it_keys  = value #( for key in keys ( corresponding #( key ) ) )
+                                           importing et_header = data(lt_header) ).
+
+    if lt_header is initial.
+      "Error
+    endif.
+
+    loop at lt_header into data(ls_header).
+      ls_header-danfe = keys[ 1 ]-%param-danfe.
+      ls_header-Atividade = 600.
+      ls_header-Status = 3.
+
+      lhc_tabs_operations=>register_historico(
+            exporting
+              i_historico = value #( IdNFe = ls_header-ChaveNFe
+                                     Etapa = ls_header-atividade
+                                     Status = ls_header-Status
+                                     Descricao = me->new_message( id = lhc_tabs_operations=>cc_classe_msg
+                                                                  number   = 020
+                                                                  severity = if_abap_behv_message=>severity-success
+                                                                  v1 = ls_header-danfe )->if_message~get_text( ) ) ).
+
+      lhc_tabs_operations=>update_header_data( ls_header ).
+    endloop.
+
+    lhc_tabs_operations=>save_historico(  ).
+
   endmethod.
 
   method etapa_600.
@@ -839,14 +867,6 @@ class lhc__nfemonitorh implementation.
               from value #( for line in keys where ( ChaveNFe = <f_header>-ChaveNFe )
                                                    ( corresponding #( line ) ) ).
 
-        when 500.
-          modify entities of /EXEDMINB/I_NFeMonitorH
-              in local mode
-              entity _NFeMonitorH
-              execute etapa_500
-              from value #( for line in keys where ( ChaveNFe = <f_header>-ChaveNFe )
-                                                   ( corresponding #( line ) ) ).
-
         when 600.
           modify entities of /EXEDMINB/I_NFeMonitorH
               in local mode
@@ -925,14 +945,6 @@ class lhc__nfemonitorh implementation.
               in local mode
               entity _NFeMonitorH
               execute etapa_400
-              from value #( for line in keys where ( ChaveNFe = <f_header>-ChaveNFe )
-                                                   ( corresponding #( line ) ) ).
-
-        when 500.
-          modify entities of /EXEDMINB/I_NFeMonitorH
-              in local mode
-              entity _NFeMonitorH
-              execute etapa_500
               from value #( for line in keys where ( ChaveNFe = <f_header>-ChaveNFe )
                                                    ( corresponding #( line ) ) ).
 
