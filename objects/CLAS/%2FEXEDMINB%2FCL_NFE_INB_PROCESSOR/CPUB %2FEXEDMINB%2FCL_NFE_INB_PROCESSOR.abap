@@ -104,7 +104,12 @@
                                         failed    type yt_failed
                                         reported  type yt_resported.
 
-     methods cria_delivery.
+     methods cria_delivery importing is_header       type /exedminb/i_nfemonitorh
+                                     it_items        type y_data_itens
+                           changing  mapped          type yt_mapped
+                                     failed          type yt_failed
+                                     reported        type yt_resported
+                           returning value(delivery) type string.
 
      methods inicializar_novas_nfs
        importing

@@ -366,7 +366,7 @@
      endif.
 
      if it_files is not initial.
-        modify /exedminb/t_nfefiles from table @it_files.
+       modify /exedminb/t_nfefiles from table @it_files.
      endif.
 
      if lt_historico is not initial.

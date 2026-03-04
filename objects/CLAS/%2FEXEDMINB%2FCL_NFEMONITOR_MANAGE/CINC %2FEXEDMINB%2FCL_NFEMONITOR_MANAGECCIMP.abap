@@ -645,9 +645,57 @@ class lhc__nfemonitorh implementation.
   endmethod.
 
   method etapa_400.
+    lhc_tabs_operations=>read_header_data( exporting it_keys  = value #( for key in keys ( corresponding #( key ) ) )
+                                           importing et_header = data(lt_header) ).
 
+    lhc_tabs_operations=>read_item_data( exporting it_keys  = value #( for key in keys ( corresponding #( key ) ) )
+                                         importing et_itens = data(lt_items) ).
 
+    if lt_header is initial.
+      "Error
+    endif.
 
+    data lt_items_filter type /exedminb/cl_nfe_inb_processor=>y_data_itens.
+    loop at lt_header into data(ls_header).
+      data(delivery) = lhc_tabs_operations=>get_assist_ref( )->cria_delivery(
+        exporting
+          is_header = ls_header
+          it_items  = value #( for item in lt_items where ( ChaveNFe = ls_header-ChaveNFe ) ( item ) )
+        changing
+          mapped    = mapped
+          failed    = failed
+          reported  = reported
+      ).
+
+      if failed-_nfemonitorh is not initial.
+        ls_header-Status = 1.
+        loop at reported-_nfemonitorh into data(line).
+          lhc_tabs_operations=>register_historico(
+            exporting
+              i_historico = value #( IdNFe = ls_header-ChaveNFe
+                                     Etapa = ls_header-atividade
+                                     Status = ls_header-Status
+                                     Descricao = line-%msg->if_message~get_text( ) ) ).
+        endloop.
+      else.
+        ls_header-Atividade = 500.
+        ls_header-Status = 3.
+        ls_header-Delivery = delivery.
+
+        lhc_tabs_operations=>register_historico(
+            exporting
+              i_historico = value #( IdNFe = ls_header-ChaveNFe
+                                     Etapa = ls_header-atividade
+                                     Status = ls_header-Status
+                                     Descricao = me->new_message( id = lhc_tabs_operations=>cc_classe_msg
+                                                                  number   = 019
+                                                                  severity = if_abap_behv_message=>severity-success
+                                                                  v1 = delivery )->if_message~get_text( ) ) ).
+
+      endif.
+
+      lhc_tabs_operations=>update_header_data( ls_header ).
+    endloop.
 
   endmethod.
 
@@ -666,7 +714,6 @@ class lhc__nfemonitorh implementation.
     endif.
 
     loop at lt_header into data(ls_header).
-
       lhc_tabs_operations=>get_assist_ref( )->revalida_autorizacao(
         exporting
           iv_chave        = ls_header-ChaveNFe

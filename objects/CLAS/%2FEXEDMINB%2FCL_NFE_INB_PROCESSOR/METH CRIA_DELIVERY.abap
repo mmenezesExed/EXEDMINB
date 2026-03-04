@@ -24,7 +24,7 @@
 
          " Create http client
          data(lo_destination) = cl_http_destination_provider=>create_by_comm_arrangement(
-           comm_scenario = 'ZSCN_API_INBOUND_DELIVERY' ).
+           comm_scenario = '/EXEDMINB/SCN_API_DELIVERY' ).
 *                                                     comm_system_id = 'ZOUT_API_INBOUND_DELIVERY_REST' ) .
 *                                             service_id     = '<Service Id>' ).
          lo_http_client = cl_web_http_client_manager=>create_by_http_destination( lo_destination ).
@@ -33,7 +33,7 @@
          lo_client_proxy = /iwbep/cl_cp_factory_remote=>create_v2_remote_proxy(
            exporting
               is_proxy_model_key       = value #( repository_id       = 'DEFAULT'
-                                                  proxy_model_id      = 'ZSCM_INBOUND_DELIVERY'
+                                                  proxy_model_id      = '/EXEDMINB/SC_API_DELIVERY'
                                                   proxy_model_version = '0001' )
              io_http_client             = lo_http_client
              iv_relative_service_root   = '' ).
@@ -41,10 +41,11 @@
          assert lo_http_client is bound.
 
 
-* Prepare business data
+*        Prepare business data
          ls_business_data = value #(
              delivery_document = ''
-             to_delivery_document_item = value #( ( delivery_document = '' reference_sddocument = '123455' ) )
+             delivery_document_by_suppl = is_header-NumeroNFe
+             to_delivery_document_item = value #( for line in it_items ( delivery_document = '' reference_sddocument = line-Pedido ) )
          ).
 
          " Navigate to the resource and create a request for the create operation
@@ -52,7 +53,7 @@
 
          " Return a data description node for the deep inboud delivery
          data(lo_data_desc_node_so) = lo_request->create_data_descripton_node( ).
-*    " Set the properties of the Header node
+*        Set the properties of the Header node
          lo_data_desc_node_so->set_properties( value #( ( |DELIVERY_DOCUMENT| )  )  ).
 
          " Add a child node Item for a navigation property
@@ -72,17 +73,14 @@
          " Get the after image
 *lo_response->get_business_data( IMPORTING es_business_data = ls_business_data ).
 
-       catch /iwbep/cx_cp_remote into data(lx_remote).
-         " Handle remote Exception
-         " It contains details about the problems of your http(s) connection
+       catch cx_web_http_client_error /iwbep/cx_gateway into data(lx_error).
+         failed-_nfemonitorh = value #( ( %fail = value #( cause = if_abap_behv=>cause-unauthorized )
+                                          %key = value #( chavenfe = is_header-ChaveNFe )
+                                          %action-etapa_400 = if_abap_behv=>mk-on ) ).
 
-
-       catch /iwbep/cx_gateway into data(lx_gateway).
-         " Handle Exception
-
-       catch cx_web_http_client_error into data(lx_web_http_client_error).
-         " Handle Exception
-         raise shortdump lx_web_http_client_error.
-
+         reported-_nfemonitorh = value #( ( %key = value #( chavenfe = is_header-ChaveNFe )
+                                            %msg = lcl_tools=>new_message(
+                                                       number   = 995
+                                                       severity = lcl_tools=>ms-error ) ) ).
      endtry.
    endmethod.
