@@ -45,7 +45,7 @@
          ls_business_data = value #(
              delivery_document = ''
              delivery_document_by_suppl = is_header-NumeroNFe
-             to_delivery_document_item = value #( for line in it_items ( delivery_document = '' reference_sddocument = line-Pedido ) )
+             to_delivery_document_item = value #( for line in it_items ( delivery_document = '' reference_sddocument = line-Pedido reference_sddocument_item = line-ItemPedido ) )
          ).
 
          " Navigate to the resource and create a request for the create operation
@@ -54,16 +54,15 @@
          " Return a data description node for the deep inboud delivery
          data(lo_data_desc_node_so) = lo_request->create_data_descripton_node( ).
 *        Set the properties of the Header node
-         lo_data_desc_node_so->set_properties( value #( ( |DELIVERY_DOCUMENT| )  )  ).
+         lo_data_desc_node_so->set_properties( value #( ( |DELIVERY_DOCUMENT| )
+                                                        ( |DELIVERY_DOCUMENT_BY_SUPPL| )  )  ).
 
          " Add a child node Item for a navigation property
          data(lo_data_desc_node_so_item) = lo_data_desc_node_so->add_child( 'TO_DELIVERY_DOCUMENT_ITEM' ).
          " Set the properties of the Item node
          lo_data_desc_node_so_item->set_properties( value #( ( |DELIVERY_DOCUMENT| )
-                                                                 ( |REFERENCE_SDDOCUMENT| )
-                                                                 ( |REFERENCE_SDDOCUMENT_ITEM| )
-                                                                   ) ).
-
+                                                             ( |REFERENCE_SDDOCUMENT| )
+                                                             ( |REFERENCE_SDDOCUMENT_ITEM| ) ) ).
 
 
 *         data(lv_response) = lcl_api_hub_read=>post_inbound_delivery( ls_business_data ).
