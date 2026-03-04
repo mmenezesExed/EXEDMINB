@@ -73,6 +73,20 @@
                                                       number   = 995
                                                       severity = lcl_tools=>ms-error ) ) to reported-_nfemonitorh.
 
+       catch /IWBEP/CX_CP_REMOTE into data(lx_remote_error).
+         failed-_nfemonitorh = value #( ( %fail = value #( cause = if_abap_behv=>cause-unauthorized )
+                                          %key = value #( chavenfe = is_header-ChaveNFe )
+                                          %action-etapa_400 = if_abap_behv=>mk-on ) ).
+
+         append value #( %key = value #( chavenfe = is_header-ChaveNFe )
+                                           %msg = lcl_tools=>new_message(
+                                                      number   = 995
+                                                      severity = lcl_tools=>ms-error ) ) to reported-_nfemonitorh.
+
+         data(l) = lx_remote_error->get_text( ).
+         data(p) = lx_remote_error->get_longtext( ).
+
+
        catch /iwbep/cx_gateway into data(lx_error).
          failed-_nfemonitorh = value #( ( %fail = value #( cause = if_abap_behv=>cause-unauthorized )
                                           %key = value #( chavenfe = is_header-ChaveNFe )
@@ -90,9 +104,5 @@
                                                       severity = lcl_tools=>ms-error
                                                       v1 = lx_error->get_longtext( ) ) ) to reported-_nfemonitorh.
 
-
-         data(p1) = lx_error->previous.
-         data(p2) = p1->previous.
-         data(p3) = p2->previous.
      endtry.
    endmethod.
