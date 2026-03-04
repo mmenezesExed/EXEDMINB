@@ -694,6 +694,7 @@ class lhc__nfemonitorh implementation.
 
       endif.
 
+      clear: failed, reported, mapped.
       lhc_tabs_operations=>update_header_data( ls_header ).
     endloop.
 

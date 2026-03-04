@@ -59,4 +59,10 @@
     lo_primitive_property->set_edm_name( 'DeliveryLongTextIsFormatted' ) ##NO_TEXT.
     lo_primitive_property->set_edm_type( 'Boolean' ) ##NO_TEXT.
 
+    lo_primitive_property = lo_entity_type->get_primitive_property( 'ETAG' ).
+    lo_primitive_property->set_edm_name( 'ETAG' ) ##NO_TEXT.
+    lo_primitive_property->set_edm_type( 'String' ) ##NO_TEXT.
+    lo_primitive_property->use_as_etag( ).
+    lo_primitive_property->set_is_technical( ).
+
   ENDMETHOD.

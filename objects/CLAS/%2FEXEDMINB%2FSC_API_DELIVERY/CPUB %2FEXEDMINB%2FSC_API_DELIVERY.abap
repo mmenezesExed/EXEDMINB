@@ -4,7 +4,6 @@
 CLASS /exedminb/sc_api_delivery DEFINITION
   PUBLIC
   INHERITING FROM /iwbep/cl_v4_abs_pm_model_prov
-
   CREATE PUBLIC.
 
   PUBLIC SECTION.
@@ -744,6 +743,8 @@ CLASS /exedminb/sc_api_delivery DEFINITION
         text_element_text          TYPE string,
         "! DeliveryLongTextIsFormatted
         delivery_long_text_is_form TYPE abap_bool,
+        "! odata.etag
+        etag                       TYPE string,
       END OF tys_a_inb_delivery_item_text_t,
       "! <p class="shorttext synchronized">List of A_InbDeliveryItemTextType</p>
       tyt_a_inb_delivery_item_text_t TYPE STANDARD TABLE OF tys_a_inb_delivery_item_text_t WITH DEFAULT KEY.
