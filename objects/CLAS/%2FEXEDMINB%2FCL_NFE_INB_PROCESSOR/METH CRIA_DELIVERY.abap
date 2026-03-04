@@ -1,9 +1,9 @@
    method cria_delivery.
      types:
        begin of ty_deep.
-         include type /EXEDMINB/SC_API_DELIVERY=>tys_a_inb_delivery_header_type.
+         include type /exedminb/sc_api_delivery=>tys_a_inb_delivery_header_type.
      types:
-         to_delivery_document_item type /EXEDMINB/SC_API_DELIVERY=>tyt_a_inb_delivery_item_type,
+         to_delivery_document_item type /exedminb/sc_api_delivery=>tyt_a_inb_delivery_item_type,
        end of ty_deep.
 
      data:
@@ -16,20 +16,10 @@
 
      try.
          " Create http client
-*DATA(lo_destination) = cl_http_destination_provider=>create_by_comm_arrangement(
-*                                             comm_scenario  = '<Comm Scenario>'
-*                                             comm_system_id = '<Comm System Id>'
-*                                             service_id     = '<Service Id>' ).
-*lo_http_client = cl_web_http_client_manager=>create_by_http_destination( lo_destination ).
-
-         " Create http client
-         data(lo_destination) = cl_http_destination_provider=>create_by_comm_arrangement(
-           comm_scenario = '/EXEDMINB/SCN_API_DELIVERY' ).
-*                                                     comm_system_id = 'ZOUT_API_INBOUND_DELIVERY_REST' ) .
-*                                             service_id     = '<Service Id>' ).
+         data(lo_destination) = cl_http_destination_provider=>create_by_comm_arrangement( comm_scenario = '/EXEDMINB/SCN_API_DELIVERY' ).
          lo_http_client = cl_web_http_client_manager=>create_by_http_destination( lo_destination ).
 
-*          " Create http client
+*        " Create http client
          lo_client_proxy = /iwbep/cl_cp_factory_remote=>create_v2_remote_proxy(
            exporting
               is_proxy_model_key       = value #( repository_id       = 'DEFAULT'
@@ -64,38 +54,59 @@
                                                              ( |REFERENCE_SDDOCUMENT| )
                                                              ( |REFERENCE_SDDOCUMENT_ITEM| ) ) ).
 
-
-*         data(lv_response) = lcl_api_hub_read=>post_inbound_delivery( ls_business_data ).
-*
-*         if lv_response-code ne 200.
-*           failed-_nfemonitorh = value #( ( %fail = value #( cause = if_abap_behv=>cause-unauthorized )
-*                                            %key = value #( chavenfe = is_header-ChaveNFe )
-*                                            %action-etapa_700 = if_abap_behv=>mk-on ) ).
-*         endif.
-*
-*         lcl_api_hub_read=>get_messages( importing t_message = data(lt_message) ).
-*
-*         loop at lt_message into data(ls_message).
-*           append value #( %key = value #( chavenfe = is_header-ChaveNFe )
-*                           %msg = ls_message-msg ) to reported-_nfemonitorh.
-*         endloop.
-
          lo_request->set_deep_business_data( is_business_data    = ls_business_data
                                              io_data_description = lo_data_desc_node_so ).
 
          " Execute the request
          lo_response = lo_request->execute( ).
+
          " Get the after image
 *lo_response->get_business_data( IMPORTING es_business_data = ls_business_data ).
 
-       catch cx_web_http_client_error /iwbep/cx_gateway into data(lx_error).
+       catch cx_web_http_client_error into data(lx_http_error).
          failed-_nfemonitorh = value #( ( %fail = value #( cause = if_abap_behv=>cause-unauthorized )
                                           %key = value #( chavenfe = is_header-ChaveNFe )
                                           %action-etapa_400 = if_abap_behv=>mk-on ) ).
 
-         reported-_nfemonitorh = value #( ( %key = value #( chavenfe = is_header-ChaveNFe )
-                                            %msg = lcl_tools=>new_message(
-                                                       number   = 995
-                                                       severity = lcl_tools=>ms-error ) ) ).
+         append value #( %key = value #( chavenfe = is_header-ChaveNFe )
+                                           %msg = lcl_tools=>new_message(
+                                                      number   = 995
+                                                      severity = lcl_tools=>ms-error ) ) to reported-_nfemonitorh.
+
+       catch /iwbep/cx_gateway into data(lx_error).
+         failed-_nfemonitorh = value #( ( %fail = value #( cause = if_abap_behv=>cause-unauthorized )
+                                          %key = value #( chavenfe = is_header-ChaveNFe )
+                                          %action-etapa_400 = if_abap_behv=>mk-on ) ).
+
+         append value #( %key = value #( chavenfe = is_header-ChaveNFe )
+                                           %msg = lcl_tools=>new_message(
+                                                      number   = 995
+                                                      severity = lcl_tools=>ms-error ) ) to reported-_nfemonitorh.
+
+
+         append value #( %key = value #( chavenfe = is_header-ChaveNFe )
+                                           %msg = lcl_tools=>new_message(
+                                                      number   = 900
+                                                      severity = lcl_tools=>ms-error
+                                                      v1 = lx_error->get_longtext( ) ) ) to reported-_nfemonitorh.
+
+         lx_error->get_message_container( )->get_leading_message_for_user(
+           importing
+             ev_msg_id               = data(ev_msg_id)
+             ev_msg_number           = data(ev_msg_number)
+             ev_msg_text             = data(ev_msg_text)
+             ev_msg_container_number = data(ev_msg_container_number)
+             es_msg_variables        = data(es_msg_variables)
+         ).
+
+         append value #( %key = value #( chavenfe = is_header-ChaveNFe )
+                                           %msg = lcl_tools=>new_message(
+                                                      id = ev_msg_id
+                                                      number   = ev_msg_number
+                                                      severity = lcl_tools=>ms-error
+                                                      v1 = es_msg_variables-msgv1
+                                                      v2 = es_msg_variables-msgv2
+                                                      v3 = es_msg_variables-msgv3
+                                                      v4 = es_msg_variables-msgv4 ) ) to reported-_nfemonitorh.
      endtry.
    endmethod.
