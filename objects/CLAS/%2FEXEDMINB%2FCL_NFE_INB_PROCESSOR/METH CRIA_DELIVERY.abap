@@ -61,9 +61,10 @@
          lo_response = lo_request->execute( ).
 
          " Get the after image
-*lo_response->get_business_data( IMPORTING es_business_data = ls_business_data ).
+         lo_response->get_business_data( importing es_business_data = ls_business_data ).
+         delivery = ls_business_data-delivery_document.
 
-       catch cx_web_http_client_error into data(lx_http_error).
+       catch cx_http_dest_provider_error cx_web_http_client_error into data(lx_http_error).
          failed-_nfemonitorh = value #( ( %fail = value #( cause = if_abap_behv=>cause-unauthorized )
                                           %key = value #( chavenfe = is_header-ChaveNFe )
                                           %action-etapa_400 = if_abap_behv=>mk-on ) ).
@@ -71,9 +72,9 @@
          append value #( %key = value #( chavenfe = is_header-ChaveNFe )
                                            %msg = lcl_tools=>new_message(
                                                       number   = 995
-                                                      severity = lcl_tools=>ms-error ) ) to reported-_nfemonitorh.
+                                                      severity = lcl_tools=>ms-information ) ) to reported-_nfemonitorh.
 
-       catch /IWBEP/CX_CP_REMOTE into data(lx_remote_error).
+       catch /iwbep/cx_cp_remote into data(lx_remote_error).
          failed-_nfemonitorh = value #( ( %fail = value #( cause = if_abap_behv=>cause-unauthorized )
                                           %key = value #( chavenfe = is_header-ChaveNFe )
                                           %action-etapa_400 = if_abap_behv=>mk-on ) ).
@@ -81,10 +82,13 @@
          append value #( %key = value #( chavenfe = is_header-ChaveNFe )
                                            %msg = lcl_tools=>new_message(
                                                       number   = 995
-                                                      severity = lcl_tools=>ms-error ) ) to reported-_nfemonitorh.
+                                                      severity = lcl_tools=>ms-information ) ) to reported-_nfemonitorh.
 
-         data(l) = lx_remote_error->get_text( ).
-         data(p) = lx_remote_error->get_longtext( ).
+         data(body) = lx_remote_error->http_error_body.
+         lcl_tools=>extracs_json_messages( exporting json        = body
+                                           importing et_messages = data(ls_reported) ).
+
+         append lines of ls_reported-_nfemonitorh to reported-_nfemonitorh.
 
 
        catch /iwbep/cx_gateway into data(lx_error).
@@ -95,13 +99,13 @@
          append value #( %key = value #( chavenfe = is_header-ChaveNFe )
                                            %msg = lcl_tools=>new_message(
                                                       number   = 995
-                                                      severity = lcl_tools=>ms-error ) ) to reported-_nfemonitorh.
+                                                      severity = lcl_tools=>ms-information ) ) to reported-_nfemonitorh.
 
 
          append value #( %key = value #( chavenfe = is_header-ChaveNFe )
                                            %msg = lcl_tools=>new_message(
                                                       number   = 900
-                                                      severity = lcl_tools=>ms-error
+                                                      severity = lcl_tools=>ms-information
                                                       v1 = lx_error->get_longtext( ) ) ) to reported-_nfemonitorh.
 
      endtry.

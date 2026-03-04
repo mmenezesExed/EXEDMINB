@@ -384,4 +384,63 @@ class lcl_tools implementation.
     endif.
   endmethod.
 
+  method extracs_json_messages.
+    types: begin of ty_message,
+             value type string,
+           end of ty_message.
+
+    types: begin of ty_error_detail,
+             code    type string,
+             message type string,
+           end of ty_error_detail.
+
+    types: ty_t_error_detail type standard table of ty_error_detail with empty key.
+
+    types: begin of ty_innererror,
+             errordetails type ty_t_error_detail,
+           end of ty_innererror.
+
+    types: begin of ty_error,
+             code       type string,
+             message    type ty_message,
+             innererror type ty_innererror,
+           end of ty_error.
+
+    types: begin of ty_root,
+             error type ty_error,
+           end of ty_root.
+
+    data ls_root type ty_root.
+
+    "----------------------------------------
+    " Desserializar JSON
+    "----------------------------------------
+    /ui2/cl_json=>deserialize(
+      exporting
+        json = json
+      changing
+        data = ls_root
+    ).
+
+    et_messages-_nfemonitorh = value #( for line in ls_root-error-innererror-errordetails ( %msg = lcl_tools=>new_message(
+                                                                                        id       = conv #( lcl_tools=>split_code_msg( code = line-code opt = 1 ) )
+                                                                                        number   = conv #( lcl_tools=>split_code_msg( code = line-code opt = 2 ) )
+                                                                                        severity = lcl_tools=>ms-information
+*                                                                                        v1       =
+*                                                                                        v2       =
+*                                                                                        v3       =
+*                                                                                        v4       =
+                                                                                      ) ) ).
+  endmethod.
+
+  method split_code_msg.
+    split code at '/' into data(id) data(number).
+
+    if opt eq 1.
+      return id.
+    elseif opt = 2.
+      return number.
+    endif.
+  endmethod.
+
 endclass.

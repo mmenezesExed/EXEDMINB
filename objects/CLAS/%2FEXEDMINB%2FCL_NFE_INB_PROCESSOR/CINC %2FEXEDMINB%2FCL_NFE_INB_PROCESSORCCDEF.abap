@@ -65,4 +65,11 @@ class lcl_tools definition.
 
     class-methods format_cnpj importing cnpj            type /exedminb/i_nfemonitorh-Emitente
                               returning value(formated) type string.
+
+    class-methods extracs_json_messages importing json        type string
+                                        exporting et_messages type /exedminb/cl_nfe_inb_processor=>yt_resported.
+
+    class-methods split_code_msg importing code       type string
+                                           opt        type i
+                                 returning value(ret) type string.
 endclass.
