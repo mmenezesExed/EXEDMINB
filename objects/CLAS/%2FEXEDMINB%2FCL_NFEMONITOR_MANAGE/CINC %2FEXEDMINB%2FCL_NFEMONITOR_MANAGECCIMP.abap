@@ -588,10 +588,6 @@ class lhc__nfemonitorh implementation.
         continue.
       endif.
 
-      if lhc_tabs_operations=>is_processar is not initial.
-        ls_header-Atividade = 300.
-      endif.
-
       lhc_tabs_operations=>register_historico(
             exporting
               i_historico = value #( IdNFe = ls_header-ChaveNFe
@@ -600,6 +596,10 @@ class lhc__nfemonitorh implementation.
                                      Descricao = me->new_message( id = lhc_tabs_operations=>cc_classe_msg
                                                                   number   = 102
                                                                   severity = if_abap_behv_message=>severity-success )->if_message~get_text( ) ) ).
+
+      if lhc_tabs_operations=>is_processar is not initial.
+        ls_header-Atividade = 300.
+      endif.
 
       lhc_tabs_operations=>update_header_data( ls_header ).
 
@@ -623,7 +623,6 @@ class lhc__nfemonitorh implementation.
 
     loop at lt_header into data(ls_header).
       if lhc_tabs_operations=>is_processar is not initial.
-        ls_header-Atividade = 400.
         ls_header-Status = 3.
 
         lhc_tabs_operations=>register_historico(
@@ -634,6 +633,8 @@ class lhc__nfemonitorh implementation.
                                      Descricao = me->new_message( id = lhc_tabs_operations=>cc_classe_msg
                                                                   number   = 018
                                                                   severity = if_abap_behv_message=>severity-success )->if_message~get_text( ) ) ).
+
+        ls_header-Atividade = 400.
       endif.
 
       clear: failed, reported, mapped.
@@ -679,7 +680,6 @@ class lhc__nfemonitorh implementation.
                                      Descricao = line-%msg->if_message~get_text( ) ) ).
         endloop.
       else.
-        ls_header-Atividade = 500.
         ls_header-Status = 3.
         ls_header-Delivery = delivery.
 
@@ -693,6 +693,7 @@ class lhc__nfemonitorh implementation.
                                                                   severity = if_abap_behv_message=>severity-success
                                                                   v1 = delivery )->if_message~get_text( ) ) ).
 
+        ls_header-Atividade = 500.
       endif.
 
       clear: failed, reported, mapped.
@@ -712,7 +713,6 @@ class lhc__nfemonitorh implementation.
 
     loop at lt_header into data(ls_header).
       ls_header-danfe = keys[ 1 ]-%param-danfe.
-      ls_header-Atividade = 600.
       ls_header-Status = 3.
 
       lhc_tabs_operations=>register_historico(
@@ -725,6 +725,7 @@ class lhc__nfemonitorh implementation.
                                                                   severity = if_abap_behv_message=>severity-success
                                                                   v1 = ls_header-danfe )->if_message~get_text( ) ) ).
 
+      ls_header-Atividade = 600.
       lhc_tabs_operations=>update_header_data( ls_header ).
 
       append value #( %tky = value #( chavenfe = ls_header-ChaveNFe ) %param-%data = corresponding #( ls_header ) ) to result.
@@ -757,16 +758,37 @@ class lhc__nfemonitorh implementation.
           reported        = reported
       ).
 
+      if failed-_nfemonitorh is not initial.
+        ls_header-Status = 1.
+        loop at reported-_nfemonitorh into data(line).
+          lhc_tabs_operations=>register_historico(
+            exporting
+              i_historico = value #( IdNFe = ls_header-ChaveNFe
+                                     Etapa = ls_header-atividade
+                                     Status = ls_header-Status
+                                     Descricao = line-%msg->if_message~get_text( ) ) ).
+        endloop.
+      else.
+        ls_header-Status = 3.
+
+        lhc_tabs_operations=>register_historico(
+              exporting
+                i_historico = value #( IdNFe = ls_header-ChaveNFe
+                                       Etapa = ls_header-atividade
+                                       Status = ls_header-Status
+                                       Descricao = me->new_message( id = lhc_tabs_operations=>cc_classe_msg
+                                                                    number   = 022
+                                                                    severity = if_abap_behv_message=>severity-success
+                                                                    v1 = ls_header-danfe )->if_message~get_text( ) ) ).
+
+        ls_header-Atividade = 700.
+      endif.
+
+      clear: failed, reported, mapped.
+      lhc_tabs_operations=>update_header_data( ls_header ).
     endloop.
 
-    clear: failed, reported, mapped.
-    reported-_nfemonitorh = value #( for l in lt_header ( ChaveNFe = l-ChaveNFe
-                                                          %msg = me->new_message(
-                                                                      id       = lhc_tabs_operations=>cc_classe_msg
-                                                                      number   = 999
-                                                                      severity = if_abap_behv_message=>severity-success
-                                                                    ) ) ).
-
+    lhc_tabs_operations=>save_historico(  ).
   endmethod.
 
   method etapa_700.
@@ -784,10 +806,10 @@ class lhc__nfemonitorh implementation.
     loop at lt_header into data(ls_header).
 
       lhc_tabs_operations=>get_assist_ref( )->executar_migo( exporting is_header = ls_header
-                                                      it_items  = value #( for item in lt_items where ( ChaveNFe = ls_header-ChaveNFe ) ( item ) )
-                                            changing  mapped    = mapped
-                                                      failed    = failed
-                                                      reported  = reported ).
+                                                                       it_items  = value #( for item in lt_items where ( ChaveNFe = ls_header-ChaveNFe ) ( item ) )
+                                                             changing  mapped    = mapped
+                                                                       failed    = failed
+                                                                       reported  = reported ).
 
     endloop.
 
@@ -809,10 +831,10 @@ class lhc__nfemonitorh implementation.
     loop at lt_header into data(ls_header).
 
       lhc_tabs_operations=>get_assist_ref( )->executar_miro( exporting is_header = ls_header
-                                                      it_items  = value #( for item in lt_items where ( ChaveNFe = ls_header-ChaveNFe ) ( item ) )
-                                            changing  mapped    = mapped
-                                                      failed    = failed
-                                                      reported  = reported ).
+                                                                       it_items  = value #( for item in lt_items where ( ChaveNFe = ls_header-ChaveNFe ) ( item ) )
+                                                             changing  mapped    = mapped
+                                                                       failed    = failed
+                                                                       reported  = reported ).
 
     endloop.
 

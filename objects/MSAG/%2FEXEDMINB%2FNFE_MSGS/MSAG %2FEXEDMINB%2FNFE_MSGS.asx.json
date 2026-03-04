@@ -401,6 +401,24 @@
    },
    {
     "ID":"NA",
+    "OBJECT":"/EXEDMINB/NFE_MSGS022",
+    "LANGU":"D",
+    "TYP":"E",
+    "DOKVERSION":1,
+    "DOKSTATE":"N",
+    "DOKFORM":"S_DOCU_SHOW",
+    "DOKSTYLE":"S_DOCUS1",
+    "DOKFUSER":"SAP_CUSTOMER",
+    "DOKFRELES":"",
+    "DOKFDATE":"0000-00-00",
+    "DOKFTIME":"00:00:00",
+    "DOKLUSER":"SAP_CUSTOMER",
+    "DOKLRELES":"",
+    "DOKLDATE":"0000-00-00",
+    "DOKLTIME":"00:00:00"
+   },
+   {
+    "ID":"NA",
     "OBJECT":"/EXEDMINB/NFE_MSGS100",
     "LANGU":"D",
     "TYP":"E",
@@ -937,6 +955,17 @@
    },
    {
     "ID":"NA",
+    "OBJECT":"/EXEDMINB/NFE_MSGS022",
+    "LANGU":"D",
+    "TYP":"E",
+    "VERSION":1,
+    "MASTERLANG":"X",
+    "TXTLINES":0,
+    "DOKSTATE":"N",
+    "SELFDEF":"3"
+   },
+   {
+    "ID":"NA",
     "OBJECT":"/EXEDMINB/NFE_MSGS100",
     "LANGU":"D",
     "TYP":"E",
@@ -1252,6 +1281,12 @@
    {
     "SPRSL":"P",
     "ARBGB":"/EXEDMINB/NFE_MSGS",
+    "MSGNR":"022",
+    "TEXT":"Status NFe Validado!"
+   },
+   {
+    "SPRSL":"P",
+    "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"100",
     "TEXT":"Registrada NFe no Monitor!"
    },
@@ -1266,48 +1301,6 @@
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"102",
     "TEXT":"Atribuídos os itens do XML aos pedidos SAP!"
-   },
-   {
-    "SPRSL":"P",
-    "ARBGB":"/EXEDMINB/NFE_MSGS",
-    "MSGNR":"103",
-    "TEXT":"Simulada a NF-e com cálculo de impostos para validação fiscal!"
-   },
-   {
-    "SPRSL":"P",
-    "ARBGB":"/EXEDMINB/NFE_MSGS",
-    "MSGNR":"104",
-    "TEXT":"Gerado o recebimento automaticamente via delivery!"
-   },
-   {
-    "SPRSL":"P",
-    "ARBGB":"/EXEDMINB/NFE_MSGS",
-    "MSGNR":"105",
-    "TEXT":"Registrada a chave de acesso da DANFE informada pelo usuário!"
-   },
-   {
-    "SPRSL":"P",
-    "ARBGB":"/EXEDMINB/NFE_MSGS",
-    "MSGNR":"106",
-    "TEXT":"Revalidado o status de autorização da NF-e!"
-   },
-   {
-    "SPRSL":"P",
-    "ARBGB":"/EXEDMINB/NFE_MSGS",
-    "MSGNR":"107",
-    "TEXT":"Registrada a entrada de mercadoria no Monitor Logístico!"
-   },
-   {
-    "SPRSL":"P",
-    "ARBGB":"/EXEDMINB/NFE_MSGS",
-    "MSGNR":"108",
-    "TEXT":"Lançada a fatura no SAP!"
-   },
-   {
-    "SPRSL":"P",
-    "ARBGB":"/EXEDMINB/NFE_MSGS",
-    "MSGNR":"109",
-    "TEXT":"Disparado o evento de confirmação da NF-e para o governo!"
    },
    {
     "SPRSL":"P",
@@ -1534,6 +1527,13 @@
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
+    "MSGNR":"022",
+    "NAME":"SAP_CUSTOMER",
+    "DATUM":"2026-03-04",
+    "SELFDEF":"3"
+   },
+   {
+    "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"100",
     "NAME":"SAP_CUSTOMER",
     "DATUM":"2026-03-04",
@@ -1549,55 +1549,6 @@
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"102",
-    "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-04",
-    "SELFDEF":"3"
-   },
-   {
-    "ARBGB":"/EXEDMINB/NFE_MSGS",
-    "MSGNR":"103",
-    "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-04",
-    "SELFDEF":"3"
-   },
-   {
-    "ARBGB":"/EXEDMINB/NFE_MSGS",
-    "MSGNR":"104",
-    "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-04",
-    "SELFDEF":"3"
-   },
-   {
-    "ARBGB":"/EXEDMINB/NFE_MSGS",
-    "MSGNR":"105",
-    "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-04",
-    "SELFDEF":"3"
-   },
-   {
-    "ARBGB":"/EXEDMINB/NFE_MSGS",
-    "MSGNR":"106",
-    "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-04",
-    "SELFDEF":"3"
-   },
-   {
-    "ARBGB":"/EXEDMINB/NFE_MSGS",
-    "MSGNR":"107",
-    "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-04",
-    "SELFDEF":"3"
-   },
-   {
-    "ARBGB":"/EXEDMINB/NFE_MSGS",
-    "MSGNR":"108",
-    "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-04",
-    "SELFDEF":"3"
-   },
-   {
-    "ARBGB":"/EXEDMINB/NFE_MSGS",
-    "MSGNR":"109",
     "NAME":"SAP_CUSTOMER",
     "DATUM":"2026-03-04",
     "SELFDEF":"3"
