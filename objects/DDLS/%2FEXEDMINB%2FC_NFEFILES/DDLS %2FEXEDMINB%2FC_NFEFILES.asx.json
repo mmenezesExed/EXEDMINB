@@ -9,10 +9,10 @@
     "AS4USER":"SAP_CUSTOMER",
     "AS4DATE":"0000-00-00",
     "AS4TIME":"00:00:00",
-    "SOURCE":"@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'Arquivos NFE'\r\n@Metadata.ignorePropagatedAnnotations: true\r\n@Metadata.allowExtensions: true\r\ndefine view entity /EXEDMINB/C_NFEFILES\r\n  provider contract transactional_query\r\n  as projection on /EXEDMINB/I_NFEFILES\r\n{\r\n  key Id,\r\n  key IdFile,\r\n      @Semantics.largeObject: { mimeType: 'MimeType', fileName: 'FileName', contentDispositionPreference: #ATTACHMENT }\r\n      Attachment,\r\n      @Semantics.mimeType: true\r\n      MimeType,\r\n      FileName,\r\n      Descricao,\r\n      /* Associations */\r\n      _Header\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[\n\"/EXEDMINB/I_NFEFILES\"\n],\n\"ASSOCIATED\":\n[\n\"/EXEDMINB/I_NFEHEADER\"\n],\n\"BASE\":\n[\n\"/EXEDMINB/I_NFEFILES\"\n],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
+    "SOURCE":"@AccessControl.authorizationCheck: #NOT_REQUIRED\r\n@EndUserText.label: 'Arquivos NFE'\r\n@Metadata.ignorePropagatedAnnotations: true\r\n@Metadata.allowExtensions: true\r\ndefine root view entity /EXEDMINB/C_NFEFILES\r\n  provider contract transactional_query\r\n  as projection on /EXEDMINB/I_NFEFILES\r\n{\r\n  key Id,\r\n  key IdFile,\r\n      @Semantics.largeObject: { mimeType: 'MimeType', fileName: 'FileName', contentDispositionPreference: #ATTACHMENT }\r\n      Attachment,\r\n      @Semantics.mimeType: true\r\n      MimeType,\r\n      FileName,\r\n      Descricao\r\n}\r\n/*+[internal] {\n\"BASEINFO\":\n{\n\"FROM\":\n[\n\"/EXEDMINB/I_NFEFILES\"\n],\n\"ASSOCIATED\":\n[],\n\"BASE\":\n[],\n\"ANNO_REF\":\n[],\n\"SCALAR_FUNCTION\":\n[],\n\"VERSION\":0,\n\"ANNOREF_EVALUATION_ERROR\":\"\"\n}\n}*/",
     "PARENTNAME":"",
     "ACTFLAG":"",
-    "CHGFLAG":"D",
+    "CHGFLAG":"W",
     "SOURCE_TYPE":"P",
     "SOURCE_ORIGIN":"0",
     "ABAP_LANGUAGE_VERSION":"5"

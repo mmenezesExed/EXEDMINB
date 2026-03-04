@@ -4,7 +4,9 @@ strict ( 2 ); auxiliary class /exedminb/cl_nfe_inb_processor;
 define behavior for /EXEDMINB/I_NFeMonitorH alias _NFeMonitorH
 lock master authorization master ( instance, global )
 {
-  field ( readonly ) ChaveNFe;
+  field ( readonly ) ChaveNFe, Atividade, AtividadeDescricao, BusinessPlaceName, CompanyCodeName, DataEmissao, Delivery, Destinatario,
+  Emitente, Empresa, EntradaFatura, EntradaMercadoria, LocalDeNegocio, NomeDestinatario, NomeEmitente, NumeroNFe, ProcessoSAP, Serie, Status, StatusCriticality,
+  StatusNFe,StatusNFeDescricao, ValorFrete, ValorOutrasDesp, ValorSeguro, ValorTotalICMS, ValorTotalICMSST, ValorTotalIPI, ValorTotalNFe, moeda;
 
   update;
   delete;
