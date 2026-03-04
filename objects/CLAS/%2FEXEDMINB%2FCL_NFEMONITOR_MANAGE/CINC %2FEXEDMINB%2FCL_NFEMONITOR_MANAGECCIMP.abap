@@ -635,13 +635,13 @@ class lhc__nfemonitorh implementation.
                                                                   severity = if_abap_behv_message=>severity-success )->if_message~get_text( ) ) ).
       endif.
 
+      clear: failed, reported, mapped.
       lhc_tabs_operations=>update_header_data( ls_header ).
-
     endloop.
 
 
+    lhc_tabs_operations=>save_historico(  ).
 
-    clear: failed, reported, mapped.
   endmethod.
 
   method etapa_400.
@@ -698,6 +698,7 @@ class lhc__nfemonitorh implementation.
       lhc_tabs_operations=>update_header_data( ls_header ).
     endloop.
 
+    lhc_tabs_operations=>save_historico(  ).
   endmethod.
 
   method etapa_500.
@@ -883,9 +884,9 @@ class lhc__nfemonitorh implementation.
 
     result = value #( for key in keys ( %tky = key-%tky
                                         %param-ChaveNFe = key-ChaveNFe ) ).
-    reported-_nfemonitorh = value #( ( %msg = me->new_message( id       = lhc_tabs_operations=>cc_classe_msg
-                                                               number   = 996
-                                                               severity = if_abap_behv_message=>severity-warning ) ) ).
+*    reported-_nfemonitorh = value #( ( %msg = me->new_message( id       = lhc_tabs_operations=>cc_classe_msg
+*                                                               number   = 996
+*                                                               severity = if_abap_behv_message=>severity-warning ) ) ).
   endmethod.
 
 
@@ -972,9 +973,9 @@ class lhc__nfemonitorh implementation.
 
     result = value #( for key in keys ( %tky = key-%tky
                                         %param-ChaveNFe = key-ChaveNFe ) ).
-    reported-_nfemonitorh = value #( ( %msg = me->new_message( id       = lhc_tabs_operations=>cc_classe_msg
-                                                               number   = 997
-                                                               severity = if_abap_behv_message=>severity-warning ) ) ).
+*    reported-_nfemonitorh = value #( ( %msg = me->new_message( id       = lhc_tabs_operations=>cc_classe_msg
+*                                                               number   = 997
+*                                                               severity = if_abap_behv_message=>severity-warning ) ) ).
   endmethod.
 
   method rba_Historico.
