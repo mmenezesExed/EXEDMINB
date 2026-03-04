@@ -383,6 +383,24 @@
    },
    {
     "ID":"NA",
+    "OBJECT":"/EXEDMINB/NFE_MSGS021",
+    "LANGU":"D",
+    "TYP":"E",
+    "DOKVERSION":1,
+    "DOKSTATE":"N",
+    "DOKFORM":"S_DOCU_SHOW",
+    "DOKSTYLE":"S_DOCUS1",
+    "DOKFUSER":"SAP_CUSTOMER",
+    "DOKFRELES":"",
+    "DOKFDATE":"0000-00-00",
+    "DOKFTIME":"00:00:00",
+    "DOKLUSER":"SAP_CUSTOMER",
+    "DOKLRELES":"",
+    "DOKLDATE":"0000-00-00",
+    "DOKLTIME":"00:00:00"
+   },
+   {
+    "ID":"NA",
     "OBJECT":"/EXEDMINB/NFE_MSGS100",
     "LANGU":"D",
     "TYP":"E",
@@ -908,6 +926,17 @@
    },
    {
     "ID":"NA",
+    "OBJECT":"/EXEDMINB/NFE_MSGS021",
+    "LANGU":"D",
+    "TYP":"E",
+    "VERSION":1,
+    "MASTERLANG":"X",
+    "TXTLINES":0,
+    "DOKSTATE":"N",
+    "SELFDEF":"3"
+   },
+   {
+    "ID":"NA",
     "OBJECT":"/EXEDMINB/NFE_MSGS100",
     "LANGU":"D",
     "TYP":"E",
@@ -1217,6 +1246,12 @@
    {
     "SPRSL":"P",
     "ARBGB":"/EXEDMINB/NFE_MSGS",
+    "MSGNR":"021",
+    "TEXT":"Falha ao determinar status NFe."
+   },
+   {
+    "SPRSL":"P",
+    "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"100",
     "TEXT":"Registrada NFe no Monitor!"
    },
@@ -1486,6 +1521,13 @@
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"020",
+    "NAME":"SAP_CUSTOMER",
+    "DATUM":"2026-03-04",
+    "SELFDEF":"3"
+   },
+   {
+    "ARBGB":"/EXEDMINB/NFE_MSGS",
+    "MSGNR":"021",
     "NAME":"SAP_CUSTOMER",
     "DATUM":"2026-03-04",
     "SELFDEF":"3"

@@ -14,8 +14,9 @@
                                           %key = value #( chavenfe = iv_chave )
                                           %action-etapa_600 = if_abap_behv=>mk-on ) ).
            reported-_nfemonitorh = value #( ( %key = value #( chavenfe = iv_chave )
-                                              %msg = lcl_tools=>new_message_with_text( severity = lcl_tools=>ms-error
-                                                                                       text = 'Falha ao determinar status NFe!' ) ) ).
+                                              %msg = lcl_tools=>new_message(
+                                                       number   = 021
+                                                       severity = lcl_tools=>ms-information ) ) ).
 
            return.
 

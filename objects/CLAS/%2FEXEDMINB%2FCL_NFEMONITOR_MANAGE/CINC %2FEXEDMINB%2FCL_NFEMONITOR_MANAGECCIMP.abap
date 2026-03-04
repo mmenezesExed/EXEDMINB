@@ -726,6 +726,8 @@ class lhc__nfemonitorh implementation.
                                                                   v1 = ls_header-danfe )->if_message~get_text( ) ) ).
 
       lhc_tabs_operations=>update_header_data( ls_header ).
+
+      append value #( %tky = value #( chavenfe = ls_header-ChaveNFe ) %param-%data = corresponding #( ls_header ) ) to result.
     endloop.
 
     lhc_tabs_operations=>save_historico(  ).

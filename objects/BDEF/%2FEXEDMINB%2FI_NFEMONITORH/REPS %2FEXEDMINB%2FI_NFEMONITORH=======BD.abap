@@ -27,6 +27,7 @@ lock master authorization master ( instance, global )
   {
     action processar affects entity _Historico;
     action reprocessar affects entity _Historico;
+    action etapa_500 affects entity _Historico;
   }
 
   association _Item;
