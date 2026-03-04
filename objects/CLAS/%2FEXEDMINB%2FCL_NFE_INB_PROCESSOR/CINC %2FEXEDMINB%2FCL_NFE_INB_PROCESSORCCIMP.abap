@@ -81,6 +81,9 @@ class lcl_api_hub_read definition.
     class-methods post_supplier_invoice importing iv_data            type data
                                         returning value(rv_response) type if_web_http_response=>http_status.
 
+    class-methods post_inbound_delivery importing iv_data            type data
+                                        returning value(rv_response) type if_web_http_response=>http_status.
+
     class-methods get_messages exporting t_message type tt_messages.
 
 
@@ -260,6 +263,16 @@ class lcl_api_hub_read implementation.
     replace all occurrences of `PurchaseOrderQtyUnitIs`   in r_payload with `PurchaseOrderQtyUnitISOCode`.
     replace all occurrences of `PurchaseOrderQtyUnitSa`   in r_payload with `PurchaseOrderQtyUnitSAPCode`.
 
+  endmethod.
+
+  method post_inbound_delivery.
+    try.
+        return post( url = |/sap/opu/odata/sap/API_INBOUND_DELIVERY_SRV/A_InbDeliveryHeader| data = iv_data ).
+      catch  cx_web_http_client_error  into data(lx_error).
+        register_message( msg = lcl_tools=>new_message_with_text( severity = lcl_tools=>ms-error
+                                                                      text = lx_error->get_text( ) ) ).
+        return value #( code = 500 ).
+    endtry.
   endmethod.
 
 endclass.
