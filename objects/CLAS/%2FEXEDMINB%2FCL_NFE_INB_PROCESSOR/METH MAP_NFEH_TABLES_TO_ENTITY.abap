@@ -11,7 +11,7 @@
           Serie              = serie
           DataEmissao        = dhEmi
           EntradaMercadoria  = migo
-          EntradaFatura      = miro
+          Fatura             = miro
           Delivery           = delivery ).
 
      r_entity = corresponding #(

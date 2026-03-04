@@ -12,7 +12,7 @@
           serie      = Serie
           dhEmi      = DataEmissao
           migo       = EntradaMercadoria
-          miro       = EntradaFatura
+          miro       = Fatura
           delivery   = Delivery ).
 
      e_nfeprotocolo = corresponding #( i_entity
