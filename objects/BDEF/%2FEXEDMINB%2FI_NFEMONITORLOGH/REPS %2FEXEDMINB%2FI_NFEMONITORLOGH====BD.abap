@@ -1,7 +1,7 @@
-unmanaged implementation in class /exedminb/cl_nfemonitor_manage unique;
+unmanaged implementation in class /exedminb/cl_i_nfemonitorlogh unique;
 strict ( 2 ); auxiliary class /exedminb/cl_nfe_inb_processor;
 
-define behavior for /EXEDMINB/I_NFeMonitorH alias _NFeMonitorH
+define behavior for /EXEDMINB/I_NFeMonitorLogH alias _NFeMonitorH
 lock master authorization master ( instance, global )
 {
   field ( readonly ) ChaveNFe, Atividade, AtividadeDescricao, BusinessPlaceName, CompanyCodeName, DataEmissao, Delivery, Destinatario, DANFE,
@@ -9,25 +9,14 @@ lock master authorization master ( instance, global )
   StatusNFe, StatusNFeDescricao, ValorFrete, ValorOutrasDesp, ValorSeguro, ValorTotalICMS, ValorTotalICMSST, ValorTotalIPI, ValorTotalNFe, moeda;
 
   update;
-  delete;
-  action processar result [1] $self;
-  action reprocessar result [1] $self;
 
-  internal action etapa_100;
-  internal action etapa_200;
-  internal action etapa_300;
-  internal action etapa_400;
-  action etapa_500 parameter /EXEDMINB/A_DANFE_PARAMETER result [1] $self;
-  internal action etapa_600;
-  internal action etapa_700;
-  internal action etapa_800;
-  internal action etapa_900;
+  action etapa_700;
+  action etapa_800;
 
   side effects
   {
-    action processar affects entity _Historico;
-    action reprocessar affects entity _Historico;
-    action etapa_500 affects entity _Historico;
+    action etapa_700 affects entity _Historico;
+    action etapa_800 affects entity _Historico;
   }
 
   association _Item;
@@ -35,7 +24,7 @@ lock master authorization master ( instance, global )
   association _Files;
 }
 
-define behavior for /EXEDMINB/I_NFeMonitorI alias _NFeMonitorI
+define behavior for /EXEDMINB/I_NFeMonitorLogI alias _NFeMonitorI
 lock dependent by _Header
 authorization dependent by _Header
 {
@@ -46,8 +35,6 @@ authorization dependent by _Header
   ChaveNFe, ItemNFe, ItemIdDiv, Plant, Material, DescricaoMaterial, NCM, UnidadeMedidaXML, Pedido, ItemPedido,
   CFOP, ValorUnitario, UnidadeMedida, ValorICMS, AliquotaICMS, AliquotaIPI, ValorIPI, DescricaoMaterialFornecedor;
 
-  action dividir parameter /EXEDMINB/a_dividir_in_param;
-  action eliminar;
 
   side effects
   {

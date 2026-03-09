@@ -299,6 +299,7 @@ class lhc_tabs_operations implementation.
       delete from /EXEDMINB/t_nfetxpayerinf   where id = @ls_keys-ChaveNFe.
       delete from /EXEDMINB/t_nfelegprocref   where id = @ls_keys-ChaveNFe.
       delete from /EXEDMINB/t_nfeprotocolo    where id = @ls_keys-ChaveNFe.
+      delete from /exedminb/t_nfefiles        where id = @ls_keys-ChaveNFe.
     endloop.
   endmethod.
 
@@ -373,6 +374,8 @@ class lhc__nfemonitorh definition inheriting from cl_abap_behavior_handler.
 
     methods rba_historico for read
       importing keys_rba for read _nfemonitorh\_historico full result_requested result result link association_links.
+    methods update for modify
+      importing entities for update _nfemonitorh.
 
 endclass.
 
@@ -393,8 +396,14 @@ class lhc__nfemonitorh implementation.
     result = value #( for line in lt_monitor_etapa ( ChaveNFe = line-ChaveNFe
                                                      %update = cond #( when line-Atividade eq 200 and line-Empresa is not initial and line-LocalDeNegocio is not initial
                                                                        then if_abap_behv=>auth-allowed else if_abap_behv=>auth-unauthorized )
-                                                     %action = value #( processar = cond #( when line-Atividade ne 500 and line-Status ne lhc_tabs_operations=>cc_status-erro then if_abap_behv=>auth-allowed else if_abap_behv=>auth-unauthorized )
-                                                                        reprocessar = cond #( when line-Atividade ne 500 and line-Status eq lhc_tabs_operations=>cc_status-erro then if_abap_behv=>auth-allowed else if_abap_behv=>auth-unauthorized )
+                                                     %action = value #( processar = cond #(
+                                                                                        when line-Atividade ne 700 then if_abap_behv=>auth-unauthorized
+                                                                                        when line-Atividade ne 800 then if_abap_behv=>auth-unauthorized
+                                                                                        when line-Atividade ne 500 and line-Status ne lhc_tabs_operations=>cc_status-erro then if_abap_behv=>auth-allowed else if_abap_behv=>auth-unauthorized )
+                                                                        reprocessar = cond #(
+                                                                                        when line-Atividade ne 700 then if_abap_behv=>auth-unauthorized
+                                                                                        when line-Atividade ne 800 then if_abap_behv=>auth-unauthorized
+                                                                                        when line-Atividade ne 500 and line-Status eq lhc_tabs_operations=>cc_status-erro then if_abap_behv=>auth-allowed else if_abap_behv=>auth-unauthorized )
                                                                         etapa_500 = cond #( when line-Atividade eq 500 then if_abap_behv=>auth-allowed else if_abap_behv=>auth-unauthorized ) ) ) ).
 
   endmethod.
@@ -1016,6 +1025,10 @@ class lhc__nfemonitorh implementation.
 
   method rba_Historico.
   endmethod.
+
+  METHOD update.
+  ENDMETHOD.
+
 endclass.
 
 class lhc__nfemonitori definition inheriting from cl_abap_behavior_handler.
