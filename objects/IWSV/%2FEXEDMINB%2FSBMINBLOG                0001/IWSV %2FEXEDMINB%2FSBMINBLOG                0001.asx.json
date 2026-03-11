@@ -23,10 +23,10 @@
     "CLASS_NAME":"CL_SADL_RAP_EXPOSURE_DPC",
     "CREATED_BY":"SAP_CUSTOMER",
     "CHANGED_BY":"",
-    "CREATED_TIMESTMP":"+020260311081118",
+    "CREATED_TIMESTMP":"+020260311131240",
     "CHANGED_TIMESTMP":"0",
     "IS_SAP_SERVICE":"-",
-    "SERVICE_TYPE":1,
+    "SERVICE_TYPE":2,
     "EXT_4_TECH_NAME":"",
     "EXT_4_VERSION":0,
     "ABAP_LANGUAGE_VERSION":"5",
@@ -42,7 +42,7 @@
     "TECHNICAL_NAME":"/EXEDMINB/SBMINBLOG",
     "VERSION":1,
     "LANGUAGE":"P",
-    "DESCRIPTION":"Service Biding Monitor Logistico"
+    "DESCRIPTION":"Service Binding Monitor Logistico"
    }
   ]
  },

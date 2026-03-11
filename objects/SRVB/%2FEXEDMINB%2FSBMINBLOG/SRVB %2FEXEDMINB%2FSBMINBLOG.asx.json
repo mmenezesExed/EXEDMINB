@@ -7,7 +7,7 @@
     "SRVB_NAME":"/EXEDMINB/SBMINBLOG",
     "VERSION":"A",
     "BIND_TYPE_IMPL":"/EXEDMINB/SBMINBLOG",
-    "BIND_TYPE_CATEGORY":1,
+    "BIND_TYPE_CATEGORY":0,
     "BIND_TYPE":"ODATA",
     "BIND_TYPE_VERSION":"V2"
    }
@@ -22,7 +22,7 @@
     "VERSION":"A",
     "CHANGED_BY":"SAP_CUSTOMER",
     "CHANGED_ON":"2026-03-11",
-    "CHANGED_AT":"08:11:17",
+    "CHANGED_AT":"13:12:40",
     "ABAP_LANGUAGE_VERSION":"5"
    }
   ]
@@ -35,7 +35,7 @@
     "SRVB_NAME":"/EXEDMINB/SBMINBLOG",
     "VERSION":"A",
     "LANGUAGE":"P",
-    "DESCRIPTION":"Service Biding Monitor Logistico"
+    "DESCRIPTION":"Service Binding Monitor Logistico"
    }
   ]
  },

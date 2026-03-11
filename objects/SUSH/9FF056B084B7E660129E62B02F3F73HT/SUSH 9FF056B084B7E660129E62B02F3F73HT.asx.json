@@ -54,7 +54,7 @@
     "OBJECT":"S_SERVICE",
     "MODIFIER":"SAP_CUSTOMER",
     "MODDATE":"2026-03-11",
-    "MODTIME":"08:11:19",
+    "MODTIME":"13:12:41",
     "OKFLAG":"X"
    }
   ]
@@ -68,7 +68,7 @@
     "TYPE":"HT",
     "MODIFIER":"SAP_CUSTOMER",
     "MODDATE":"2026-03-11",
-    "MODTIME":"08:11:19",
+    "MODTIME":"13:12:41",
     "OKFLAG":"",
     "ATTRIBUTES":"",
     "ABAP_LANGUAGE_VERSION":"5"
