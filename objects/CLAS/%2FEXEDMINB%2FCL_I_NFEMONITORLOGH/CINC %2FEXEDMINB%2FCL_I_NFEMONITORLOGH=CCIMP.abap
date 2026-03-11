@@ -318,6 +318,34 @@ class lhc_tabs_operations implementation.
 
 endclass.
 
+CLASS lhc__nfemonitordelivery DEFINITION INHERITING FROM cl_abap_behavior_handler.
+
+  PRIVATE SECTION.
+
+    METHODS update FOR MODIFY
+      IMPORTING entities FOR UPDATE _NFeMonitorDelivery.
+
+    METHODS read FOR READ
+      IMPORTING keys FOR READ _NFeMonitorDelivery RESULT result.
+
+    METHODS rba_Header FOR READ
+      IMPORTING keys_rba FOR READ _NFeMonitorDelivery\_Header FULL result_requested RESULT result LINK association_links.
+
+ENDCLASS.
+
+CLASS lhc__nfemonitordelivery IMPLEMENTATION.
+
+  METHOD update.
+  ENDMETHOD.
+
+  METHOD read.
+  ENDMETHOD.
+
+  METHOD rba_Header.
+  ENDMETHOD.
+
+ENDCLASS.
+
 class lhc__nfemonitorh definition inheriting from cl_abap_behavior_handler.
   private section.
 
@@ -346,6 +374,11 @@ class lhc__nfemonitorh definition inheriting from cl_abap_behavior_handler.
       importing keys_rba for read _nfemonitorh\_historico full result_requested result result link association_links.
     methods update for modify
       importing entities for update _nfemonitorh.
+    methods rba_delivery for read
+      importing keys_rba for read _nfemonitorh\_delivery full result_requested result result link association_links.
+
+    methods rba_files for read
+      importing keys_rba for read _nfemonitorh\_files full result_requested result result link association_links.
 
 endclass.
 
@@ -440,6 +473,12 @@ class lhc__nfemonitorh implementation.
 
   method update.
   endmethod.
+
+  METHOD rba_Delivery.
+  ENDMETHOD.
+
+  METHOD rba_Files.
+  ENDMETHOD.
 
 endclass.
 

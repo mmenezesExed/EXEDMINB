@@ -1,7 +1,7 @@
 unmanaged implementation in class /exedminb/cl_i_nfemonitorlogh unique;
 strict ( 2 ); auxiliary class /exedminb/cl_nfe_inb_processor;
 
-define behavior for /EXEDMINB/I_NFeMonitorLogH alias _NFeMonitorH
+define behavior for /EXEDMINB/I_NFEMONITORLOGH alias _NFeMonitorH
 lock master authorization master ( instance, global )
 {
   field ( readonly ) ChaveNFe, Atividade, AtividadeDescricao, BusinessPlaceName, CompanyCodeName, DataEmissao, Delivery, Destinatario, DANFE,
@@ -20,11 +20,12 @@ lock master authorization master ( instance, global )
   }
 
   association _Item;
+  association _Delivery;
   association _Historico;
   association _Files;
 }
 
-define behavior for /EXEDMINB/I_NFeMonitorLogI alias _NFeMonitorI
+define behavior for /EXEDMINB/I_NFEMONITORLOGI alias _NFeMonitorI
 lock dependent by _Header
 authorization dependent by _Header
 {
@@ -32,7 +33,7 @@ authorization dependent by _Header
   update;
   internal delete;
   field ( readonly )
-  ChaveNFe, ItemNFe, ItemIdDiv, Plant, Material, DescricaoMaterial, NCM, UnidadeMedidaXML, Pedido, ItemPedido,
+  ChaveNFe, ItemNFe, ItemIdDiv, Plant, Material, DescricaoMaterial, NCM, UnidadeMedidaXML, Pedido, ItemPedido, PedidoItem,
   CFOP, ValorUnitario, UnidadeMedida, ValorICMS, AliquotaICMS, AliquotaIPI, ValorIPI, DescricaoMaterialFornecedor;
 
 
@@ -42,4 +43,18 @@ authorization dependent by _Header
   }
 
   association _Header;
+}
+
+define behavior for /EXEDMINB/I_NFEMINBDELIVERY alias _NFeMonitorDelivery
+lock dependent by _Header
+authorization dependent by _Header
+{
+
+  update;
+  field ( readonly )
+  ChaveNFe, Delivery, DeliveryDocumentItem, DeliveryDocumentItemText, DataRemessa, Material, Plant,
+  DeliveryQuantityUnit, OriginalDeliveryQuantity, PurchaseOrder, PurchaseOrderItem;
+
+  association _Header;
+
 }

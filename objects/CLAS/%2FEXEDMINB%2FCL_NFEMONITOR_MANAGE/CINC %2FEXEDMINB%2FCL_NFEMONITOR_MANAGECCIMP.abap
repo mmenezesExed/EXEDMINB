@@ -778,7 +778,7 @@ class lhc__nfemonitorh implementation.
                                      Descricao = line-%msg->if_message~get_text( ) ) ).
         endloop.
       else.
-        ls_header-Status = 3.
+        ls_header-Status = 2.
 
         lhc_tabs_operations=>register_historico(
               exporting
