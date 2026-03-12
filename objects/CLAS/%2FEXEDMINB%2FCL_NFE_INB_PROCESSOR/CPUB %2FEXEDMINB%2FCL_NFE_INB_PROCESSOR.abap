@@ -66,7 +66,8 @@
             tt_txpayerinf   type standard table of /EXEDMINB/t_nfetxpayerinf,
             tt_legprocref   type standard table of /EXEDMINB/t_nfelegprocref,
             tt_nfeprot      type standard table of /EXEDMINB/t_nfeprotocolo,
-            tt_files        type standard table of /exedminb/t_nfefiles.
+            tt_files        type standard table of /exedminb/t_nfefiles,
+            tt_delivery     type standard table of /exedminb/i_nfeminbdelivery.
 
 
      methods dividir_item importing it_keys  type y_dividir_itens_key
@@ -110,6 +111,21 @@
                                      failed          type yt_failed
                                      reported        type yt_resported
                            returning value(delivery) type string.
+
+     methods atualizar_qtd_delivery importing it_delivery type tt_delivery
+                                    changing  mapped      type yt_mapped
+                                              failed      type yt_failed
+                                              reported    type yt_resported.
+
+     methods entrada_deposito importing iv_delivery type /exedminb/i_nfeminbdelivery-Delivery
+                              changing  mapped      type yt_mapped
+                                        failed      type yt_failed
+                                        reported    type yt_resported.
+
+     methods entrada_mercadoria importing iv_delivery type /exedminb/i_nfeminbdelivery-Delivery
+                                changing  mapped      type yt_mapped
+                                          failed      type yt_failed
+                                          reported    type yt_resported.
 
      methods inicializar_novas_nfs
        importing

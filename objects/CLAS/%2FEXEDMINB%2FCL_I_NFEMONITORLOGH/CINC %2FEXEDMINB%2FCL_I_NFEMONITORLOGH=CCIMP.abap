@@ -318,33 +318,104 @@ class lhc_tabs_operations implementation.
 
 endclass.
 
-CLASS lhc__nfemonitordelivery DEFINITION INHERITING FROM cl_abap_behavior_handler.
+class lhc__nfemonitordelivery definition inheriting from cl_abap_behavior_handler.
 
-  PRIVATE SECTION.
+  private section.
 
-    METHODS update FOR MODIFY
-      IMPORTING entities FOR UPDATE _NFeMonitorDelivery.
+    methods update for modify
+      importing entities for update _NFeMonitorDelivery.
 
-    METHODS read FOR READ
-      IMPORTING keys FOR READ _NFeMonitorDelivery RESULT result.
+    methods read for read
+      importing keys for read _NFeMonitorDelivery result result.
 
-    METHODS rba_Header FOR READ
-      IMPORTING keys_rba FOR READ _NFeMonitorDelivery\_Header FULL result_requested RESULT result LINK association_links.
+    methods rba_Header for read
+      importing keys_rba for read _NFeMonitorDelivery\_Header full result_requested result result link association_links.
 
-ENDCLASS.
+endclass.
 
-CLASS lhc__nfemonitordelivery IMPLEMENTATION.
+class lhc__nfemonitordelivery implementation.
 
-  METHOD update.
-  ENDMETHOD.
+  method update.
+    data ls_mapped type /exedminb/cl_nfe_inb_processor=>yt_mapped.
+    data ls_reported type /exedminb/cl_nfe_inb_processor=>yt_resported.
+    data ls_failed type /exedminb/cl_nfe_inb_processor=>yt_failed.
+    data existe_diferenca type abap_boolean.
+    data entities_to_update type /exedminb/cl_nfe_inb_processor=>tt_delivery.
 
-  METHOD read.
-  ENDMETHOD.
+    lhc_tabs_operations=>read_header_data( exporting it_keys  = value #( for key in entities ( ChaveNFe = key-ChaveNFe ) )
+                                           importing et_header = data(lt_header) ).
 
-  METHOD rba_Header.
-  ENDMETHOD.
+    loop at lt_header into data(ls_header).
 
-ENDCLASS.
+      free entities_to_update.
+      clear existe_diferenca.
+      clear: ls_failed, ls_reported.
+
+      loop at entities into data(entitie) where ChaveNFe eq ls_header-ChaveNFe.
+        if entitie-OriginalDeliveryQuantity ne entitie-ActualDeliveryQuantity.
+          existe_diferenca = abap_true.
+        endif.
+
+        append corresponding #( entitie ) to entities_to_update.
+      endloop.
+
+
+      if existe_diferenca eq abap_true.
+        ""Show only first time
+        reported-_nfemonitorh = value #( ( %msg = me->new_message( id       = lhc_tabs_operations=>cc_classe_msg
+                                                                   number   = 994
+                                                                   severity = if_abap_behv_message=>severity-warning ) ) ).
+      endif.
+
+      lhc_tabs_operations=>get_assist_ref( )->atualizar_qtd_delivery(
+          exporting
+            it_delivery = entities_to_update
+          changing
+            mapped      = ls_mapped
+            failed      = ls_failed
+            reported    = ls_reported
+        ).
+
+      if ls_failed-_nfemonitorh is not initial.
+        clear reported-_nfemonitorh.
+        ls_header-Status = 1. condense ls_header-Status no-gaps.
+
+        loop at ls_reported-_nfemonitorh into data(report).
+          lhc_tabs_operations=>register_historico(
+            exporting
+              i_historico = value #( IdNFe = ls_header-ChaveNFe
+                                     Etapa = ls_header-atividade
+                                     Status = ls_header-Status
+                                     Descricao = report-%msg->if_message~get_text( ) ) ).
+
+        endloop.
+
+      else.
+        ls_header-Status = 2. condense ls_header-Status no-gaps.
+        lhc_tabs_operations=>register_historico(
+              exporting
+                i_historico = value #( IdNFe = ls_header-ChaveNFe
+                                       Etapa = ls_header-atividade
+                                       Status = ls_header-Status
+                                       Descricao = me->new_message( id = lhc_tabs_operations=>cc_classe_msg
+                                                                    number   = 023
+                                                                    severity = if_abap_behv_message=>severity-success )->if_message~get_text( ) ) ).
+      endif.
+
+      lhc_tabs_operations=>update_header_data( ls_header ).
+    endloop.
+
+    lhc_tabs_operations=>save_historico(  ).
+
+  endmethod.
+
+  method read.
+  endmethod.
+
+  method rba_Header.
+  endmethod.
+
+endclass.
 
 class lhc__nfemonitorh definition inheriting from cl_abap_behavior_handler.
   private section.
@@ -412,6 +483,7 @@ class lhc__nfemonitorh implementation.
   endmethod.
 
   method etapa_700.
+    data lt_deliverys type /exedminb/cl_nfe_inb_processor=>tt_delivery.
     data ls_mapped type /exedminb/cl_nfe_inb_processor=>yt_mapped.
     data ls_reported type /exedminb/cl_nfe_inb_processor=>yt_resported.
     data ls_failed type /exedminb/cl_nfe_inb_processor=>yt_failed.
@@ -419,25 +491,112 @@ class lhc__nfemonitorh implementation.
     lhc_tabs_operations=>read_header_data( exporting it_keys  = value #( for key in keys ( corresponding #( key ) ) )
                                            importing et_header = data(lt_header) ).
 
-    lhc_tabs_operations=>read_item_data( exporting it_keys  = value #( for key in keys ( corresponding #( key ) ) )
-                                         importing et_itens = data(lt_items) ).
-
-
-    if lt_header is initial.
-      "Error
+    if lt_header is not initial.
+      select * from /exedminb/i_nfeminbdelivery
+        for all entries in @lt_header
+        where ChaveNFe eq @lt_header-ChaveNFe
+        into table @lt_deliverys.
     endif.
 
     loop at lt_header into data(ls_header).
 
-      lhc_tabs_operations=>get_assist_ref( )->executar_migo( exporting is_header = ls_header
-                                                                       it_items  = value #( for item in lt_items where ( ChaveNFe = ls_header-ChaveNFe ) ( item ) )
-                                                             changing  mapped    = ls_mapped
-                                                                       failed    = ls_failed
-                                                                       reported  = ls_reported ).
+      loop at lt_deliverys transporting no fields where ChaveNFe eq ls_header-ChaveNFe
+                                                    and StorageLocation is initial.
+        failed-_nfemonitorh = value #( ( %fail = value #( cause = if_abap_behv=>cause-unauthorized )
+                                         %key = value #( chavenfe = ls_header-ChaveNFe )
+                                         %action-etapa_700 = if_abap_behv=>mk-on ) ).
+
+        reported-_nfemonitorh = value #( ( %key = value #( chavenfe = ls_header-ChaveNFe )
+                                           %msg = me->new_message( id = lhc_tabs_operations=>cc_classe_msg
+                                                                   number   = 992
+                                                                   severity = if_abap_behv_message=>severity-error ) ) ).
+
+        exit.
+      endloop.
+
+      if failed-_nfemonitorh is not initial.
+        exit.
+      endif.
+
+      clear: ls_failed, ls_reported.
+
+      lhc_tabs_operations=>get_assist_ref( )->entrada_deposito(
+        exporting
+          iv_delivery = ls_header-Delivery
+        changing
+          mapped      = ls_mapped
+          failed      = ls_failed
+          reported    = ls_reported
+      ).
+
+      if ls_failed-_nfemonitorh is not initial.
+        clear reported-_nfemonitorh.
+        ls_header-Status = 1. condense ls_header-Status no-gaps.
+
+        loop at ls_reported-_nfemonitorh into data(report).
+          lhc_tabs_operations=>register_historico(
+            exporting
+              i_historico = value #( IdNFe = ls_header-ChaveNFe
+                                     Etapa = ls_header-atividade
+                                     Status = ls_header-Status
+                                     Descricao = report-%msg->if_message~get_text( ) ) ).
+
+        endloop.
+
+      else.
+        ls_header-Status = 2. condense ls_header-Status no-gaps.
+        lhc_tabs_operations=>register_historico(
+              exporting
+                i_historico = value #( IdNFe = ls_header-ChaveNFe
+                                       Etapa = ls_header-atividade
+                                       Status = ls_header-Status
+                                       Descricao = me->new_message( id = lhc_tabs_operations=>cc_classe_msg
+                                                                    number   = 023
+                                                                    severity = if_abap_behv_message=>severity-success )->if_message~get_text( ) ) ).
+
+
+        lhc_tabs_operations=>get_assist_ref( )->entrada_mercadoria(
+          exporting
+            iv_delivery = ls_header-Delivery
+          changing
+            mapped      = ls_mapped
+            failed      = ls_failed
+            reported    = ls_reported
+        ).
+
+        if ls_failed-_nfemonitorh is not initial.
+          clear reported-_nfemonitorh.
+          ls_header-Status = 1. condense ls_header-Status no-gaps.
+
+          loop at ls_reported-_nfemonitorh into data(report_em).
+            lhc_tabs_operations=>register_historico(
+              exporting
+                i_historico = value #( IdNFe = ls_header-ChaveNFe
+                                       Etapa = ls_header-atividade
+                                       Status = ls_header-Status
+                                       Descricao = report_em-%msg->if_message~get_text( ) ) ).
+
+          endloop.
+
+        else.
+          ls_header-Status = 3. condense ls_header-Status no-gaps.
+          ls_header-Atividade = 900.
+          lhc_tabs_operations=>register_historico(
+                exporting
+                  i_historico = value #( IdNFe = ls_header-ChaveNFe
+                                         Etapa = ls_header-atividade
+                                         Status = ls_header-Status
+                                         Descricao = me->new_message( id = lhc_tabs_operations=>cc_classe_msg
+                                                                      number   = 023
+                                                                      severity = if_abap_behv_message=>severity-success )->if_message~get_text( ) ) ).
+        endif.
+      endif.
+
+      lhc_tabs_operations=>update_header_data( ls_header ).
 
     endloop.
 
-
+    lhc_tabs_operations=>save_historico(  ).
   endmethod.
 
   method etapa_800.
@@ -474,11 +633,11 @@ class lhc__nfemonitorh implementation.
   method update.
   endmethod.
 
-  METHOD rba_Delivery.
-  ENDMETHOD.
+  method rba_Delivery.
+  endmethod.
 
-  METHOD rba_Files.
-  ENDMETHOD.
+  method rba_Files.
+  endmethod.
 
 endclass.
 

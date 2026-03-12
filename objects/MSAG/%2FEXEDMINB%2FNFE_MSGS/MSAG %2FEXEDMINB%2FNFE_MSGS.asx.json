@@ -419,6 +419,24 @@
    },
    {
     "ID":"NA",
+    "OBJECT":"/EXEDMINB/NFE_MSGS023",
+    "LANGU":"D",
+    "TYP":"E",
+    "DOKVERSION":1,
+    "DOKSTATE":"N",
+    "DOKFORM":"S_DOCU_SHOW",
+    "DOKSTYLE":"S_DOCUS1",
+    "DOKFUSER":"SAP_CUSTOMER",
+    "DOKFRELES":"",
+    "DOKFDATE":"0000-00-00",
+    "DOKFTIME":"00:00:00",
+    "DOKLUSER":"SAP_CUSTOMER",
+    "DOKLRELES":"",
+    "DOKLDATE":"0000-00-00",
+    "DOKLTIME":"00:00:00"
+   },
+   {
+    "ID":"NA",
     "OBJECT":"/EXEDMINB/NFE_MSGS100",
     "LANGU":"D",
     "TYP":"E",
@@ -600,6 +618,96 @@
    {
     "ID":"NA",
     "OBJECT":"/EXEDMINB/NFE_MSGS900",
+    "LANGU":"D",
+    "TYP":"E",
+    "DOKVERSION":1,
+    "DOKSTATE":"N",
+    "DOKFORM":"S_DOCU_SHOW",
+    "DOKSTYLE":"S_DOCUS1",
+    "DOKFUSER":"SAP_CUSTOMER",
+    "DOKFRELES":"",
+    "DOKFDATE":"0000-00-00",
+    "DOKFTIME":"00:00:00",
+    "DOKLUSER":"SAP_CUSTOMER",
+    "DOKLRELES":"",
+    "DOKLDATE":"0000-00-00",
+    "DOKLTIME":"00:00:00"
+   },
+   {
+    "ID":"NA",
+    "OBJECT":"/EXEDMINB/NFE_MSGS990",
+    "LANGU":"D",
+    "TYP":"E",
+    "DOKVERSION":1,
+    "DOKSTATE":"N",
+    "DOKFORM":"S_DOCU_SHOW",
+    "DOKSTYLE":"S_DOCUS1",
+    "DOKFUSER":"SAP_CUSTOMER",
+    "DOKFRELES":"",
+    "DOKFDATE":"0000-00-00",
+    "DOKFTIME":"00:00:00",
+    "DOKLUSER":"SAP_CUSTOMER",
+    "DOKLRELES":"",
+    "DOKLDATE":"0000-00-00",
+    "DOKLTIME":"00:00:00"
+   },
+   {
+    "ID":"NA",
+    "OBJECT":"/EXEDMINB/NFE_MSGS991",
+    "LANGU":"D",
+    "TYP":"E",
+    "DOKVERSION":1,
+    "DOKSTATE":"N",
+    "DOKFORM":"S_DOCU_SHOW",
+    "DOKSTYLE":"S_DOCUS1",
+    "DOKFUSER":"SAP_CUSTOMER",
+    "DOKFRELES":"",
+    "DOKFDATE":"0000-00-00",
+    "DOKFTIME":"00:00:00",
+    "DOKLUSER":"SAP_CUSTOMER",
+    "DOKLRELES":"",
+    "DOKLDATE":"0000-00-00",
+    "DOKLTIME":"00:00:00"
+   },
+   {
+    "ID":"NA",
+    "OBJECT":"/EXEDMINB/NFE_MSGS992",
+    "LANGU":"D",
+    "TYP":"E",
+    "DOKVERSION":1,
+    "DOKSTATE":"N",
+    "DOKFORM":"S_DOCU_SHOW",
+    "DOKSTYLE":"S_DOCUS1",
+    "DOKFUSER":"SAP_CUSTOMER",
+    "DOKFRELES":"",
+    "DOKFDATE":"0000-00-00",
+    "DOKFTIME":"00:00:00",
+    "DOKLUSER":"SAP_CUSTOMER",
+    "DOKLRELES":"",
+    "DOKLDATE":"0000-00-00",
+    "DOKLTIME":"00:00:00"
+   },
+   {
+    "ID":"NA",
+    "OBJECT":"/EXEDMINB/NFE_MSGS993",
+    "LANGU":"D",
+    "TYP":"E",
+    "DOKVERSION":1,
+    "DOKSTATE":"N",
+    "DOKFORM":"S_DOCU_SHOW",
+    "DOKSTYLE":"S_DOCUS1",
+    "DOKFUSER":"SAP_CUSTOMER",
+    "DOKFRELES":"",
+    "DOKFDATE":"0000-00-00",
+    "DOKFTIME":"00:00:00",
+    "DOKLUSER":"SAP_CUSTOMER",
+    "DOKLRELES":"",
+    "DOKLDATE":"0000-00-00",
+    "DOKLTIME":"00:00:00"
+   },
+   {
+    "ID":"NA",
+    "OBJECT":"/EXEDMINB/NFE_MSGS994",
     "LANGU":"D",
     "TYP":"E",
     "DOKVERSION":1,
@@ -966,6 +1074,17 @@
    },
    {
     "ID":"NA",
+    "OBJECT":"/EXEDMINB/NFE_MSGS023",
+    "LANGU":"D",
+    "TYP":"E",
+    "VERSION":1,
+    "MASTERLANG":"X",
+    "TXTLINES":0,
+    "DOKSTATE":"N",
+    "SELFDEF":"3"
+   },
+   {
+    "ID":"NA",
     "OBJECT":"/EXEDMINB/NFE_MSGS100",
     "LANGU":"D",
     "TYP":"E",
@@ -1077,6 +1196,61 @@
    {
     "ID":"NA",
     "OBJECT":"/EXEDMINB/NFE_MSGS900",
+    "LANGU":"D",
+    "TYP":"E",
+    "VERSION":1,
+    "MASTERLANG":"X",
+    "TXTLINES":0,
+    "DOKSTATE":"N",
+    "SELFDEF":"3"
+   },
+   {
+    "ID":"NA",
+    "OBJECT":"/EXEDMINB/NFE_MSGS990",
+    "LANGU":"D",
+    "TYP":"E",
+    "VERSION":1,
+    "MASTERLANG":"X",
+    "TXTLINES":0,
+    "DOKSTATE":"N",
+    "SELFDEF":"3"
+   },
+   {
+    "ID":"NA",
+    "OBJECT":"/EXEDMINB/NFE_MSGS991",
+    "LANGU":"D",
+    "TYP":"E",
+    "VERSION":1,
+    "MASTERLANG":"X",
+    "TXTLINES":0,
+    "DOKSTATE":"N",
+    "SELFDEF":"3"
+   },
+   {
+    "ID":"NA",
+    "OBJECT":"/EXEDMINB/NFE_MSGS992",
+    "LANGU":"D",
+    "TYP":"E",
+    "VERSION":1,
+    "MASTERLANG":"X",
+    "TXTLINES":0,
+    "DOKSTATE":"N",
+    "SELFDEF":"3"
+   },
+   {
+    "ID":"NA",
+    "OBJECT":"/EXEDMINB/NFE_MSGS993",
+    "LANGU":"D",
+    "TYP":"E",
+    "VERSION":1,
+    "MASTERLANG":"X",
+    "TXTLINES":0,
+    "DOKSTATE":"N",
+    "SELFDEF":"3"
+   },
+   {
+    "ID":"NA",
+    "OBJECT":"/EXEDMINB/NFE_MSGS994",
     "LANGU":"D",
     "TYP":"E",
     "VERSION":1,
@@ -1287,6 +1461,12 @@
    {
     "SPRSL":"P",
     "ARBGB":"/EXEDMINB/NFE_MSGS",
+    "MSGNR":"023",
+    "TEXT":"Itens da remessa atualizados!"
+   },
+   {
+    "SPRSL":"P",
+    "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"100",
     "TEXT":"Registrada NFe no Monitor!"
    },
@@ -1311,8 +1491,38 @@
    {
     "SPRSL":"P",
     "ARBGB":"/EXEDMINB/NFE_MSGS",
+    "MSGNR":"990",
+    "TEXT":"Erro realizar entrada de mercadoria."
+   },
+   {
+    "SPRSL":"P",
+    "ARBGB":"/EXEDMINB/NFE_MSGS",
+    "MSGNR":"991",
+    "TEXT":"Erro ao fazer entrada em depósito."
+   },
+   {
+    "SPRSL":"P",
+    "ARBGB":"/EXEDMINB/NFE_MSGS",
+    "MSGNR":"992",
+    "TEXT":"Remessa possuem itens sem depósito."
+   },
+   {
+    "SPRSL":"P",
+    "ARBGB":"/EXEDMINB/NFE_MSGS",
+    "MSGNR":"993",
+    "TEXT":"Erro ao atualizar remessa."
+   },
+   {
+    "SPRSL":"P",
+    "ARBGB":"/EXEDMINB/NFE_MSGS",
+    "MSGNR":"994",
+    "TEXT":"Quantidade entrada diferente da quantidade da remessa! Deseja Continuar?"
+   },
+   {
+    "SPRSL":"P",
+    "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"995",
-    "TEXT":"Erro na criação da delivery."
+    "TEXT":"Erro na criação da remessa."
    },
    {
     "SPRSL":"P",
@@ -1375,224 +1585,266 @@
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"000",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"001",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"002",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"003",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"004",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"005",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"006",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"007",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"008",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"009",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"010",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"011",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"012",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"013",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"014",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"015",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"016",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"017",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"018",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"019",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"020",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"021",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"022",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
+    "SELFDEF":"3"
+   },
+   {
+    "ARBGB":"/EXEDMINB/NFE_MSGS",
+    "MSGNR":"023",
+    "NAME":"SAP_CUSTOMER",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"100",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"101",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"102",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"900",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
+    "SELFDEF":"3"
+   },
+   {
+    "ARBGB":"/EXEDMINB/NFE_MSGS",
+    "MSGNR":"990",
+    "NAME":"SAP_CUSTOMER",
+    "DATUM":"2026-03-12",
+    "SELFDEF":"3"
+   },
+   {
+    "ARBGB":"/EXEDMINB/NFE_MSGS",
+    "MSGNR":"991",
+    "NAME":"SAP_CUSTOMER",
+    "DATUM":"2026-03-12",
+    "SELFDEF":"3"
+   },
+   {
+    "ARBGB":"/EXEDMINB/NFE_MSGS",
+    "MSGNR":"992",
+    "NAME":"SAP_CUSTOMER",
+    "DATUM":"2026-03-12",
+    "SELFDEF":"3"
+   },
+   {
+    "ARBGB":"/EXEDMINB/NFE_MSGS",
+    "MSGNR":"993",
+    "NAME":"SAP_CUSTOMER",
+    "DATUM":"2026-03-12",
+    "SELFDEF":"3"
+   },
+   {
+    "ARBGB":"/EXEDMINB/NFE_MSGS",
+    "MSGNR":"994",
+    "NAME":"SAP_CUSTOMER",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"995",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"996",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"997",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"998",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    },
    {
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"999",
     "NAME":"SAP_CUSTOMER",
-    "DATUM":"2026-03-11",
+    "DATUM":"2026-03-12",
     "SELFDEF":"3"
    }
   ]
@@ -1621,8 +1873,8 @@
     "CRELEASE":"",
     "DELFLAG":"",
     "TRANSLTTXT":"",
-    "CREATED_ON":"2026-03-04",
-    "CHECK_DATE":"2026-03-04",
+    "CREATED_ON":"2026-03-12",
+    "CHECK_DATE":"2026-03-12",
     "CHECK_CFG":""
    }
   ]

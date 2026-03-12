@@ -944,6 +944,7 @@ class lhc__nfemonitorh implementation.
 
 
   method reprocessar.
+
     lhc_tabs_operations=>read_header_data( exporting it_keys  = value #( for key in keys ( corresponding #( key ) ) )
                                            importing et_header = data(lt_header) ).
 
@@ -1026,8 +1027,8 @@ class lhc__nfemonitorh implementation.
   method rba_Historico.
   endmethod.
 
-  METHOD update.
-  ENDMETHOD.
+  method update.
+  endmethod.
 
 endclass.
 
