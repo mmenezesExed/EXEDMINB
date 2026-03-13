@@ -520,6 +520,7 @@ class lhc__nfemonitorh implementation.
 
       clear: ls_failed, ls_reported.
 
+      "Executa entrada em deposito
       lhc_tabs_operations=>get_assist_ref( )->entrada_deposito(
         exporting
           iv_delivery = ls_header-Delivery
@@ -549,12 +550,12 @@ class lhc__nfemonitorh implementation.
               exporting
                 i_historico = value #( IdNFe = ls_header-ChaveNFe
                                        Etapa = ls_header-atividade
-                                       Status = ls_header-Status
+                                       Status = 3
                                        Descricao = me->new_message( id = lhc_tabs_operations=>cc_classe_msg
-                                                                    number   = 023
+                                                                    number   = 024
                                                                     severity = if_abap_behv_message=>severity-success )->if_message~get_text( ) ) ).
 
-
+        "Executa entrada de Mercadoria
         lhc_tabs_operations=>get_assist_ref( )->entrada_mercadoria(
           exporting
             iv_delivery = ls_header-Delivery
@@ -579,16 +580,22 @@ class lhc__nfemonitorh implementation.
           endloop.
 
         else.
-          ls_header-Status = 3. condense ls_header-Status no-gaps.
-          ls_header-Atividade = 900.
+          ls_header-Status = 2. condense ls_header-Status no-gaps.
           lhc_tabs_operations=>register_historico(
                 exporting
                   i_historico = value #( IdNFe = ls_header-ChaveNFe
                                          Etapa = ls_header-atividade
-                                         Status = ls_header-Status
+                                         Status = 3
                                          Descricao = me->new_message( id = lhc_tabs_operations=>cc_classe_msg
-                                                                      number   = 023
+                                                                      number   = 025
                                                                       severity = if_abap_behv_message=>severity-success )->if_message~get_text( ) ) ).
+
+          "Executa Miro
+          modify entities of /exedminb/i_nfemonitorlogh
+              in local mode
+              entity _NFeMonitorH
+              execute etapa_800
+              from value #( ( ChaveNFe = ls_header-ChaveNFe ) ).
         endif.
       endif.
 
@@ -616,14 +623,47 @@ class lhc__nfemonitorh implementation.
     endif.
 
     loop at lt_header into data(ls_header).
-
+      ls_header-Atividade = 0800.
       lhc_tabs_operations=>get_assist_ref( )->executar_miro( exporting is_header = ls_header
                                                                        it_items  = value #( for item in lt_items where ( ChaveNFe = ls_header-ChaveNFe ) ( item ) )
                                                              changing  mapped    = ls_mapped
                                                                        failed    = ls_failed
                                                                        reported  = ls_reported ).
 
+      if ls_failed-_nfemonitorh is not initial.
+        clear reported-_nfemonitorh.
+        ls_header-Status = 1. condense ls_header-Status no-gaps.
+
+        loop at ls_reported-_nfemonitorh into data(report_em).
+          lhc_tabs_operations=>register_historico(
+            exporting
+              i_historico = value #( IdNFe = ls_header-ChaveNFe
+                                     Etapa = ls_header-atividade
+                                     Status = ls_header-Status
+                                     Descricao = report_em-%msg->if_message~get_text( ) ) ).
+
+        endloop.
+
+      else.
+        ls_header-Status = 3. condense ls_header-Status no-gaps.
+        lhc_tabs_operations=>register_historico(
+              exporting
+                i_historico = value #( IdNFe = ls_header-ChaveNFe
+                                       Etapa = ls_header-atividade
+                                       Status = ls_header-Status
+                                       Descricao = me->new_message( id = lhc_tabs_operations=>cc_classe_msg
+                                                                    number   = 026
+                                                                    severity = if_abap_behv_message=>severity-success )->if_message~get_text( ) ) ).
+
+        ls_header-Atividade = 0900.
+
+      endif.
+
+      lhc_tabs_operations=>update_header_data( ls_header ).
+
     endloop.
+
+    lhc_tabs_operations=>save_historico(  ).
 
   endmethod.
 
