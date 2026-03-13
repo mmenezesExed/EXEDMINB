@@ -1621,7 +1621,7 @@
     "SPRSL":"P",
     "ARBGB":"/EXEDMINB/NFE_MSGS",
     "MSGNR":"994",
-    "TEXT":"Quantidade entrada diferente da quantidade da remessa! Deseja Continuar?"
+    "TEXT":"Qtd. da remessa &1 item &2, alterado de &3 para &4!"
    },
    {
     "SPRSL":"P",

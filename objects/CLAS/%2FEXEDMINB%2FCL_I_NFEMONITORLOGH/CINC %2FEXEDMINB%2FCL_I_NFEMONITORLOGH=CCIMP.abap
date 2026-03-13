@@ -342,6 +342,8 @@ class lhc__nfemonitordelivery implementation.
     data existe_diferenca type abap_boolean.
     data entities_to_update type /exedminb/cl_nfe_inb_processor=>tt_delivery.
 
+
+
     lhc_tabs_operations=>read_header_data( exporting it_keys  = value #( for key in entities ( ChaveNFe = key-ChaveNFe ) )
                                            importing et_header = data(lt_header) ).
 
@@ -353,56 +355,68 @@ class lhc__nfemonitordelivery implementation.
 
       loop at entities into data(entitie) where ChaveNFe eq ls_header-ChaveNFe.
         if entitie-OriginalDeliveryQuantity ne entitie-ActualDeliveryQuantity.
-          existe_diferenca = abap_true.
+          append corresponding #( entitie ) to entities_to_update.
         endif.
-
-        append corresponding #( entitie ) to entities_to_update.
       endloop.
 
 
-      if existe_diferenca eq abap_true.
-        ""Show only first time
-        reported-_nfemonitorh = value #( ( %msg = me->new_message( id       = lhc_tabs_operations=>cc_classe_msg
-                                                                   number   = 994
-                                                                   severity = if_abap_behv_message=>severity-warning ) ) ).
-      endif.
+      if lines( entities_to_update ) > 0.
 
-      lhc_tabs_operations=>get_assist_ref( )->atualizar_qtd_delivery(
-          exporting
-            it_delivery = entities_to_update
-          changing
-            mapped      = ls_mapped
-            failed      = ls_failed
-            reported    = ls_reported
-        ).
-
-      if ls_failed-_nfemonitorh is not initial.
-        clear reported-_nfemonitorh.
-        ls_header-Status = 1. condense ls_header-Status no-gaps.
-
-        loop at ls_reported-_nfemonitorh into data(report).
-          lhc_tabs_operations=>register_historico(
+        lhc_tabs_operations=>get_assist_ref( )->atualizar_qtd_delivery(
             exporting
-              i_historico = value #( IdNFe = ls_header-ChaveNFe
-                                     Etapa = ls_header-atividade
-                                     Status = ls_header-Status
-                                     Descricao = report-%msg->if_message~get_text( ) ) ).
+              it_delivery = entities_to_update
+            changing
+              mapped      = ls_mapped
+              failed      = ls_failed
+              reported    = ls_reported
+          ).
 
-        endloop.
+        if ls_failed-_nfemonitorh is not initial.
+          clear reported-_nfemonitorh.
+          ls_header-Status = 1. condense ls_header-Status no-gaps.
 
-      else.
-        ls_header-Status = 2. condense ls_header-Status no-gaps.
-        lhc_tabs_operations=>register_historico(
+          loop at ls_reported-_nfemonitorh into data(report).
+            lhc_tabs_operations=>register_historico(
               exporting
                 i_historico = value #( IdNFe = ls_header-ChaveNFe
                                        Etapa = ls_header-atividade
                                        Status = ls_header-Status
-                                       Descricao = me->new_message( id = lhc_tabs_operations=>cc_classe_msg
-                                                                    number   = 023
-                                                                    severity = if_abap_behv_message=>severity-success )->if_message~get_text( ) ) ).
+                                       Descricao = report-%msg->if_message~get_text( ) ) ).
+
+          endloop.
+
+        else.
+          data OriginalDeliveryQuantity type string.
+          data ActualDeliveryQuantity type string.
+
+          ls_header-Status = 2. condense ls_header-Status no-gaps.
+          loop at entities_to_update into data(delivery_updated).
+            data(delivery) = delivery_updated-Delivery.
+            SHIFT delivery LEFT DELETING LEADING '0'.
+
+            OriginalDeliveryQuantity = delivery_updated-OriginalDeliveryQuantity.
+            ActualDeliveryQuantity = delivery_updated-ActualDeliveryQuantity.
+            translate OriginalDeliveryQuantity using '.,'.
+            translate ActualDeliveryQuantity using '.,'.
+
+            lhc_tabs_operations=>register_historico(
+                exporting
+                  i_historico = value #( IdNFe = ls_header-ChaveNFe
+                                         Etapa = ls_header-atividade
+                                         Status = 2
+                                         Descricao = me->new_message( id       = lhc_tabs_operations=>cc_classe_msg
+                                                                      number   = 994
+                                                                      severity = if_abap_behv_message=>severity-warning
+                                                                      v1 = delivery
+                                                                      v2 = delivery_updated-DeliveryDocumentItem
+                                                                      v3 = OriginalDeliveryQuantity
+                                                                      v4 = ActualDeliveryQuantity )->if_message~get_text( ) ) ).
+          endloop.
+        endif.
+
+        lhc_tabs_operations=>update_header_data( ls_header ).
       endif.
 
-      lhc_tabs_operations=>update_header_data( ls_header ).
     endloop.
 
     lhc_tabs_operations=>save_historico(  ).

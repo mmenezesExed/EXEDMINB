@@ -40,7 +40,7 @@
          lo_function_request = lo_function->create_request( ).
 
          " Execute the request
-         lo_function_response = lo_function_request->execute( ).
+         lo_function_response = lo_function_request->execute( /iwbep/if_cp_request_function=>gcs_http_method-post ).
 
          " Get the after image
          lo_function_response->get_business_data( importing ea_response_data = la_business_data ).

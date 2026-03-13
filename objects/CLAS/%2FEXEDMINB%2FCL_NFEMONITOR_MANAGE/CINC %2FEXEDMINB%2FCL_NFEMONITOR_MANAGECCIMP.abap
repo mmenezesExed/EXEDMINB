@@ -690,7 +690,7 @@ class lhc__nfemonitorh implementation.
         endloop.
       else.
         ls_header-Status = 3.
-        ls_header-Delivery = delivery.
+        ls_header-Delivery = |{ delivery WIDTH = 10 ALIGN = RIGHT PAD = '0' }|. .
 
         lhc_tabs_operations=>register_historico(
             exporting
