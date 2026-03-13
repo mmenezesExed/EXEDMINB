@@ -15,6 +15,7 @@ lock master authorization master ( instance, global )
 
   side effects
   {
+    entity _Delivery affects entity _Historico;
     action etapa_700 affects entity _Historico;
     action etapa_800 affects entity _Historico;
   }

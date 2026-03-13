@@ -348,6 +348,11 @@ class lhc__nfemonitordelivery implementation.
                                            importing et_header = data(lt_header) ).
 
     loop at lt_header into data(ls_header).
+      select * from /exedminb/i_nfeminbdelivery
+        for all entries in @lt_header
+        where ChaveNFe eq @lt_header-ChaveNFe
+        into table @data(lt_atual_deliverys).
+
 
       free entities_to_update.
       clear existe_diferenca.
@@ -386,17 +391,26 @@ class lhc__nfemonitordelivery implementation.
           endloop.
 
         else.
-          data OriginalDeliveryQuantity type string.
+          data OldDeliveryQuantity type string.
           data ActualDeliveryQuantity type string.
+          data itemDelivery type string.
 
           ls_header-Status = 2. condense ls_header-Status no-gaps.
+
           loop at entities_to_update into data(delivery_updated).
             data(delivery) = delivery_updated-Delivery.
-            SHIFT delivery LEFT DELETING LEADING '0'.
+            itemDelivery = delivery_updated-DeliveryDocumentItem.
+            shift delivery left deleting leading '0'.
+            shift itemDelivery left deleting leading '0'.
 
-            OriginalDeliveryQuantity = delivery_updated-OriginalDeliveryQuantity.
+
+
+            OldDeliveryQuantity = cond #( when line_exists( lt_atual_deliverys[ Delivery = delivery_updated-Delivery
+                                                                                DeliveryDocumentItem = delivery_updated-DeliveryDocumentItem ] )
+                                          then lt_atual_deliverys[ Delivery = delivery_updated-Delivery
+                                                                                DeliveryDocumentItem = delivery_updated-DeliveryDocumentItem ]-ActualDeliveryQuantity else 0 ).
             ActualDeliveryQuantity = delivery_updated-ActualDeliveryQuantity.
-            translate OriginalDeliveryQuantity using '.,'.
+            translate OldDeliveryQuantity using '.,'.
             translate ActualDeliveryQuantity using '.,'.
 
             lhc_tabs_operations=>register_historico(
@@ -408,8 +422,8 @@ class lhc__nfemonitordelivery implementation.
                                                                       number   = 994
                                                                       severity = if_abap_behv_message=>severity-warning
                                                                       v1 = delivery
-                                                                      v2 = delivery_updated-DeliveryDocumentItem
-                                                                      v3 = OriginalDeliveryQuantity
+                                                                      v2 = itemDelivery
+                                                                      v3 = OldDeliveryQuantity
                                                                       v4 = ActualDeliveryQuantity )->if_message~get_text( ) ) ).
           endloop.
         endif.

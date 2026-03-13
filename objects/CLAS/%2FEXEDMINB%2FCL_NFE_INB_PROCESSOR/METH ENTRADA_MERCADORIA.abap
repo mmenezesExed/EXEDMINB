@@ -3,6 +3,7 @@
      types ty_return type standard table of /exedminb/sc_api_delivery=>tys_putaway_report.
 
      data:
+       ls_entity_key     type /exedminb/sc_api_delivery=>tys_a_inb_delivery_header_type,
        ls_parameter         type /exedminb/sc_api_delivery=>tys_parameters_11,
        la_business_data     type ty_return,
        lo_http_client       type ref to if_web_http_client,
@@ -28,6 +29,14 @@
 
          assert lo_http_client is bound.
 
+         ls_entity_key = value #(
+                            delivery_document = iv_delivery ).
+
+         data(lo_read_resource) = lo_client_proxy->create_resource_for_entity_set( 'A_INB_DELIVERY_HEADER' )->navigate_with_key( ls_entity_key ).
+         data(lo_read_request) = lo_read_resource->create_request_for_read( ).
+         data(lo_read_response) = lo_read_request->execute( ).
+         data(lv_etag) = lo_read_response->get_etag( ).
+
 
 *        Prepare parameter
          ls_parameter = value #(
@@ -38,6 +47,7 @@
          lo_function = lo_client_proxy->create_resource_for_function( 'POST_GOODS_RECEIPT' ).
          lo_function->set_parameter( is_parameter = ls_parameter ).
          lo_function_request = lo_function->create_request( ).
+         lo_function_request->set_if_match( lv_etag ).
 
          " Execute the request
          lo_function_response = lo_function_request->execute( /iwbep/if_cp_request_function=>gcs_http_method-post ).
