@@ -31,6 +31,8 @@
            assert lo_http_client is bound.
 
 
+
+
            " Set entity key
            ls_entity_key = value #(
                      delivery_document       = ls_delivery-Delivery
@@ -43,16 +45,18 @@
 
            " Navigate to the resource and create a request for the update operation
            lo_resource = lo_client_proxy->create_resource_for_entity_set( 'A_INB_DELIVERY_ITEM' )->navigate_with_key( ls_entity_key ).
+
+           data(lo_read_request) = lo_resource->create_request_for_read( ).
+           data(lo_read_response) = lo_read_request->execute( ).
+           data(lv_etag) = lo_read_response->get_etag( ).
+
            lo_request = lo_resource->create_request_for_update( /iwbep/if_cp_request_update=>gcs_update_semantic-put ).
 
            " ETag is needed
-           " You need to retrieve it and then set it here
-*        lo_request->set_if_match( ls_business_data-etag ).
-
-           data lv_str type string.
-           lv_str = |STORAGE_LOCATION-ACTUAL_DELIVERY_QUANTITY|.
+           lo_request->set_if_match( lv_etag ).
            lo_request->set_business_data( exporting is_business_data     = ls_business_data
-                                                    it_provided_property = value #( ( lv_str ) ) ).
+                                                    it_provided_property = value #( ( |ACTUAL_DELIVERY_QUANTITY| )
+                                                                                    ( |STORAGE_LOCATION| ) ) ).
 
            " Execute the request and retrieve the business data
            lo_response = lo_request->execute( ).
