@@ -49,8 +49,10 @@
            " You need to retrieve it and then set it here
 *        lo_request->set_if_match( ls_business_data-etag ).
 
+           data lv_str type string.
+           lv_str = |STORAGE_LOCATION-ACTUAL_DELIVERY_QUANTITY|.
            lo_request->set_business_data( exporting is_business_data     = ls_business_data
-                                                    it_provided_property = value #( ( |ACTUAL_DELIVERY_QUANTITY-STORAGE_LOCATION| ) ) ).
+                                                    it_provided_property = value #( ( lv_str ) ) ).
 
            " Execute the request and retrieve the business data
            lo_response = lo_request->execute( ).
