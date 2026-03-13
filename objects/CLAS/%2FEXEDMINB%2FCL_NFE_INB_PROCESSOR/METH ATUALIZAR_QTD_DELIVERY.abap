@@ -50,7 +50,7 @@
            data(lo_read_response) = lo_read_request->execute( ).
            data(lv_etag) = lo_read_response->get_etag( ).
 
-           lo_request = lo_resource->create_request_for_update( /iwbep/if_cp_request_update=>gcs_update_semantic-put ).
+           lo_request = lo_resource->create_request_for_update( /iwbep/if_cp_request_update=>gcs_update_semantic-patch ).
 
            " ETag is needed
            lo_request->set_if_match( lv_etag ).
