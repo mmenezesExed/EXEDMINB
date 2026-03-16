@@ -397,12 +397,12 @@ class lhc__nfemonitorh implementation.
                                                      %update = cond #( when line-Atividade eq 200 and line-Empresa is not initial and line-LocalDeNegocio is not initial
                                                                        then if_abap_behv=>auth-allowed else if_abap_behv=>auth-unauthorized )
                                                      %action = value #( processar = cond #(
-                                                                                        when line-Atividade ne 700 then if_abap_behv=>auth-unauthorized
-                                                                                        when line-Atividade ne 800 then if_abap_behv=>auth-unauthorized
+                                                                                        when line-Atividade eq 700 then if_abap_behv=>auth-unauthorized
+                                                                                        when line-Atividade eq 800 then if_abap_behv=>auth-unauthorized
                                                                                         when line-Atividade ne 500 and line-Status ne lhc_tabs_operations=>cc_status-erro then if_abap_behv=>auth-allowed else if_abap_behv=>auth-unauthorized )
                                                                         reprocessar = cond #(
-                                                                                        when line-Atividade ne 700 then if_abap_behv=>auth-unauthorized
-                                                                                        when line-Atividade ne 800 then if_abap_behv=>auth-unauthorized
+                                                                                        when line-Atividade eq 700 then if_abap_behv=>auth-unauthorized
+                                                                                        when line-Atividade eq 800 then if_abap_behv=>auth-unauthorized
                                                                                         when line-Atividade ne 500 and line-Status eq lhc_tabs_operations=>cc_status-erro then if_abap_behv=>auth-allowed else if_abap_behv=>auth-unauthorized )
                                                                         etapa_500 = cond #( when line-Atividade eq 500 then if_abap_behv=>auth-allowed else if_abap_behv=>auth-unauthorized ) ) ) ).
 
