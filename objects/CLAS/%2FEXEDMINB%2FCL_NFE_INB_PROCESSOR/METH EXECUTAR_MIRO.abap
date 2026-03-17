@@ -23,7 +23,7 @@
          quantity_in_purchase_order type string,
          supplier_invoice_item_amou type string,
          document_currency          type /exedminb/sc_api_supplinv_proc=>tys_a_suplr_invc_item_pur_or_2-document_currency,
-         purchase_order_qty_unit_is type /exedminb/sc_api_supplinv_proc=>tys_a_suplr_invc_item_pur_or_2-purchase_order_qty_unit_is,
+         "purchase_order_qty_unit_is type /exedminb/sc_api_supplinv_proc=>tys_a_suplr_invc_item_pur_or_2-purchase_order_qty_unit_is,
          purchase_order_qty_unit_sa type /exedminb/sc_api_supplinv_proc=>tys_a_suplr_invc_item_pur_or_2-purchase_order_qty_unit_sa,
        end of ty_po_item,
        tt_po_items type standard table of ty_po_item with empty key,
@@ -163,7 +163,7 @@
                                                      quantity_in_purchase_order  = item-Quantity
                                                      supplier_invoice_item_amou  = item-NetPriceAmount
                                                      document_currency           = item-DocumentCurrency
-                                                     purchase_order_qty_unit_is  = item-PurchaseOrderQuantityUnit
+                                                     "purchase_order_qty_unit_is  = item-PurchaseOrderQuantityUnit
                                                      purchase_order_qty_unit_sa  = item-PurchaseOrderQuantityUnit
              ) )
          ).
