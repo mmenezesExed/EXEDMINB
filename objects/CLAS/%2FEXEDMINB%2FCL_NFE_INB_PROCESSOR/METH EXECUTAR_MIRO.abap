@@ -127,6 +127,7 @@
              ) )
          ).
 
+         condense ls_business_data-invoice_gross_amount no-gaps.
 
          data(lv_response) = lcl_api_hub_read=>post_supplier_invoice( ls_business_data ).
 

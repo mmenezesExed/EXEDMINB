@@ -358,11 +358,14 @@ class lcl_tools implementation.
   method trata_html_text.
     r_text = text.
 
-    split r_text at '<message>' into data(trash) data(msg).
+    split r_text at '<message' into data(trash) data(msg).
     if msg is not initial.
-      split msg at '</message>' into msg trash.
+      split msg at '>' into trash msg.
       if msg is not initial.
-        r_text = msg.
+        split msg at '</message>' into msg trash.
+        if msg is not initial.
+          r_text = msg.
+        endif.
       endif.
     endif.
   endmethod.
