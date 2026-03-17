@@ -9,7 +9,6 @@
          br_nfe_random_number       type /exedminb/sc_api_supplinv_proc=>tys_a_br_supplier_invoice_nf_2-br_nfe_random_number,
          br_nftype                  type /exedminb/sc_api_supplinv_proc=>tys_a_br_supplier_invoice_nf_2-br_nftype,
          br_nota_fiscal             type /exedminb/sc_api_supplinv_proc=>tys_a_br_supplier_invoice_nf_2-br_nota_fiscal,
-         fiscal_year                type /exedminb/sc_api_supplinv_proc=>tys_a_br_supplier_invoice_nf_2-fiscal_year,
        end of ty_br_nfe,
 
        " Estrutura para os Itens do Pedido (Purchase Order Items)
@@ -154,7 +153,6 @@
                                              br_nfe_random_number        = is_header-ChaveNFe+34(9)
                                              br_nftype                   = '' "Validar com cliente
                                              br_nota_fiscal              = is_header-NumeroNFe
-                                             fiscal_year                 = fiscal_year
              )
              to_suplr_invc_item_pur_ord = value #( for item in lt_PurchaseOrderItemsDatas index into idx (
                                                      supplier_invoice_item       = idx
