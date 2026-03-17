@@ -3,7 +3,7 @@
      types ty_return type standard table of /exedminb/sc_api_delivery=>tys_putaway_report.
 
      data:
-       ls_entity_key     type /exedminb/sc_api_delivery=>tys_a_inb_delivery_header_type,
+       ls_entity_key        type /exedminb/sc_api_delivery=>tys_a_inb_delivery_header_type,
        ls_parameter         type /exedminb/sc_api_delivery=>tys_parameters_12,
        la_business_data     type ty_return,
        lo_http_client       type ref to if_web_http_client,

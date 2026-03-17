@@ -1,14 +1,59 @@
    method executar_miro.
-     data begin of y_bisiness_data.
-     include type /exedminb/sc_api_supplinv_proc=>tys_a_supplier_invoice_type.
-     data: to_br_supplier_invoice_nfd type /exedminb/sc_api_supplinv_proc=>tys_a_br_supplier_invoice_nf_2,
-           to_suplr_invc_item_pur_ord type /exedminb/sc_api_supplinv_proc=>tyt_A_SUPLR_INVC_ITEM_PUR_OR_2.
-     data end of y_bisiness_data.
+     types:
+       " Estrutura para os dados de Nota Fiscal Brasil
+       begin of ty_br_nfe,
+         br_nfauthentication_date   type /exedminb/sc_api_supplinv_proc=>tys_a_br_supplier_invoice_nf_2-br_nfauthentication_date,
+         br_nfauthentication_time   type /exedminb/sc_api_supplinv_proc=>tys_a_br_supplier_invoice_nf_2-br_nfauthentication_time,
+         br_nfauthzn_protocol_numbe type /exedminb/sc_api_supplinv_proc=>tys_a_br_supplier_invoice_nf_2-br_nfauthzn_protocol_numbe,
+         br_nfauthzn_protocol_num_2 type /exedminb/sc_api_supplinv_proc=>tys_a_br_supplier_invoice_nf_2-br_nfauthzn_protocol_num_2,
+         br_nfe_random_number       type /exedminb/sc_api_supplinv_proc=>tys_a_br_supplier_invoice_nf_2-br_nfe_random_number,
+         br_nftype                  type /exedminb/sc_api_supplinv_proc=>tys_a_br_supplier_invoice_nf_2-br_nftype,
+         br_nota_fiscal             type /exedminb/sc_api_supplinv_proc=>tys_a_br_supplier_invoice_nf_2-br_nota_fiscal,
+         fiscal_year                type /exedminb/sc_api_supplinv_proc=>tys_a_br_supplier_invoice_nf_2-fiscal_year,
+       end of ty_br_nfe,
+
+       " Estrutura para os Itens do Pedido (Purchase Order Items)
+       begin of ty_po_item,
+         supplier_invoice_item      type /exedminb/sc_api_supplinv_proc=>tys_a_suplr_invc_item_pur_or_2-supplier_invoice_item,
+         purchase_order             type /exedminb/sc_api_supplinv_proc=>tys_a_suplr_invc_item_pur_or_2-purchase_order,
+         purchase_order_item        type /exedminb/sc_api_supplinv_proc=>tys_a_suplr_invc_item_pur_or_2-purchase_order_item,
+         reference_document         type /exedminb/sc_api_supplinv_proc=>tys_a_suplr_invc_item_pur_or_2-reference_document,
+         reference_document_fiscal  type /exedminb/sc_api_supplinv_proc=>tys_a_suplr_invc_item_pur_or_2-reference_document_fiscal,
+         reference_document_item    type /exedminb/sc_api_supplinv_proc=>tys_a_suplr_invc_item_pur_or_2-reference_document_item,
+         tax_code                   type /exedminb/sc_api_supplinv_proc=>tys_a_suplr_invc_item_pur_or_2-tax_code,
+         quantity_in_purchase_order type /exedminb/sc_api_supplinv_proc=>tys_a_suplr_invc_item_pur_or_2-quantity_in_purchase_order,
+         supplier_invoice_item_amou type /exedminb/sc_api_supplinv_proc=>tys_a_suplr_invc_item_pur_or_2-supplier_invoice_item_amou,
+         document_currency          type /exedminb/sc_api_supplinv_proc=>tys_a_suplr_invc_item_pur_or_2-document_currency,
+         purchase_order_qty_unit_is type /exedminb/sc_api_supplinv_proc=>tys_a_suplr_invc_item_pur_or_2-purchase_order_qty_unit_is,
+         purchase_order_qty_unit_sa type /exedminb/sc_api_supplinv_proc=>tys_a_suplr_invc_item_pur_or_2-purchase_order_qty_unit_sa,
+       end of ty_po_item,
+       tt_po_items type standard table of ty_po_item with empty key,
+
+       " Estrutura Principal (Header)
+       begin of ty_business_data,
+         company_code               type /exedminb/sc_api_supplinv_proc=>tys_a_supplier_invoice_type-company_code,
+         document_currency          type /exedminb/sc_api_supplinv_proc=>tys_a_supplier_invoice_type-document_currency,
+         document_date              type /exedminb/sc_api_supplinv_proc=>tys_a_supplier_invoice_type-document_date,
+         invoice_gross_amount       type /exedminb/sc_api_supplinv_proc=>tys_a_supplier_invoice_type-invoice_gross_amount,
+         invoicing_party            type /exedminb/sc_api_supplinv_proc=>tys_a_supplier_invoice_type-invoicing_party,
+         posting_date               type /exedminb/sc_api_supplinv_proc=>tys_a_supplier_invoice_type-posting_date,
+         creation_date              type /exedminb/sc_api_supplinv_proc=>tys_a_supplier_invoice_type-creation_date,
+         supplier_invoice_idby_invc type /exedminb/sc_api_supplinv_proc=>tys_a_supplier_invoice_type-supplier_invoice_idby_invc,
+         accounting_document_type   type /exedminb/sc_api_supplinv_proc=>tys_a_supplier_invoice_type-accounting_document_type,
+         tax_is_calculated_automati type /exedminb/sc_api_supplinv_proc=>tys_a_supplier_invoice_type-tax_is_calculated_automati,
+         direct_quoted_exchange_rat type /exedminb/sc_api_supplinv_proc=>tys_a_supplier_invoice_type-direct_quoted_exchange_rat,
+         document_header_text       type /exedminb/sc_api_supplinv_proc=>tys_a_supplier_invoice_type-document_header_text,
+         payment_terms              type /exedminb/sc_api_supplinv_proc=>tys_a_supplier_invoice_type-payment_terms,
+         unplanned_delivery_cost_ta type /exedminb/sc_api_supplinv_proc=>tys_a_supplier_invoice_type-unplanned_delivery_cost_ta,
+         unplnd_deliv_cost_tax_juri type /exedminb/sc_api_supplinv_proc=>tys_a_supplier_invoice_type-unplnd_deliv_cost_tax_juri,
+         to_br_supplier_invoice_nfd type ty_br_nfe,
+         to_suplr_invc_item_pur_ord type tt_po_items,
+       end of ty_business_data.
 
 
      data:
-       ls_business_data        like y_bisiness_data,
-       ls_business_data_result like y_bisiness_data,
+       ls_business_data        type ty_business_data,
+       ls_business_data_result type ty_business_data,
        lo_http_client          type ref to if_web_http_client,
        lo_client_proxy         type ref to /iwbep/if_cp_client_proxy,
        lo_request              type ref to /iwbep/if_cp_request_create,
