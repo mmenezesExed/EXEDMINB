@@ -148,7 +148,7 @@
              unplnd_deliv_cost_tax_juri  = lt_PurchaseOrderItemsDatas[ 1 ]-Companycode
              to_br_supplier_invoice_nfd  = value #(
                                              br_nfauthentication_date    = lcl_tools=>convert_abap_timestamp_2_epoch( iv_date = lv_dhRecbto_date )
-                                             br_nfauthentication_time    = lv_dhRecbto_time
+                                             br_nfauthentication_time    = |PT{ lv_dhRecbto_time(2) }H{ lv_dhRecbto_time+2(2) }M{ lv_dhRecbto_time+4(2) }S|
                                              br_nfauthzn_protocol_numbe  = ls_protocolo-nProt
                                              br_nfauthzn_protocol_num_2  = ls_protocolo-nProt
                                              br_nfe_random_number        = is_header-ChaveNFe+34(9)
