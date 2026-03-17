@@ -36,7 +36,6 @@
          invoice_gross_amount       type /exedminb/sc_api_supplinv_proc=>tys_a_supplier_invoice_type-invoice_gross_amount,
          invoicing_party            type /exedminb/sc_api_supplinv_proc=>tys_a_supplier_invoice_type-invoicing_party,
          posting_date               type /exedminb/sc_api_supplinv_proc=>tys_a_supplier_invoice_type-posting_date,
-         creation_date              type /exedminb/sc_api_supplinv_proc=>tys_a_supplier_invoice_type-creation_date,
          supplier_invoice_idby_invc type /exedminb/sc_api_supplinv_proc=>tys_a_supplier_invoice_type-supplier_invoice_idby_invc,
          accounting_document_type   type /exedminb/sc_api_supplinv_proc=>tys_a_supplier_invoice_type-accounting_document_type,
          tax_is_calculated_automati type /exedminb/sc_api_supplinv_proc=>tys_a_supplier_invoice_type-tax_is_calculated_automati,
@@ -136,7 +135,6 @@
              invoice_gross_amount        = is_header-ValorTotalNFe
              invoicing_party             = lt_PurchaseOrderItemsDatas[ 1 ]-Supplier
              posting_date                = lcl_tools=>convert_abap_timestamp_2_epoch( iv_date = cl_abap_context_info=>get_system_date( ) )
-             creation_date               = lcl_tools=>convert_abap_timestamp_2_epoch( iv_date = cl_abap_context_info=>get_system_date( ) )
              supplier_invoice_idby_invc  = |{ is_header-NumeroNFe }{ is_header-Serie }|
              accounting_document_type    = 'RE'
              tax_is_calculated_automati  = abap_true

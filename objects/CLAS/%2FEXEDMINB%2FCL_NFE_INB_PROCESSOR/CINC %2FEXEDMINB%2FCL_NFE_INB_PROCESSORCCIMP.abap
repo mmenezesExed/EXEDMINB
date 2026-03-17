@@ -267,6 +267,7 @@ class lcl_api_hub_read implementation.
     replace all occurrences of `SupplierInvoiceItemAmou`  in r_payload with `SupplierInvoiceItemAmount`.
     replace all occurrences of `PurchaseOrderQtyUnitIs`   in r_payload with `PurchaseOrderQtyUnitISOCode`.
     replace all occurrences of `PurchaseOrderQtyUnitSa`   in r_payload with `PurchaseOrderQtyUnitSAPCode`.
+    replace all occurrences of `ReferenceDocumentFiscal`  in r_payload with `ReferenceDocumentFiscalYear`.
 
   endmethod.
 
