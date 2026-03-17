@@ -20,8 +20,8 @@
          reference_document_fiscal  type /exedminb/sc_api_supplinv_proc=>tys_a_suplr_invc_item_pur_or_2-reference_document_fiscal,
          reference_document_item    type /exedminb/sc_api_supplinv_proc=>tys_a_suplr_invc_item_pur_or_2-reference_document_item,
          tax_code                   type /exedminb/sc_api_supplinv_proc=>tys_a_suplr_invc_item_pur_or_2-tax_code,
-         quantity_in_purchase_order type /exedminb/sc_api_supplinv_proc=>tys_a_suplr_invc_item_pur_or_2-quantity_in_purchase_order,
-         supplier_invoice_item_amou type /exedminb/sc_api_supplinv_proc=>tys_a_suplr_invc_item_pur_or_2-supplier_invoice_item_amou,
+         quantity_in_purchase_order type string,
+         supplier_invoice_item_amou type string,
          document_currency          type /exedminb/sc_api_supplinv_proc=>tys_a_suplr_invc_item_pur_or_2-document_currency,
          purchase_order_qty_unit_is type /exedminb/sc_api_supplinv_proc=>tys_a_suplr_invc_item_pur_or_2-purchase_order_qty_unit_is,
          purchase_order_qty_unit_sa type /exedminb/sc_api_supplinv_proc=>tys_a_suplr_invc_item_pur_or_2-purchase_order_qty_unit_sa,
@@ -170,6 +170,10 @@
 
          condense ls_business_data-invoice_gross_amount no-gaps.
          condense ls_business_data-direct_quoted_exchange_rat no-gaps.
+         loop at ls_business_data-to_suplr_invc_item_pur_ord assigning field-symbol(<f_items>).
+           condense <f_items>-quantity_in_purchase_order no-gaps.
+           condense <f_items>-supplier_invoice_item_amou no-gaps.
+         endloop.
 
          data(lv_response) = lcl_api_hub_read=>post_supplier_invoice( ls_business_data ).
 
