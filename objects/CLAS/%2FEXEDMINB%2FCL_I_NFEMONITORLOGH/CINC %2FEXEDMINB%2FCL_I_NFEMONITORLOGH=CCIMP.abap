@@ -207,23 +207,42 @@ class lhc_tabs_operations implementation.
 
   method save_header_activ_changes.
     if mt_data_header_changes is not initial.
+      select * from /exedminb/t_nfeheader
+        for all entries in @mt_data_header_changes
+        where Id eq @mt_data_header_changes-ChaveNFe
+        into table @data(hist_data).
+
       loop at mt_data_header_changes into data(ls_chgs).
         lhc_tabs_operations=>get_assist_ref( )->map_entity_to_nfeh_tables(
           exporting
             i_entity        = ls_chgs
           importing
             e_nfeheader     = data(ls_nfeheader)
-            e_nfeissuer     = data(ls_nfeissuer)
-            e_nferecipient  = data(ls_nferecipient)
-            e_nfeicmstaxtot = data(ls_nfeicmstaxtot)
-            e_nfeprotocolo  = data(ls_nfeprotocolo)
+            "e_nfeissuer     = data(ls_nfeissuer)
+            "e_nferecipient  = data(ls_nferecipient)
+            "e_nfeicmstaxtot = data(ls_nfeicmstaxtot)
+            "e_nfeprotocolo  = data(ls_nfeprotocolo)
         ).
 
+        if line_exists( hist_data[ id = ls_nfeheader-Id ] ).
+          data(ls_histdata) = hist_data[ id = ls_nfeheader-Id ].
+          ls_histdata-atividade = ls_nfeheader-atividade.
+          ls_histdata-statusProc = ls_nfeheader-statusProc.
+          ls_histdata-bukrs     = ls_nfeheader-bukrs.
+          ls_histdata-branch    = ls_nfeheader-branch.
+          ls_histdata-processo  = ls_nfeheader-processo.
+          ls_histdata-migo      = ls_nfeheader-migo.
+          ls_histdata-miro      = ls_nfeheader-miro.
+          ls_histdata-delivery  = ls_nfeheader-delivery.
+          ls_histdata-danfe     = ls_nfeheader-danfe.
+        endif.
+
         modify /exedminb/t_nfeheader from @ls_nfeheader.
-        modify /EXEDMINB/T_NFeIssuer from @ls_nfeissuer.
-        modify /EXEDMINB/T_NFeRecipient from @ls_nferecipient.
-        modify /EXEDMINB/T_NFeICMSTaxTot from @ls_nfeicmstaxtot.
-        modify /EXEDMINB/T_NFEProtocolo from @ls_nfeprotocolo.
+
+*        modify /EXEDMINB/T_NFeIssuer from @ls_nfeissuer.
+*        modify /EXEDMINB/T_NFeRecipient from @ls_nferecipient.
+*        modify /EXEDMINB/T_NFeICMSTaxTot from @ls_nfeicmstaxtot.
+*        modify /EXEDMINB/T_NFEProtocolo from @ls_nfeprotocolo.
       endloop.
     endif.
   endmethod.

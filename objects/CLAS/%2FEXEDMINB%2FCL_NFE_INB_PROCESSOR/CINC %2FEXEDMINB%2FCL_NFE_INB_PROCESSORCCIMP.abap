@@ -258,6 +258,11 @@ class lcl_api_hub_read implementation.
     replace all occurrences of `UnplndDelivCostTaxJuri`   in r_payload with `UnplndDelivCostTaxJurisdiction`.
     replace all occurrences of `BrNfauthznProtocolNumbe`  in r_payload with `BR_NFAuthznProtocolNumber`.
     replace all occurrences of `BrNfauthznProtocolNum_2`  in r_payload with `BR_NFAuthznProtocolNumber16`.
+    replace all occurrences of `BrNfauthenticationDate`   in r_payload with `BR_NFAuthenticationDate`.
+    replace all occurrences of `BrNfauthenticationTime`   in r_payload with `BR_NFAuthenticationTime`.
+    replace all occurrences of `BrNfeRandomNumber`        in r_payload with `BR_NFeRandomNumber`.
+    replace all occurrences of `BrNftype`                 in r_payload with `BR_NFType`.
+    replace all occurrences of `BrNotaFiscal`             in r_payload with `BR_NFSNumber`.
     replace all occurrences of `QuantityInPurchaseOrder`  in r_payload with `QuantityInPurchaseOrderUnit`.
     replace all occurrences of `SupplierInvoiceItemAmou`  in r_payload with `SupplierInvoiceItemAmount`.
     replace all occurrences of `PurchaseOrderQtyUnitIs`   in r_payload with `PurchaseOrderQtyUnitISOCode`.
