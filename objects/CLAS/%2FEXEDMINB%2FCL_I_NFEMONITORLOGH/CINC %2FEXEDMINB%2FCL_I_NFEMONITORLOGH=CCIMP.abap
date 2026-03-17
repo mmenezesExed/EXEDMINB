@@ -519,11 +519,26 @@ class lhc__nfemonitorh implementation.
     lhc_tabs_operations=>read_header_data( exporting it_keys  = value #( for key in keys ( corresponding #( key ) ) )
                                            importing et_header = data(lt_header) ).
 
+    lhc_tabs_operations=>read_item_data( exporting it_keys  = value #( for key in keys ( corresponding #( key ) ) )
+                                         importing et_itens = data(lt_items) ).
+
     if lt_header is not initial.
       select * from /exedminb/i_nfeminbdelivery
         for all entries in @lt_header
         where ChaveNFe eq @lt_header-ChaveNFe
         into table @lt_deliverys.
+    endif.
+
+    if lt_items is initial.
+      failed-_nfemonitorh = value #( ( %fail = value #( cause = if_abap_behv=>cause-unauthorized )
+                                       %action-etapa_700 = if_abap_behv=>mk-on ) ).
+
+      reported-_nfemonitorh = value #( ( %msg = me->new_message( id = lhc_tabs_operations=>cc_classe_msg
+                                                                 number   = 900
+                                                                 severity = if_abap_behv_message=>severity-error
+                                                                 v1 = 'Falha ao buscar itens!' ) ) ).
+
+      exit.
     endif.
 
     loop at lt_header into data(ls_header).
@@ -548,43 +563,10 @@ class lhc__nfemonitorh implementation.
 
       clear: ls_failed, ls_reported.
 
-      "Executa entrada em deposito
-      lhc_tabs_operations=>get_assist_ref( )->entrada_deposito(
-        exporting
-          iv_delivery = ls_header-Delivery
-        changing
-          mapped      = ls_mapped
-          failed      = ls_failed
-          reported    = ls_reported
-      ).
+      if ls_header-EntradaMercadoria is initial.
 
-      if ls_failed-_nfemonitorh is not initial.
-        clear reported-_nfemonitorh.
-        ls_header-Status = 1. condense ls_header-Status no-gaps.
-
-        loop at ls_reported-_nfemonitorh into data(report).
-          lhc_tabs_operations=>register_historico(
-            exporting
-              i_historico = value #( IdNFe = ls_header-ChaveNFe
-                                     Etapa = ls_header-atividade
-                                     Status = ls_header-Status
-                                     Descricao = report-%msg->if_message~get_text( ) ) ).
-
-        endloop.
-
-      else.
-        ls_header-Status = 2. condense ls_header-Status no-gaps.
-        lhc_tabs_operations=>register_historico(
-              exporting
-                i_historico = value #( IdNFe = ls_header-ChaveNFe
-                                       Etapa = ls_header-atividade
-                                       Status = 3
-                                       Descricao = me->new_message( id = lhc_tabs_operations=>cc_classe_msg
-                                                                    number   = 024
-                                                                    severity = if_abap_behv_message=>severity-success )->if_message~get_text( ) ) ).
-
-        "Executa entrada de Mercadoria
-        lhc_tabs_operations=>get_assist_ref( )->entrada_mercadoria(
+        "Executa entrada em deposito
+        lhc_tabs_operations=>get_assist_ref( )->entrada_deposito(
           exporting
             iv_delivery = ls_header-Delivery
           changing
@@ -597,13 +579,13 @@ class lhc__nfemonitorh implementation.
           clear reported-_nfemonitorh.
           ls_header-Status = 1. condense ls_header-Status no-gaps.
 
-          loop at ls_reported-_nfemonitorh into data(report_em).
+          loop at ls_reported-_nfemonitorh into data(report).
             lhc_tabs_operations=>register_historico(
               exporting
                 i_historico = value #( IdNFe = ls_header-ChaveNFe
                                        Etapa = ls_header-atividade
                                        Status = ls_header-Status
-                                       Descricao = report_em-%msg->if_message~get_text( ) ) ).
+                                       Descricao = report-%msg->if_message~get_text( ) ) ).
 
           endloop.
 
@@ -615,15 +597,93 @@ class lhc__nfemonitorh implementation.
                                          Etapa = ls_header-atividade
                                          Status = 3
                                          Descricao = me->new_message( id = lhc_tabs_operations=>cc_classe_msg
-                                                                      number   = 025
+                                                                      number   = 024
                                                                       severity = if_abap_behv_message=>severity-success )->if_message~get_text( ) ) ).
 
-          "Executa Miro
-          modify entities of /exedminb/i_nfemonitorlogh
-              in local mode
-              entity _NFeMonitorH
-              execute etapa_800
-              from value #( ( ChaveNFe = ls_header-ChaveNFe ) ).
+          "Executa entrada de Mercadoria
+          clear: ls_failed, ls_reported.
+          lhc_tabs_operations=>get_assist_ref( )->entrada_mercadoria(
+            exporting
+              iv_delivery = ls_header-Delivery
+            changing
+              mapped      = ls_mapped
+              failed      = ls_failed
+              reported    = ls_reported
+          ).
+
+          if ls_failed-_nfemonitorh is not initial.
+            clear reported-_nfemonitorh.
+            ls_header-Status = 1. condense ls_header-Status no-gaps.
+
+            loop at ls_reported-_nfemonitorh into data(report_em).
+              lhc_tabs_operations=>register_historico(
+                exporting
+                  i_historico = value #( IdNFe = ls_header-ChaveNFe
+                                         Etapa = ls_header-atividade
+                                         Status = ls_header-Status
+                                         Descricao = report_em-%msg->if_message~get_text( ) ) ).
+
+            endloop.
+
+          else.
+            ls_header-Status = 2. condense ls_header-Status no-gaps.
+
+            read table lt_items into data(ls_item) index 1.
+            select single PurchasingHistoryDocument
+            from I_PurchaseOrderHistoryAPI01
+            where PurchaseOrder = @ls_item-Pedido
+               and PurchaseOrderItem = @ls_item-ItemPedido
+               and PurchasingHistoryCategory eq 'E'
+            into @ls_header-EntradaMercadoria.
+
+            lhc_tabs_operations=>register_historico(
+                  exporting
+                    i_historico = value #( IdNFe = ls_header-ChaveNFe
+                                           Etapa = ls_header-atividade
+                                           Status = 3
+                                           Descricao = me->new_message( id = lhc_tabs_operations=>cc_classe_msg
+                                                                        number   = 025
+                                                                        severity = if_abap_behv_message=>severity-success
+                                                                        v1       = ls_header-EntradaMercadoria )->if_message~get_text( ) ) ).
+          endif.
+        endif.
+
+      else.
+        "Executa Miro
+        clear: ls_failed, ls_reported.
+        lhc_tabs_operations=>get_assist_ref( )->executar_miro( exporting is_header = ls_header
+                                                                         it_items  = value #( for item in lt_items where ( ChaveNFe = ls_header-ChaveNFe ) ( item ) )
+                                                               changing  mapped    = ls_mapped
+                                                                         failed    = ls_failed
+                                                                         reported  = ls_reported ).
+
+        if ls_failed-_nfemonitorh is not initial.
+          clear reported-_nfemonitorh.
+          ls_header-Status = 1. condense ls_header-Status no-gaps.
+
+          loop at ls_reported-_nfemonitorh into report_em.
+            lhc_tabs_operations=>register_historico(
+              exporting
+                i_historico = value #( IdNFe = ls_header-ChaveNFe
+                                       Etapa = ls_header-atividade
+                                       Status = ls_header-Status
+                                       Descricao = report_em-%msg->if_message~get_text( ) ) ).
+
+          endloop.
+
+        else.
+          ls_header-Status = 3. condense ls_header-Status no-gaps.
+          lhc_tabs_operations=>register_historico(
+                exporting
+                  i_historico = value #( IdNFe = ls_header-ChaveNFe
+                                         Etapa = ls_header-atividade
+                                         Status = ls_header-Status
+                                         Descricao = me->new_message( id = lhc_tabs_operations=>cc_classe_msg
+                                                                      number   = 026
+                                                                      severity = if_abap_behv_message=>severity-success )->if_message~get_text( ) ) ).
+
+          ls_header-Atividade = 0900.
+
         endif.
       endif.
 

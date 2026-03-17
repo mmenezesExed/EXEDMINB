@@ -422,15 +422,10 @@ class lcl_tools implementation.
         data = ls_root
     ).
 
-    et_messages-_nfemonitorh = value #( for line in ls_root-error-innererror-errordetails ( %msg = lcl_tools=>new_message(
-                                                                                        id       = conv #( lcl_tools=>split_code_msg( code = line-code opt = 1 ) )
-                                                                                        number   = conv #( lcl_tools=>split_code_msg( code = line-code opt = 2 ) )
-                                                                                        severity = lcl_tools=>ms-information
-*                                                                                        v1       =
-*                                                                                        v2       =
-*                                                                                        v3       =
-*                                                                                        v4       =
-                                                                                      ) ) ).
+    et_messages-_nfemonitorh = value #( for line in ls_root-error-innererror-errordetails ( %msg = lcl_tools=>new_message_with_text(
+                                                                                                                    severity = lcl_tools=>ms-information
+                                                                                                                    text = line-message
+                                                                                                                  ) ) ).
   endmethod.
 
   method split_code_msg.

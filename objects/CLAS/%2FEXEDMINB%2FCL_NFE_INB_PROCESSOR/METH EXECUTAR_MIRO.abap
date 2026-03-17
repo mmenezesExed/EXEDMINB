@@ -119,7 +119,7 @@
                                                      reference_document_fiscal   = item-PurchasingHistoryDocumentYear
                                                      reference_document_item     = item-PurchasingHistoryDocumentItem
                                                      tax_code                    = item-TaxCode
-                                                     quantity_in_purchase_order  = item-PurchaseOrderQuantityUnit
+                                                     quantity_in_purchase_order  = item-Quantity
                                                      supplier_invoice_item_amou  = item-NetPriceAmount
                                                      document_currency           = item-DocumentCurrency
                                                      purchase_order_qty_unit_is  = item-PurchaseOrderQuantityUnit
