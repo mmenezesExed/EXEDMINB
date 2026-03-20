@@ -103,7 +103,7 @@
 
                   _poi~PurchaseOrderItem,
                   _poi~TaxCode,
-                  _poi~NetPriceAmount,
+                  _poi~NetAmount,
 
                   _poih~PurchasingHistoryDocument,
                   _poih~PurchasingHistoryDocumentYear,
@@ -161,7 +161,7 @@
                                                      reference_document_item     = item-PurchasingHistoryDocumentItem
                                                      tax_code                    = item-TaxCode
                                                      quantity_in_purchase_order  = item-Quantity
-                                                     supplier_invoice_item_amou  = item-NetPriceAmount
+                                                     supplier_invoice_item_amou  = item-NetAmount
                                                      document_currency           = item-DocumentCurrency
                                                      "purchase_order_qty_unit_is  = item-PurchaseOrderQuantityUnit
                                                      purchase_order_qty_unit_sa  = item-PurchaseOrderQuantityUnit
